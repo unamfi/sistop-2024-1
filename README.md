@@ -5,7 +5,7 @@
 Este repositorio es el espacio de entrega de proyectos para la clase
 impartida por Gunnar Wolf de *Sistemas Operativos* de la Facultad de
 Ingeniería de la UNAM, en el semestre *2024-1* (septiembre a diciembre
-de 2021). El sitio Web de la materia, donde encontrarán listas,
+de 2023). El sitio Web de la materia, donde encontrarán listas,
 calificaciones, presentaciones, temas y demás materiales es
 http://gwolf.sistop.org/ y el sitio desde donde pueden consultar y
 descargar el libro que emplearemos como referencia para el cursado es
