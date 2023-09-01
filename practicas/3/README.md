@@ -102,27 +102,99 @@ agosto, _Más adecuaciones para darle la patada inaugural a 2024-1_:
 	HEAD is now at 044c579 Más adecuaciones para darle la patada inaugural a 2024-1
 
 Veré únicamente los archivos que existían en ese punto en el tiempo. Si ahora
-pido nuevamente `git lg .`, veré que la cabeza anónima de rama sobre la cual
+pido nuevamente `git lg`, veré que la cabeza anónima de rama sobre la cual
 estoy trabajando (`HEAD`) apunta al commit que solicité. Para ver nuevamente la
 historia completa del repositorio _en el directorio actual_ tengo que
 especificar el switch `--all`:
 
-    ✓ ((HEAD detached at 044c579)*) gwolf@misnenet『33』~/vcs/clase_sistop/semestres/2024-1/lista $ git lg .
+    $ git lg
 	* 044c579 (HEAD) Más adecuaciones para darle la patada inaugural a 2024-1 (Mon Aug 14 18:11:07 2023 -0600 2 weeks ago) <Gunnar Wolf>
     * 3772e39 Preparo la lista para iniciar el semestre 2024-1 (Sun Aug 13 17:04:34 2023 -0600 3 weeks ago) <Gunnar Wolf>
-    ✓ ((HEAD detached at 044c579)*) gwolf@misnenet『34』~/vcs/clase_sistop/semestres/2024-1/lista $ git lg --all .
+    $ git lg --all
 	* 7d4651e (origin/master, origin/HEAD, master) Lista 29/ago (Tue Aug 29 19:48:02 2023 -0600 2 days ago) <Gunnar Wolf>
-   * 7e6949b Entregas de la práctica #1 (Mon Aug 28 09:13:10 2023 -0600 3 days ago) <Gunnar Wolf>
-   * f67be57 Lista 24/ago (Thu Aug 24 19:44:20 2023 -0600 7 days ago) <Gunnar Wolf>
-   * be75006 Actualizo lista con altas y bajas (Wed Aug 23 13:47:09 2023 -0600 8 days ago) <Gunnar Wolf>
-   * 63568a8 Agrego correo de alumno por altas/bajas (Tue Aug 22 19:51:38 2023 -0600 9 days ago) <Gunnar Wolf>
-   * be49c58 Tomo lista 17 y 22 de agosto (Tue Aug 22 19:50:19 2023 -0600 9 days ago) <Gunnar Wolf>
-   * 044c579 (HEAD) Más adecuaciones para darle la patada inaugural a 2024-1 (Mon Aug 14 18:11:07 2023 -0600 2 weeks ago) <Gunnar Wolf>
-   * 3772e39 Preparo la lista para iniciar el semestre 2024-1 (Sun Aug 13 17:04:34 2023 -0600 3 weeks ago) <Gunnar Wolf>
-   ✓ ((HEAD detached at 044c579)*) gwolf@misnenet『35』~/vcs/clase_sistop/semestres/2024-1/lista $
+    * 7e6949b Entregas de la práctica #1 (Mon Aug 28 09:13:10 2023 -0600 3 days ago) <Gunnar Wolf>
+    * f67be57 Lista 24/ago (Thu Aug 24 19:44:20 2023 -0600 7 days ago) <Gunnar Wolf>
+    * be75006 Actualizo lista con altas y bajas (Wed Aug 23 13:47:09 2023 -0600 8 days ago) <Gunnar Wolf>
+    * 63568a8 Agrego correo de alumno por altas/bajas (Tue Aug 22 19:51:38 2023 -0600 9 days ago) <Gunnar Wolf>
+    * be49c58 Tomo lista 17 y 22 de agosto (Tue Aug 22 19:50:19 2023 -0600 9 days ago) <Gunnar Wolf>
+    * 044c579 (HEAD) Más adecuaciones para darle la patada inaugural a 2024-1 (Mon Aug 14 18:11:07 2023 -0600 2 weeks ago) <Gunnar Wolf>
+    * 3772e39 Preparo la lista para iniciar el semestre 2024-1 (Sun Aug 13 17:04:34 2023 -0600 3 weeks ago) <Gunnar Wolf>
+	$
+
+Claro, cuando por alguna razón muevo mi `HEAD`, es importante volver a la rama
+en la que estoy trabajando. Para volver a la rama principal:
+
+	$ git checkout master
+
+Git nos permite también referirnos a cada *commit* de forma relativa al punto
+de la historia del repositorio desde donde estamos trabajando con el caracter
+`~` para referirnos a commits anteriores; este caracter puede repetirse para
+*apuntar* a generaciones anteriores. Veamos, partiendo desde `master`:
+
+    $ git checkout HEAD~~
+    Note: switching to 'HEAD~~~'.
+	(...)
+    HEAD is now at f67be57 Lista 24/ago
+	$ git lg --all
+	* 7d4651e (origin/master, origin/HEAD, master) Lista 29/ago (Tue Aug 29 19:48:02 2023 -0600 2 days ago) <Gunnar Wolf>
+    * 7e6949b Entregas de la práctica #1 (Mon Aug 28 09:13:10 2023 -0600 4 days ago) <Gunnar Wolf>
+	* f67be57 (HEAD) Lista 24/ago (Thu Aug 24 19:44:20 2023 -0600 7 days ago) <Gunnar Wolf>
+	* be75006 Actualizo lista con altas y bajas (Wed Aug 23 13:47:09 2023 -0600 8 days ago) <Gunnar Wolf>
+	* 63568a8 Agrego correo de alumno por altas/bajas (Tue Aug 22 19:51:38 2023 -0600 9 days ago) <Gunnar Wolf>
+	* be49c58 Tomo lista 17 y 22 de agosto (Tue Aug 22 19:50:19 2023 -0600 9 days ago) <Gunnar Wolf>
+	* 044c579 Más adecuaciones para darle la patada inaugural a 2024-1 (Mon Aug 14 18:11:07 2023 -0600 2 weeks ago) <Gunnar Wolf>
+	* 3772e39 Preparo la lista para iniciar el semestre 2024-1 (Sun Aug 13 17:04:34 2023 -0600 3 weeks ago) <Gunnar Wolf>
+	$ git checkout HEAD
+
+**OJO:** Tengo que reconocer que en este punto estoy simplificando. Cuando la
+historia del repositorio se bifurca mucho, como es el caso del que tenemos para
+la materia, no siempre resulta intuitivo *cuál de los commits padre* es la línea
+que estamos siguiendo. En dado caso, sugiero utilizar las referencias al
+*commit* descritas anteriormente.
 
 ## ¿Cuál es la diferencia entre dos commits?
 
-**¡UPS!**
+Muchas veces no querremos *volver en el tiempo*, sino comparar dos diferentes
+*commits*. Para eso tenemos a `git diff`. Si nuestros archivos son textuales (no
+PDF, DOCX ni otros formatos binarios), nos presentará de una forma simple y
+clara de entender qué cambios hubo, *sin mudar el punto en el que
+estamos*. Puedo darle dos commits, o dos referencias relativas, y me indicará
+(siempre y cuando la terminal implemente salida a color):
 
-El planteamiento de esta práctica todavía no está completo ☹
+- Cada *commit* puede incluir varios archivos. `diff` presenta un pequeño
+  encabezado describiendo a cada uno de estos.
+- El archivo en el primer *commit*, indicado por la letra `a`, y en el segundo,
+  indicado por `b`.
+- En celeste y entre signos `@@`, la línea del archivo donde ocurre este cambio
+- En verde, las líneas que se agregaron
+- En rojo, las líneas que se suprimieron:
+
+![Diferencias entre dos versiones](./img/diff.png)
+
+## Ahora sí, ¡la práctica!
+
+¿Qué vamos a hacer para esta práctica? ¡Muy sencillo! Como dije, les dejo esta
+práctica *de la mano* del [proyecto
+#1](../../proyectos/1/README.md). Aprovechemos que el proyecto tiene dos partes
+(un artículo a elección de ustedes y el artículo central de la revista). Para
+realizar su entrega, hagan por lo menos dos *commits* presentando la historia
+del documento: desarrollen el resumen de uno de los artículos, hagan un
+*commit*, y posteriormente el del segundo.
+
+Les pido que me entreguen un *pantallazo* mostrando, una vez que estén
+entregando el proyecto, el estado del desarrollo: La bitácora mostrando más de
+un *commit*, y las diferencias entre ① el repositorio antes de que inicien su
+trabajo, ② en el punto intermedio en que tienen uno de los artículos
+desarrollados, y ③ el estado final, con el resumen listo para entregar.
+
+Puntos a pensar / considerar:
+
+- ¿En qué formato están entregando el resumen que les pedí para el proyecto?
+  Si las herramientas les acomodan, ¡intenten hacerlo en un formato basado en
+  texto! (HTML, Markdown, org-mode, etc.)
+  
+  Este punto es únicamente como *recomendación mía*. Si prefieren hacer su
+  entrega en un formato binario, presenten únicamente el pantalazo con el
+  resultado de `git diff`.
+
+Y después de todo este texto... ¡Sí! Eso es todo 😉
