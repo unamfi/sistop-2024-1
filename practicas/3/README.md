@@ -196,5 +196,9 @@ Puntos a pensar / considerar:
   Este punto es únicamente como *recomendación mía*. Si prefieren hacer su
   entrega en un formato binario, presenten únicamente el pantalazo con el
   resultado de `git diff`.
+- El estado final de tu entrega del proyecto incluye dos *commits*, y dos
+  archivos que potencialmente podrían ser absolutamente distintos entre sí. Sin
+  embargo, *no dupliquen los archivos*. Que el archivo entregado tenga su
+  *historia de versiones*, pero que sea *un único archivo entregado*.
 
 Y después de todo este texto... ¡Sí! Eso es todo 😉
