@@ -12,12 +12,6 @@ También, esto permite independizar los datos de los programas, ya que, independ
 
 Aunado a la gestión y uso de los archivos, se mencionan dos tipos de archivos que tenían características diferentes y cada uno tenía sus ventajas – dependiendo del problema que se estuviera analizando, así como el sistema de cómputo que se estuviera utilizando –. Igualmente, se menciona diferencias entre las diferentes formas de programar entre dos sistemas distintos con el mismo lenguaje de programación, hablando de una diferencia de comportamiento y manejo de comandos por los diferentes equipos de cómputo de la época. Hoy en día, aunque los equipos cuenten con una estructura diferente, cuando utilizamos un lenguaje de programación de alto nivel, no profundizamos tanto en cómo funciona el acceso a la memoria y manejo de instrucciones tras bambalinas, obteniendo – la mayoría de las veces – el mismo resultado independientemente del sistema que estemos utilizando; nuevamente, creo que esto muestra el gran trabajo de abstracción que realizan los sistemas operativos para los usuarios de las computadoras y cómo esto ha ido cambiando a lo largo de los años. 
 
-
-
-
-
-
-
-Lenguaje de programación
+## Lenguaje de programación
 
 Los lenguajes de programación hoy en día son bastante amigables, y, con el paso de los años, esto ha ido mejorando de modo que se facilita la actividad de realizar código para los programadores. En este artículo se presentan varios códigos de BASIC, el cual no parece tan intuitivo y amigable de utilizar – sobre todo se menciona la complejidad de utilizar archivos –. La estructura es bastante similar a la estructura de un lenguaje ensamblador, aunque BASIC ya se encontraba dentro de una categoría de lenguajes de alto nivel; sin embargo, se observa una estructura parecida, constando de instrucciones concisas (READ, NEXT, GOTO) y diferentes variables sin largas líneas de código como solemos observar hoy en día en los lenguajes de alto nivel. Pero me parece interesante ver que, aunque la sintaxis difiera a la de los lenguajes actuales, conociendo de programación se vuelve bastante sencillo entender lo que se está realizando, ya que la lógica sigue siendo, en esencia, la misma.
