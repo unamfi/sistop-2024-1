@@ -35,3 +35,32 @@ producto fuera muy eficiente, la tecnología que se usaba para que este gran inv
 revolucionario.
  
 Escrito por: Puente Estrada Rodrigo Abdiel
+
+
+
+En el fascículo principal, nos hablan acerca de una maquina llamada Dragon 32, la cual 
+funcionaria para poder utilizar de manera eficaz “para su época” algunas funciones para la 
+resolución, colores y visualización de diferentes propiedades de la pantalla.
+En un principio nos indican como es que se mide la resolución de una pantalla, la cual va 
+desde 512 hasta 49,152 puntos, de igual modo existe la posibilidad de cambiar los colores. 
+Dando así una variedad de resoluciones y gammas para la personalización de equipos.
+Parte importante de la resolución de pantalla, son las funciones de esta misma las cuales nos 
+pueden ayudar en diferentes casos, para diferentes ocasiones; por ejemplo, si se desean 
+rellenar figuras, para algún estudio estadístico, como lo serian diagramas, mapas etc… la 
+función PAINT nos ayudaría a resolver este problema, ya que su función principal seria la de 
+rellenar formas cerradas.
+En otro caso la función GET y PUT nos pueden servir para almacenar (como lo diríamos 
+ahora, un screen shot) una captura de pantalla, y si es necesario poder visualizarla de nuevo, 
+la función PUT es la que nos daría esta propiedad.
+Por último, hablare sobre la lectura llamada Su fiel servidor, la cual nos cuenta como es el 
+funcionamiento de las maquinas motrices, o mejor conocidas como brazos robóticos. La 
+problemática en esta lectura es acerca de la precisión y funcionamiento de los brazos, ya que 
+un desface en la construcción y modelación de partes, significaría perdidas monetarias, 
+además de un gran desperdicio de objetos los cuales resultarían defectuosos.
+Las propuestas que indican son muy buenas para poder lograr un porcentaje mínimo de error, 
+como lo serian sensores, cámaras y patrones de diseño los cuales fungirían como seguro de 
+máquinas, me explico, al ponerle un “seguro” me refiero a un método para bloquear cualquier 
+movimiento del brazo en caso de que llegara a detectar que se ha desfasado o que está en una 
+posición que no debería. 
+
+Escrito por: Gómez Vázquez Juan Pablo
