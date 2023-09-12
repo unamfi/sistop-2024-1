@@ -2,23 +2,23 @@
 
 ##### Se muestran los ultimos commits antes de la realización del proyecto
 
-![](/Users/erick/desktop/p1/01Antes_del_proyecto.png)
+![](./Users/erick/desktop/p1/01Antes_del_proyecto.png)
 
 ##### Se hace el primer Commit del primer articulo
 
-![](/Users/erick/desktop/p1/02Primer_Commit.png)
+![](./erick/desktop/p1/02Primer_Commit.png)
 
 ##### Se realizan los siguientes Commit para agregar el segundo comentario
 
-![](/Users/erick/desktop/p1/03Mas_Commit.png)
+![](/erick/desktop/p1/03Mas_Commit.png)
 
 ##### Se muestra la Comparación
 
-![](/Users/erick/desktop/p1/04Comparacion.png)
+![](./Users/erick/desktop/p1/04Comparacion.png)
 
 ##### Visualizacion del Historial de Cambios 
 
-![](/Users/erick/desktop/p1/05HistorialCambios.png)
+![](/desktop/p1/05HistorialCambios.png)
 
 
 
