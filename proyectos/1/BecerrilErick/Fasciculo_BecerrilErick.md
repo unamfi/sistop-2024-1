@@ -1,5 +1,5 @@
 # Elección del Fascículo
-Mi número de cuenta es 313026742 y resolviendo el algoritmo propuesto por el profesor obtenemos lo siguiente:
+Mi número de cuenta es **313026742** y resolviendo el algoritmo propuesto por el profesor obtenemos lo siguiente:
 
 m = m1 + m2 = 313026742 + 00000000 = 313026742
 
