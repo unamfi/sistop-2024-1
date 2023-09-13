@@ -1,6 +1,6 @@
 # Proyecto 1
 
-**__ Osorio Rodrigo y Robles Alan__**
+**_Osorio Rodrigo y Robles Alan_**
 
 ## Número de cuenta
 - Osorio Angeles Rodrigo Jafet = 318008893
