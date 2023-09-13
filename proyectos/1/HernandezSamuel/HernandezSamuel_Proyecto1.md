@@ -4,7 +4,13 @@ Revision de MiComputer Número de cuenta: 316060497 Fecha de entrega: 12/09/2023
 
 El proyecto lo realice de manera individual asi que sino calcule mal el fasciculo que me toca es el 24
 
-m = m1 + m2 m = 316060497 + 0 m = 316060497 m % 100 = 316060497 % 100 = 97 f = ⌊97 / 4⌋ f = ⌊24.25⌋ f = 24
+m = m1 + m2 
+m = 316060497 + 0 
+m = 316060497 
+m % 100 = 316060497 % 100 = 97 
+f = ⌊97 / 4⌋ 
+f = ⌊24.25⌋ 
+f = 24
 
 
 Fascículo 24. Research Machines 380Z (Articulo principal).
