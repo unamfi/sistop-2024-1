@@ -1,0 +1,32 @@
+UNVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO
+FACULTAD DE INGENIERÍA
+Sistemas Operativos.
+Profesor: Ing. Gunnar Eyal Wolf Iszaevich.
+Grupo: 06 Alumno: Hernández Hernández Samuel
+Proyecto 1. Revision de MiComputer
+Número de cuenta: 316060497
+Fecha de entrega: 12/09/2023
+
+
+El proyecto lo realice de manera individual asi que sino calcule mal el fasciculo que me toca es el 24
+
+m = m1 + m2 
+m = 316060497 + 0 
+m = 316060497 
+m % 100 = 316060497 % 100 = 97 
+f = ⌊97 / 4⌋ 
+f = ⌊24.25⌋ 
+f = 24
+
+
+Fascículo 24. Research Machines 380Z (Articulo principal).
+
+El artículo presenta el Research Machines 380Z, un microordenador que gano en su época mucha popularidad en escuelas y en el Ministerio de Defensa británico gracias a su sólida 
+construcción y potentes gráficos de alta resolución. Aunque no se destacaba por su innovación ni por su competitividad en precio, pero si por su fiabilidad y respaldo. El paquete de 
+gráficos de alta resolución (HRG) del 380Z era especialmente destacado, ya que permitía una variedad de resoluciones y colores, pero para aprovechar al máximo esas capacidades, era 
+esencial contar con un monitor en color con una interfaz RGB. Además, su sistema contaba con tableros adicionales para el control de disco y comunicaciones. Su teclado era resistente y 
+diseñado para soportar un uso intensivo, lo que lo hacía ideal para entornos educativos. El sistema se compone de varios tableros, incluyendo la CPU, RAM y gráficos de alta resolución. 
+La fuente de alimentación era robusta y difícil de dañar, lo que aumenta la confiabilidad de la máquina. Por último, el 380Z ofrece diferentes versiones de BASIC y el paquete HRG, 
+permitiendo a los usuarios adaptar la memoria según sus necesidades. Además, es compatible con varios lenguajes, incluyendo uno similar al Pascal, lo que lo hacía atractivo tanto para 
+educadores como para científicos europeos que requerían cálculos matemáticos complejos. En resumen, el Research Machines 380Z destaca por su solidez y capacidades gráficas, siendo una 
+elección popular en entornos educativos y militares.
