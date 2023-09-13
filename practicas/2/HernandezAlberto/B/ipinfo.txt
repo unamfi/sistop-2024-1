@@ -1,0 +1,29 @@
+
+Configuraci¢n IP de Windows
+
+
+Adaptador de Ethernet Ethernet:
+
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+   Direcci¢n IPv6 . . . . . . . . . . : 2806:106e:19:8ed:a82d:26c1:ed5e:9f98
+   Direcci¢n IPv6 temporal. . . . . . : 2806:106e:19:8ed:78c6:7ae0:1f73:6bc9
+   V¡nculo: direcci¢n IPv6 local. . . : fe80::7028:c3db:2b88:99bc%2
+   Direcci¢n IPv4. . . . . . . . . . . . . . : 192.168.1.78
+   M scara de subred . . . . . . . . . . . . : 255.255.255.0
+   Puerta de enlace predeterminada . . . . . : fe80::1%2
+                                       192.168.1.254
+
+Adaptador de LAN inal mbrica Wi-Fi:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+
+Adaptador de LAN inal mbrica Local Area Connection* 1:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
+
+Adaptador de LAN inal mbrica Local Area Connection* 2:
+
+   Estado de los medios. . . . . . . . . . . : medios desconectados
+   Sufijo DNS espec¡fico para la conexi¢n. . : 
