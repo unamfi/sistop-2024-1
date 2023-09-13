@@ -1,0 +1,53 @@
+
+Nombre de host:                            PCERDA
+Nombre del sistema operativo:              Microsoft Windows 11 Pro
+Versi¢n del sistema operativo:             10.0.22621 N/D Compilaci¢n 22621
+Fabricante del sistema operativo:          Microsoft Corporation
+Configuraci¢n del sistema operativo:       Estaci¢n de trabajo independiente
+Tipo de compilaci¢n del sistema operativo: Multiprocessor Free
+Propiedad de:                              juanpablogv18@hotmail.com
+Organizaci¢n registrada:                   N/D
+Id. del producto:                          00331-10000-00001-AA867
+Fecha de instalaci¢n original:             07/04/2023, 01:38:28 p. m.
+Tiempo de arranque del sistema:            29/08/2023, 11:13:01 a. m.
+Fabricante del sistema:                    Gigabyte Technology Co., Ltd.
+Modelo el sistema:                         B550M AORUS ELITE
+Tipo de sistema:                           x64-based PC
+Procesador(es):                            1 Procesadores instalados.
+                                           [01]: AMD64 Family 25 Model 33 Stepping 0 AuthenticAMD ~3401 Mhz
+Versi¢n del BIOS:                          American Megatrends International, LLC. F16a, 03/11/2022
+Directorio de Windows:                     C:\WINDOWS
+Directorio de sistema:                     C:\WINDOWS\system32
+Dispositivo de arranque:                   \Device\HarddiskVolume1
+Configuraci¢n regional del sistema:        es-mx;Espa¤ol (M‚xico)
+Idioma de entrada:                         es-mx;Espa¤ol (M‚xico)
+Zona horaria:                              (UTC-06:00) Guadalajara, Ciudad de M‚xico, Monterrey
+Cantidad total de memoria f¡sica:          24,483 MB
+Memoria f¡sica disponible:                 16,206 MB
+Memoria virtual: tama¤o m ximo:            26,915 MB
+Memoria virtual: disponible:               14,328 MB
+Memoria virtual: en uso:                   12,587 MB
+Ubicaci¢n(es) de archivo de paginaci¢n:    C:\pagefile.sys
+Dominio:                                   WORKGROUP
+Servidor de inicio de sesi¢n:              \\PCERDA
+Revisi¢n(es):                              5 revisi¢n(es) instaladas.
+                                           [01]: KB5028948
+                                           [02]: KB5012170
+                                           [03]: KB5025800
+                                           [04]: KB5029263
+                                           [05]: KB5028756
+Tarjeta(s) de red:                         2 Tarjetas de interfaz de red instaladas.
+                                           [01]: Realtek Gaming GbE Family Controller
+                                                 Nombre de conexi¢n: Ethernet
+                                                 DHCP habilitado:    S¡
+                                                 Servidor DHCP:      192.168.68.1
+                                                 Direcciones IP
+                                                 [01]: 192.168.68.115
+                                                 [02]: fe80::ace4:e429:6ed1:a96f
+                                           [02]: Wintun Userspace Tunnel
+                                                 Nombre de conexi¢n: Wintun
+                                                 Estado:             Medios desconectados
+Requisitos Hyper-V:                        Extensiones de modo de monitor de VM: S¡
+                                           Se habilit¢ la virtualizaci¢n en el firmware: No
+                                           Traducci¢n de direcciones de segundo nivel: S¡
+                                           La prevenci¢n de ejecuci¢n de datos est  disponible: S¡
