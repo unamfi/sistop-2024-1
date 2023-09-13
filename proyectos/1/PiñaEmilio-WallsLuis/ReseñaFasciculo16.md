@@ -80,3 +80,69 @@ pasado y mi historia resulte como lo que imaginé sobre los
 desarrolladores del FairPhone y esta computadora cómo este artículo
 resulte mi inspiración en alguna innovación en los próximos años. Lo
 recordaré muy bien si llego a lograrlo.
+
+## Tema libre: Las nuevas memorias
+
+Almacenar información siempre ha sido un aspecto vital de la
+civilización. Desde la invención de las primeras computadoras se ha
+tenido el problema de cómo guardar información de manera permanente y de
+fácil acceso. Desde la Segunda Guerra Mundial ha habido avances en cómo
+se guarda la información. Uno de los primeros dispositivos que se
+utilizaban era un tubo relleno de mercurio con dos puntas con un cristal
+de cuarzo. Este dispositivo se utilizaba para distinguir entre las
+señales constantes, como lo eran los árboles en un radar, y las señales
+de un objeto diferente. Este tipo de dispositivo hoy en día pareciera
+sacado de la ficción o incluso de la magia lo que propone una reflexión
+de cómo la tecnología ha avanzado hasta el día de hoy. El artículo
+explora muchos dispositivos para abordar información a lo largo de la
+historia, lo que provee al lector de una perspectiva más completa sobre
+la historia del almacenamiento. El artículo al mostrar todas las
+diferentes maneras en las que se ha guardado la información capta la
+atención y estimula la curiosidad que generan los dispositivos tan
+diferentes a los que se usan hoy en día.
+
+Aunque el artículo fue escrito en 1984, este plantea una posibilidad a
+futuro que hoy en día pareciera posible. Este es poder guardar la
+información en chips enfriados a temperaturas cercanas al cero absoluto
+para poder utilizar un solo electrón para poder guardar información.
+Incluso hoy en día se necesitan cientos de miles de electrones para
+poder guardar información en los chips modernos. esta información le
+deja al lector una posibilidad de investigación a futuro sobre qué tipo
+de dispositivos de almacenamiento se predicen hoy en día, así como
+Cuáles fueron los posibles y cuáles se han descartado por su
+imposibilidad.
+
+Uno de los dispositivos de almacenamiento más interesantes que se
+mencionaron en este artículo, fue el de la memoria de núcleos de
+ferrita. Este dispositivo de almacenamiento se mostraba de una manera
+que me pareció increíblemente interesante e ingeniosa, ya que se tienen
+núcleos de ferrita en forma de Dona, puestos sobre una red de cables de
+metal. La lectura y el almacenamiento de la información se da gracias a
+dos corrientes que se mandan por un respectivo cable perpendicular y uno
+Paralelo que cambian el flujo del campo magnético del núcleo de ferrita,
+y al cambiarlo se establece un valor de uno o de cero. Uno de los
+problemas más grandes que tiene este dispositivo de almacenamiento es
+que toda la información se tiene que reescribir después de leerse ya que
+se cambian los estados de los campos magnéticos del núcleo de ferrita.
+
+El artículo hace muy bien al llevar al lector de la mano a través de la
+historia de los dispositivos de almacenamiento. describe la diferencia
+entre muchos de ellos, así como la similitud que se tiene de la
+información en el mundo de la computación (unos y ceros). Con toda la
+información hoy, resulta muy interesante las soluciones que se tuvieron
+en el pasado para resolver un problema que hoy parece darse por hecho.
+En el pasado siempre fue un problema el costo de los dispositivos de
+almacenamiento y la velocidad de acceso a la información. Aunque no se
+ofrece una comparación directa con los dispositivos de almacenamiento
+que se tienen en la modernidad, queda como ejercicio al lector comparar
+lo que se usaban hoy en día con lo que se utilizaba en el pasado.
+
+Disfruté mucho el artículo, el uso de imágenes complementarias y sus
+explicaciones funcionaron perfectamente como complemento a la
+información presentada de manera escrita. El nivel que se tiene es
+amigable para quienes leen el artículo Sabiendo sobre computación o
+leyendo como primer acercamiento a este tipo de información.
+
+### Realizado por:
+- Piña Félix Emilio 317594148
+- Walls Chávez Luis 316078719 
