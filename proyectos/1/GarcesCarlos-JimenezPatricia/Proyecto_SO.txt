@@ -1,0 +1,47 @@
+﻿Resultado de imagen para facultad de ingenieria unam 
+ Resultado de imagen para unam 
+
+
+
+Universidad Nacional Autónoma de México
+
+
+Facultad de Ingeniería
+
+
+
+
+SISTEMAS OPERATIVOS
+
+
+PROYECTO
+
+
+Profesor: 
+Grupo: 04
+Nombre: 
+* Garces Angulo Carlos Alberto
+* Jiménez Pérez Patricia Alejandra
+
+
+Semestre 2024-1                                                Fecha de Entrega: 13-09-23
+    
+
+
+
+
+
+
+
+
+Para la elección del fascículo
+m1: 316113421
+m2: 315181803
+m1+m2=631,295,224
+f=24/4 = 6
+MI COMPUTER
+CURSO PRÁCTICO DEL ORDENADOR PERSONAL EL MICRO Y EL MINIORDENADOR
+Atari 400 y 800 
+El Atari 400 y 800 como un equipo de cómputo fueron significativos por los juegos que tuvieron, en el cual se menciona uno en particular que fue muy importante llamado Pong, este popular juego les hizo tener un crecimiento significativo en su industria, ya que sus ordenadores brindaban una muy buena calidad en cuanto a gráficos y software. Un dato curioso es que entre estos dos al ser diferentes en cuanto al teclado, se mencionaba que el Atari 400 se fabricaba con fines militares ya que al ser un teclado por así decirlo más plano ocasionaba que fuera preferible por el hecho de no acumular polvo.
+En este fascículo también nos muestra la parte del hardware, logramos ver  las placas de la CPU y las placas de la RAM con imágenes detallando donde se encontraba cada componente.        Por ejemplo, para la placa de la CPU se señalaban los chips y el reloj los cuales eran los encargados de manejar el color, movimiento en pantalla, además de poder manipular los gráficos de los juegos. Por otro lado, también enseña  las placas de la RAM que brindan más memoria ya que se podía ocupar hasta tres de estas placas   , inclusive se habla también de la placa de personalidad que daba la oportunidad de utilizar un lenguaje alterno con solo cambiar la ROM, esto considero hace que sea más atractivo al mercado en ese entonces añadiendo todas las cualidades anteriores.
+Y no más importante se muestra su placa madre del Atari 800 que de igual forma señalan cada parte de los componentes y donde se colocan ciertas cosas como los cartuchos, la memoria ROM y las conexiones como es el teclado, el de periférico o la señal de video, que si bien se mostraran dimensiones y si era algo pesado, pero no tanto como otros tipos de equipos que eran más pesados significativamente lo que lo hace decente, también se ve que se podía manejar con otros lenguajes como el popular lenguaje C, además dentro del fascículo también se menciona que Atari brindaba una información muy completa a los usuarios en su documentación  dado que estos mismos obtenían este equipo para fines más avanzados, por lo que  Atari quería mostrarles de manera adecuada el funcionamiento de su equipo para que pudieran familiarizarse más rápido.
