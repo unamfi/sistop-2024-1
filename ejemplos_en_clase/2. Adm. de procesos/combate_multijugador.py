@@ -5,6 +5,7 @@ import random
 
 num_jugadores = 3
 multiplex = threading.Semaphore(num_jugadores)
+barrera = threading.Semaphore(0)
 activos = []
 mut_activos = threading.Semaphore(1)
 
@@ -15,7 +16,14 @@ def multiplexado(x):
     # ↓ Manejo de mutex para modificar el arreglo activos
     mut_activos.acquire()
     activos.append(x)
+    if len(activos) == num_jugadores:
+        barrera.release()
     mut_activos.release()
+
+    # ↓ 'barrera' es una barrera, pero es también una implementación de un
+    # torniquete
+    barrera.acquire()
+    barrera.release()
 
     print('%02d: inicio porción compartida; estamos: %s' % (x, activos))
     time.sleep(random.random())
