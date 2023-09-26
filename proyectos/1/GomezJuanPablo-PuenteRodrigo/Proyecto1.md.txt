@@ -1,0 +1,66 @@
+## Iluminando el dragón
+Al realizar a la lectura de este articulo nos menciona cual es la forma en la que funciona la 
+pantalla en un modo muy peculiar, en los monitores que se usan para nuestras computadoras,
+Cuales son las configuraciones que se necesitan para que estas funcionen la densidad de 
+resolución que tienen, mas que nada en la pantalla que se este utilizando en esos momentos, 
+los coleres que llegan a tener en alta resolución, también nos hablan sobre los colores 
+alternativos que es cuando una SCREN se trabaja en formato 1:1 que es donde se utiliza.
+También se menciona algunos formatos y programas que nos ayudan a nosotros los usuarios 
+a que tengamos un mejor manejo sobre este tipo y una mayor facilidad para el uso de este.
+Lo que no me agrado mucho de esta lectura es que es una lectura difícil, mas que nada para 
+los que somos principiantes, nos es difícil esta lectura, pero investigando mas sobre el tema 
+se hace mejor comprender esta lectura.
+
+## Un útil “ratón”
+En la lectura que realice nos mostraba la gran eficiencia que dio la tecnología al integrar un 
+dispositivo el cual nos ayudaba de forma grafica en la utilidad de la computadora ya que esta 
+facilitaba el uso de la misma, gracias a este gran invento muchas compañías tecnológicas 
+dieron un gran salto ya que esta implementaba la función de las computadoras, ya no 
+solamente al usar la computadora teníamos que usar el teclado sino que con este invento 
+podíamos hacer grandes cosas hablando en la computadora porque las tareas se volvían más 
+fáciles y practicas ya no teníamos que solamente manipular con las flechas y ciertos 
+comandos del teclado tradicional sino que ya con el “ratón” podíamos facilitar usar 
+programas (softwares) en la computadora.
+También en el artículo nos menciono el año en el que fue creada y como era su 
+funcionamiento, como es que serbia el instrumento, cual era la forma mecánicamente en la 
+cual funcionaba, habían dos tipos de funcionamiento del ratón, explicaba brevemente de 
+mecánica que hacia para que este pudiera funcionar en la computadora, también mencionaba 
+que la compañía de Apple su ratón se llamaba Lisa el cual funcionaba con una pequeña bola 
+en la parte inferior y que solamente tenía un solo botón el cual nos mencionaba que tenia dos 
+funciones con ese botón. También había otras marcas las cuales era casi el mismo diseño pero 
+utilizaban dos botones que el izquierdo era el principal y que el derecho era el secundario 
+para opciones mas específicas, claro esto dependía del programa que se utilizara.
+Lo que mas me llamo la atención fue el mecanismo que se usaba anteriormente para que este 
+producto fuera muy eficiente, la tecnología que se usaba para que este gran invento fuera 
+revolucionario.
+ 
+Escrito por: Puente Estrada Rodrigo Abdiel
+
+
+
+En el fascículo principal, nos hablan acerca de una maquina llamada Dragon 32, la cual 
+funcionaria para poder utilizar de manera eficaz “para su época” algunas funciones para la 
+resolución, colores y visualización de diferentes propiedades de la pantalla.
+En un principio nos indican como es que se mide la resolución de una pantalla, la cual va 
+desde 512 hasta 49,152 puntos, de igual modo existe la posibilidad de cambiar los colores. 
+Dando así una variedad de resoluciones y gammas para la personalización de equipos.
+Parte importante de la resolución de pantalla, son las funciones de esta misma las cuales nos 
+pueden ayudar en diferentes casos, para diferentes ocasiones; por ejemplo, si se desean 
+rellenar figuras, para algún estudio estadístico, como lo serian diagramas, mapas etc… la 
+función PAINT nos ayudaría a resolver este problema, ya que su función principal seria la de 
+rellenar formas cerradas.
+En otro caso la función GET y PUT nos pueden servir para almacenar (como lo diríamos 
+ahora, un screen shot) una captura de pantalla, y si es necesario poder visualizarla de nuevo, 
+la función PUT es la que nos daría esta propiedad.
+Por último, hablare sobre la lectura llamada Su fiel servidor, la cual nos cuenta como es el 
+funcionamiento de las maquinas motrices, o mejor conocidas como brazos robóticos. La 
+problemática en esta lectura es acerca de la precisión y funcionamiento de los brazos, ya que 
+un desface en la construcción y modelación de partes, significaría perdidas monetarias, 
+además de un gran desperdicio de objetos los cuales resultarían defectuosos.
+Las propuestas que indican son muy buenas para poder lograr un porcentaje mínimo de error, 
+como lo serian sensores, cámaras y patrones de diseño los cuales fungirían como seguro de 
+máquinas, me explico, al ponerle un “seguro” me refiero a un método para bloquear cualquier 
+movimiento del brazo en caso de que llegara a detectar que se ha desfasado o que está en una 
+posición que no debería. 
+
+Escrito por: Gómez Vázquez Juan Pablo
