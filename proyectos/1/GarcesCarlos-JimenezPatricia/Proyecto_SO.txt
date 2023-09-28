@@ -1,0 +1,56 @@
+﻿Resultado de imagen para facultad de ingenieria unam 
+ Resultado de imagen para unam 
+
+
+
+Universidad Nacional Autónoma de México
+
+
+Facultad de Ingeniería
+
+
+
+
+SISTEMAS OPERATIVOS
+
+
+PROYECTO
+
+
+Profesor: 
+Grupo: 04
+Nombre: 
+* Garces Angulo Carlos Alberto
+* Jiménez Pérez Patricia Alejandra
+
+
+Semestre 2024-1                                                Fecha de Entrega: 13-09-23
+    
+
+
+
+
+
+
+
+
+Para la elección del fascículo
+m1: 316113421
+m2: 315181803
+m1+m2=631,295,224
+f=24/4 = 6
+MI COMPUTER
+CURSO PRÁCTICO DEL ORDENADOR PERSONAL EL MICRO Y EL MINIORDENADOR
+Atari 400 y 800 
+El Atari 400 y 800 como un equipo de cómputo fueron significativos por los juegos que tuvieron, en el cual se menciona uno en particular que fue muy importante llamado Pong, este popular juego les hizo tener un crecimiento significativo en su industria, ya que sus ordenadores brindaban una muy buena calidad en cuanto a gráficos y software. Un dato curioso es que entre estos dos al ser diferentes en cuanto al teclado, se mencionaba que el Atari 400 se fabricaba con fines militares ya que al ser un teclado por así decirlo más plano ocasionaba que fuera preferible por el hecho de no acumular polvo.
+En este fascículo también nos muestra la parte del hardware, logramos ver  las placas de la CPU y las placas de la RAM con imágenes detallando donde se encontraba cada componente.        Por ejemplo, para la placa de la CPU se señalaban los chips y el reloj los cuales eran los encargados de manejar el color, movimiento en pantalla, además de poder manipular los gráficos de los juegos. Por otro lado, también enseña  las placas de la RAM que brindan más memoria ya que se podía ocupar hasta tres de estas placas   , inclusive se habla también de la placa de personalidad que daba la oportunidad de utilizar un lenguaje alterno con solo cambiar la ROM, esto considero hace que sea más atractivo al mercado en ese entonces añadiendo todas las cualidades anteriores.
+Y no más importante se muestra su placa madre del Atari 800 que de igual forma señalan cada parte de los componentes y donde se colocan ciertas cosas como los cartuchos, la memoria ROM y las conexiones como es el teclado, el de periférico o la señal de video, que si bien se mostraran dimensiones y si era algo pesado, pero no tanto como otros tipos de equipos que eran más pesados significativamente lo que lo hace decente, también se ve que se podía manejar con otros lenguajes como el popular lenguaje C, además dentro del fascículo también se menciona que Atari brindaba una información muy completa a los usuarios en su documentación  dado que estos mismos obtenían este equipo para fines más avanzados, por lo que  Atari quería mostrarles de manera adecuada el funcionamiento de su equipo para que pudieran familiarizarse más rápido.
+
+ARTÍCULO ADICIONAL
+
+				DIÁLOGO DIGITAL
+Dentro de este apartado nos muestra  como es la transferencia de información entre la CPU y los dispositivos conectados a él,  nos indica que para este proceso se necesita el direccionamiento de memoria y para ello se necesita al bus de direcciones, el cual sera de ayuda para poder seleccionar una dirección de memoria correcta.Se  ve tambien que para la seleccion de dispositivos en donde queremos enviar información se pone un ejemplo de un LED que nos ayuda a ver si se ha pulsado una tecla en especifico, y este pasa por un decodificador que ayuda a que sea más fácil el reconocimiento y por tanto cumple con el objetivo de poder enviar información como originalmente se requería. 
+El artículo menciona a la impresora como un periférico típico en donde es necesario el ocupar un chip interface I/O , el cual es capaz de poder ayudar al usuario ya que casi todo lo elemental está integrado en él.Incluye el chip PPI 8255 que tiene 24 patillas para 3 puertas de ocho bits de datos que pueden enviarse o recibirse por ejemplo en una impresora a la vez.Aquí hacen la pregunta de cómo es posible que nuestra CPU se entere de que un dispositivo externo quiere enviar información al ordenador, en donde después nos dan dos opciones, en donde en principio se dice que la CPU deja de ejecutar el programa por un momento y entonces es ahí cuando empieza a explorar si hay algo en las puertas de entrada, si es así las deja pasar  al bus de datos, a este procedimiento se le denomino sondeo.
+Como segundo procedimiento se llama a las interrupciones en donde nuestro dispositivo envía una señal de interrupción a la CPU ocasionando así que pare y pueda tomarse en cuenta  a la puerta de entrada. Esto nos enseña un poco más acerca de como es posible el manejo del chip y las opciones que nos brinda para el envio de la información desde la memoria hacia otros dispositivos.
+Como último punto cabe señalar el modo en que en la ciencia hogareña dentro de este fascículo nos enseña a que  en su mayoría estamos rodeados de ordenadores, todo esto viene dado desde los chips que lo integran como en  un simple horno hasta nuestro coche personal, que es algo que tal vez no nos hayamos puesto a pensar realmente, por supuesto cada uno con diferentes componentes pero con el fin de cumplir sus tareas correctamente a través de parámetros u objetivos distintos.
+
