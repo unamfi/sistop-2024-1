@@ -1,0 +1,352 @@
+* Proyecto 1 • Calificaciones y comentarios
+** ¿Qué lineamientos empleo para calificar?
+
+No puedo calificar a este “proyecto” a partir de criterios técnicos, pues –como
+se los mencioné– es principalmente un control de lectura. Estoy calificando
+alrededor de su expresión escrita, que es lo único que puedo juzgar libre de
+ambigüedad… y un tradicional punto débil que, desafortunadamente, cargan muchos
+ingenieros hacia su vida profesional.
+
+¡Veamos pues!
+
+** Becerril Erick
+- Archivos :: [[./BecerrilErick/Fasciculo_BecerrilErick.md][Fasciculo_BecerrilErick.md]]
+- Comentarios ::
+  - Interesante que eligieras a los "trazadores". Es una tecnología que veíamos
+    como "muy sexy y prometedora" en su época, pero desapareció por completo por
+    muchos años por aparentemente impráctica, hasta que reapareció con las
+    impresoras 3D.
+  - ¡Muy bueno por vincular un desarrollo con el otro!
+  - (sí sabes que desde hace varios años no es ya necesario instalar drivers de
+    impresión salvo en casos muy específicos, ¿verdad? 😉)
+  - Ojo, no te dejes "cegar" por quien dice que Steve Jobs diseñó nada
+    relacionado con el cómputo. Si acaso, diseñó una empresa muy exitosa
+    alrededor de la tecnología (pero el fuerte de Jobs era una mezcla de su
+    personalidad como jefe ultra-exigente y hacer crear deseo en la cabeza de
+    sus potenciales clientes). Los tecnólogos siempre fueron otros.
+- Calificación :: 10
+
+** Ceniceros Carlos, Pérez José
+- Archivos :: [[./CenicerosCarlos-PerezJose/Proyecto1.html][Proyecto1.html]]
+- Comentarios ::
+  - Umh... ¡Ojo con la expresión escrita! Lo primero que veo en su respuesta es
+    una «pared de texto»: Dos grandes párrafos, uno por cada tema que
+    desarrollaron, sin parrafeo interno y sin espacio para que el lector tome
+    aire. 
+  - ¡Ojo con sus medidas y conceptos! Dicen que el RAM hoy en día se maneja en
+    /gigas/ (G) y las ROM en /teras/ (T). ¿Qué consideran una ROM? Para mí, una
+    memoria ROM grande sigue siendo de 8 megas. ¿A qué tipo de memoria hacen
+    referencia?
+  - Lo que mencionan de los cassettes es interesante. No es que únicamente
+    pudiera almacenar un archivo, sino que _por su naturaleza secuencial_
+    resultaba impráctico o inconveniente almacenar varios. Vamos, en un cassette
+    puedes almacenar varios archivos --- si guardas conocimiento /externo/
+    (p.ej. con un papelito) en qué punto inicia cada uno de ellos. Pero la
+    computadora no puede fácilmente adelantar y retroceder la unidad para llegar
+    a ellos.
+  - Creo yo que el cómputo sí estaba orientado al público en general,
+    no-capacitado, y prueba de esto es que estas revistas se vendían en los
+    puestos callejeros de revistas. Como les indiqué en el preámbulo, estas
+    revistas las leía yo alrededor de los 10 años de edad 😉
+  - Estemmmm... ¡La tecla "Bloq Mayus" forma parte de los teclados desde las
+    máquinas de escribir manuales de fines del s.XIX!
+  - La mayor parte de los periféricos no requerían desarmar la computadora,
+    había puertos externos (que hoy parecen salidos de películas de ficción de
+    los 1950s 😉 ¡y probablemente de ahí se inspiraron!)
+- Calificación :: 9
+
+** Cervantes Eduardo, Nuñez Enrique
+- Archivos :: [[./CervantesEduardo-NuñezEnrique/CervantesEduardo-NuñezEnrique.docx][CervantesEduardo-NuñezEnrique.docx]]
+- Comentarios ::
+  - Buen resumen. Siempre me pareció interesante cómo todos hablaban bien de lo
+    buena que fue la VIC-20, siendo tan limitada como era, y con la C-64
+    saliendo a mercado apenas dos años más tarde (y... /absolutamente/ superior)
+  - Muy buen resumen el de los /micro-discos/ de cinta flexible. Recuerdo que
+    eran un /bicho raro/, ¡pero no qué tanto así lo eran! En fin... Sí, no todos
+    los inventos están destinados a tener futuro 😉
+  - ¡Buenísimo que acudan a fuentes adicionales de información! 😃
+- Calificación :: 10
+
+** Cruz Emilio, Garciliano Giovanni
+- Archivos :: [[./CruzEmilio-GarcilianoGiovanni/CruzEmilio-GarcilianoGiovanni_Proyecto1.troff][CruzEmilio-GarcilianoGiovanni_Proyecto1.troff]]
+- Comentarios ::
+  - No incluyeron en su entrega las indicaciones de cuál fascículo trabajaron 🙁
+    Me resulta útil para poder cotejar, comparar un poco el texto con lo
+    desarrollado, particularmente cuando no estoy seguro de lo que quieren decir
+    con algo.
+  - ¡ ~Troff~ ! ¡Qué adecuado para esta tarea! Pero... ¿Qué los lleva a gustar
+    de este formato? Creoq ue nunca conocía nadie que verdaderamente
+    /disfrutara/ de escribir en ~troff~...
+  - Me gustó lo que escribieron respecto al código de barras. Es particularmente
+    importante no ser /únicamente/ técnicos, /únicamente/ ingenieros, sino
+    mantener en mente nuestra contribución para la vida en sociedad.
+- Calificación :: 9
+
+** Garces Carlos, Jimenez Patricia
+- Archivos :: [[./GarcesCarlos-JimenezPatricia/Proyecto_SO.txt][Proyecto_SO.txt]]
+- Comentarios ::
+  - ¿Qué usaron para escribir este texto? Vamos, ¿por qué me entregaron un texto
+    que substituye los escudos de la Facultad y la UNAM por "Resultado de imagen
+    para facultad de ingenieria unam" y "Resultado de imagen para unam"? Confío
+    en que sea únicamente una herramienta para pasarlo a texto, y no una
+    herramienta de redacción... ¿cierto?
+  - ¡Ojo! El icónico ~Pong~ no es un juego específico a las Atari 400/800, sino
+    que de la compañía Atari misma. Pong se comenzó a comercializar en 1972; las
+    Atari 400/800 en 1979.
+  - Me parece muy interesante que eligieran al artículo de "diálogo digital". Se
+    parece bastante a lo que vimos en clase respecto a las interrupciones y
+    excepciones, ¿no es cierto? 😉
+- Calificación :: 9
+
+** Gomez Juan Pablo, Puente Rodrigo
+- Archivos :: [[./GomezJuanPablo-PuenteRodrigo/Proyecto1.md.txt][Proyecto1.md.txt]]
+- Comentarios ::
+  - No incluyeron en su entrega las indicaciones de cuál fascículo trabajaron 🙁
+    Me resulta útil para poder cotejar, comparar un poco el texto con lo
+    desarrollado, particularmente cuando no estoy seguro de lo que quieren decir
+    con algo.
+  - ¡Ojo con los errores! El texto que envían presenta simples errores de dedo
+    ("coleres", "SCREN"), pero también ortográficos ("como es que serbia el
+    instrumento", "un desface en la construcción"). Todo trabajo escrito que
+    ustedes entregan deja una impresión de cómo será profesionalmente trabajar
+    con ustedes. Un documento con estos errores habla de falta de cuidado y de
+    preparación profesional. ¡Ser un buen ingeniero no se limita a habilidades
+    técnicas!
+  - La Lisa de Apple (la abordamos en una de las primeras clases) fue la primera
+    computadora personal con un entorno usuario nativamente gráfico. Por su
+    precio y algunas otras debilidades, fue un fracaso comercial (y fue seguida
+    al año siguiente por la Macintosh, un éxito indudable)... ¡Pero no era el
+    nombre del mouse!
+- Calificación :: 8
+
+** Hernandez Samuel
+- Archivos :: [[./HernandezSamuel/HernandezSamuel_Practica3.png][HernandezSamuel_Practica3.png]], [[./HernandezSamuel/HernandezSamuel_Proyecto1.md][HernandezSamuel_Proyecto1.md]], [[./HernandezSamuel/HernandezSamuel_Proyecto1.txt][HernandezSamuel_Proyecto1.txt]]
+- Comentarios ::
+  - ¡Ups! Me parece que tu entrega de la práctica 3 cayó acá, mezclada con la
+    del Proyecto 1. Porque además de tener aquí el primer archivo referido, no
+    forma parte del [[../../practicas/3][directorio de la práctica]].
+  - Tu entrega consta de dos archivos (¡justo como no debería de
+    ser!). Afortunadamente, abriéndolos a ambos, me queda claro que el primero
+    es el ~.txt~, y el segundo (el que debo evaluar) es el ~.md~.
+  - Umh... ¡Ojo con la expresión escrita! Lo primero que veo en tu texto es una
+    «pared de texto»: Dos grandes párrafos, uno por cada tema que desarrollaste,
+    sin parrafeo interno y sin espacio para que el lector tome aire.
+  - Me gusta el tema que elegiste, el de ensamblador / lenguaje máquina. El
+    enfoque y la experiencia que presenta ya no es como trabajamos — ¡ni
+    siquiera cuando escribimos en ensamblador!
+- Calificación :: 9
+
+** Lara Aguilar, Martinez Villegas
+- Archivos :: [[./LaraAguilar-MartinezVillegas/LaraAguilar-MartinezVillegaz-Proyecto1.pdf][LaraAguilar-MartinezVillegaz-Proyecto1.pdf]]
+- Comentarios ::
+  - Me da gusto ver que leyeron la revista completa, aún siendo que sólo les
+    pedí reseña de dos de los textos 😉 ¡Espero que haya sido por gusto e
+    interés, y no por error!
+  - Muy buen resumen, cubren prácicamente todos los temas en tan sólo dos
+    páginas!
+    - Además... Da gusto ver que entreguen en TeX.
+- Calificación :: 10
+
+** Lopez Ernesto
+- Archivos :: [[./LopezErnesto/LopezErnesto_Proyecto1.md][LopezErnesto_Proyecto1.md]]
+- Comentarios ::
+  - Tu revisión, elemento por elemento, del artículo sobre la Sharp MZ-11 es muy
+    buena
+    - ¡Y me gusta que te centres en /cómo te sientes/ respecto a lo que vas
+      leyendo!
+  - La memoria RAM separada para video no es una idea tan ajena al cómputo
+    moderno
+    - Sí para las personas que, como yo (y supongo, como tú) no usamos GPUs
+      "profesionales" o "dedicados
+    - Vete al mercado de los profesionales gráficos o de los /gamers/ y... verás
+      que todas las tarjetas te hablan de /VRAM/: Video RAM
+    - Como ejemplo, acá tienes un artículo:
+      «[[https://www.howtogeek.com/794750/does-gpu-memory-matter-how-much-vram-do-you-need/][Does
+      your GPU Memory Matter? How much VRAM do you need?]]»
+    - Me gusta tu afirmación de que el BASIC de los 1980s resulta más parecido a
+      lo que acostumbramos ver en un ensamblador que a los lenguajes de
+      programación que hoy consideramos de /alto nivel/... ¡Y eso que BASIC es,
+      por definición un lenguaje para /principiantes/! (Beginners All-purpose
+      Symbolic Instruction Code)
+      - ...Y peor todavía con el BASIC de los 1970s. No eres el primero que hace
+        esta observación... Asómate al texto «[[https://programmingisterrible.com/post/40132515169/dijkstra-basic][Why did Djikstra hate BASIC?]]»
+- Calificación :: 10
+
+** Martinez Santiago, Vazquez Sebastian
+- Archivos :: [[./MartinezSantiago-VazquezSebastian/Proyecto1.pdf][Proyecto1.pdf]]
+- Comentarios ::
+  - Buena reseña sobre la BBC Modelo B
+    - Fue una computadora realmente muy exitosa en su momento. Y por varios de
+      los puntos que mencionaste, comprenderás por qué es vista como "la
+      abuelita" de las Raspberry Pi.
+    - ...Sí, también tenía el conector para controlar proyectos de electrónica.
+  - Buena revisión y reflexión sobre los tipos de memoria
+- Calificación :: 10
+
+** Matias Hannia, Zuñiga Lisset
+- Archivos :: [[./MatiasHannia-ZuñigaLisset/MatiasHannia-ZuñigaLisset.pdf][MatiasHannia-ZuñigaLisset.pdf]], [[./MatiasHannia-ZuñigaLisset/MatiasHannia-ZuñigaLissett.pdf][MatiasHannia-ZuñigaLissett.pdf]]
+- Comentarios ::
+  - ¿Por qué entregaron dos archivos idénticos, con diferente nombre? ☹ ¿No es
+    eso justo lo que buscamos /evitar/ con lo que marca la práctica 3?
+  - Indican sus números de cuenta (¡eso es bueno!), pero no el fascículo que les
+    toca 🙁
+    - Las cuentas terminan en 96 y 14. Suma módulo 100 = 10 ⇒ fascículo 2
+  - Me parece interesante, hasta donde he leído ustedes son el primer equipo que
+    expresa su resumen "en presente", tal como está plasmado en la revista, y no
+    diciendo que "en esa época creían que..." 😉
+- Calificación :: 9
+
+** Miranda Victor
+- Archivos :: [[./MirandaVictor/Reseñas_Resumenes_MirandaVictor.pdf][Reseñas_Resumenes_MirandaVictor.pdf]]
+- Comentarios ::
+  - ¡Qué curiosa tu estrategia para combinar en un único archivo los dos commits
+    de este proyecto /además del de la práctica/! 😉
+  - Me gusta cómo separas lo que escribes en /resumen/ y /reseña/: los puntos
+    principales del artículo, y /lo que piensas tú/ al respecto.
+    - Hay, necesariamente, superposición entre ambos, pero me parece un buen
+      compromiso para llegar a la premisa que les dí, de la manera en que tú la
+      entendiste 😃
+- Calificación :: 10
+
+** Moreno Edgar
+- Archivos :: [[./MorenoEdgar/ComentarioMiComputer.md][ComentarioMiComputer.md]]
+- Comentarios ::
+  - Una cosa que tal vez no menciona el artículo que revisaste porque /no
+    llamaba la atención en aquella época/ es que el nombre VIC-20 es por el
+    /Video-Chip/, y por los 20 caracteres de ancho que tenía la
+    pantalla. ¡Incluso a mediados de los 80 eso era ridículamente poco! En los
+    equipos de 8 bits, el estándar estaba más bien por los 40, y en las PCs (que
+    usaban monitores dedicados, no TVs) era de 80.
+  - Así es: Las computadoras Commodore usaban un código casi-pero-no-exactamente
+    ASCII: [[https://en.wikipedia.org/wiki/PETSCII][PETSCII]], que definía caracteres especiales para ayudar a /dibujar/
+    interfaces textuales y elementos /semi-gráficos/. Además, le permitían al
+    programador /redefinir caracteres/ para lograr figuras no previstas.
+    - Puede resultarte interesante ver el [[https://gwolf.org/files/C64_graficacion_y_sonido.pdf][manual de
+      programación de gráficas y sonido]] de un curso que tomé en 1986 o 1987 y
+      scaneé hace algunos años 😉
+  - ¡Buenísimo que este proyecto te ayudara a aclarar el concepto de lo que es y
+    cómo funcionan los /buffers/! Ya por eso, valió la pena dejarles la lectura.
+  - Lo del /buffer de digitación avanzada/: Exacto. Recuerdo que el buffer (en
+    hardware) del teclado de las PC que fue utilizado de forma predominante
+    entre 1981 y 1990 (después de eso, los teclados se hicieron /más tontos/)
+    era de 16 caracteres. El que tú mencionas, seguramente era un buffer /en
+    software/, ofrecido/gestionado por el entorno operativo (Windows), no por el
+    hardware mismo.
+- Calificación :: 10
+
+** Mota Carolina, Flores Adan
+- Archivos :: [[./MotaCarolina-FloresAdan/Reseña-Fas15.html][Reseña-Fas15.html]], [[./MotaCarolina-FloresAdan/index.html][index.html]]
+- Comentarios ::
+  - ¡Buenísima presentación! 😃 Se nota el desvelo. Aunque el robot que
+    presentan no responde a la imitación de un comportamiento humano como lo
+    indican, sino que a un cálculo balístico /de carcajada/.
+    - (hay que hacer la anotación de que el video es [[https://mashable.com/video/bowling-robot-video-computer-generated][generado por
+      computadora]]... ¡Muy bien generado, eso sí!
+    - El CSS es sin duda perfectible. Hay elementos que /escapan/ a su
+      contenedor o transparencias no muy bien resueltas. Pero me da gusto que el
+      proyecto les haya dado espacio para jugar y aprender más 😉
+  - Respecto a los sistemas operativos y los robots: ¡Sí, pero no! Ya
+    platicaremos un poco más adelante respecto a los /requisitos de tiempo
+    real/, un tema muy importante para comprender por qué conviene mantener los
+    dispositivos que requieren control /preciso en el tiempo y el espacio/ con
+    un sistema lo más mínimo posible.
+  - ¡Ojo con la ortografía! No le confíen al revisor automático lo que deben
+    hacer ustedes con /criterio humano/.
+    - ¡El título mismo! ¿De dónde le salió la segunda /P/ al nombre de la
+      revista?
+    - Si bien la palabra /capas/ es válida, se refiere al plural del vestuario
+      que cubre la espalda de alguien (¿un superhéroe?), no a la /capacidad/ de
+      lograr algo (/capaz/). Detalles como este son muy importantes para la
+      imagen como profesionales que ustedes dejan.
+    - /He/ es la conjugación en pasado, primera persona, del verbo /haber/, no
+      la manera de conjuntar dos palabras, la segunda de las cuales inicia con
+      /i/ (/ventajas e innovación/).
+  - La redacción podría mejorar también un tanto. Revisen el párrafo que sigue a
+    /Iluminando el Dragon y la capacidad para gráficos del Dragon 32/: La lógica
+    de la frase es bastante revuelta. En el último párafo, /(...) las creaciones
+    estaban sujetas prueba y error/ (falta algo que conecte).
+  - El 10 no se los puedo poner.. pero ante la solicitud expresa y la atención a
+    la presentación, les dejo el 9.5.
+- Calificación :: 9.5
+
+** Osorio Rodrigo Jafet, Robles Alan
+- Archivos :: [[./OsorioRodrigoJafet-RoblesAlan/Reseña.md][Reseña.md]]
+- Comentarios ::
+  - Me pusieron a buscar el fascículo, porque no mencionan cuál eligieron. Según
+    mis cuentas, tendrían que haber tomado el 13 — (...93 + ...62) % 100 / 4,
+    pero hicieron el 23.
+    - ¡No hay problema! Mi "formulita" es únicamente para procurar que entre
+      todos cubran más fascículos, ¡pero quería ahorrarme el tiempo de búsqueda!
+  - La Sinclair QL, en efecto, es una de las primeras máquinas que con toda
+    justicia pertenece a una /generación posterior/ que casi todas las que cubre
+    esta colección.
+- Calificación :: 9
+
+** Piña Emilio, Walls Luis
+- Archivos :: [[./PiñaEmilio-WallsLuis/ReseñaFasciculo16.md][ReseñaFasciculo16.md]]
+- Comentarios ::
+  - Bonita narartiva 😉 Me gusta que lo presenten como algo personal, con
+    vínculos con sus vivencias. ¡Vale mucho hacerlo así! 😃 (¡espero que no
+    fuera únicamente /el chavo del 8/ lo que veían en su vieja TV!)
+  - También me llama la atención la modularidad de este equipo. Y si bien han
+    existido varias computadoras con esta característica... Tristemente, no es
+    lo que ha /pegado/
+    - Lo que comentan de la universalidad de USB es cierto, aunque limitado a
+      los dispositivos de /conectividad externa/.
+  - Muy buena la segunda parte también, de las tecnologías de memoria.
+- Calificación :: 10
+
+** Ramirez Luis
+- Archivos :: [[./RamirezLuis/AvP1_RamirezLuis.pdf][AvP1_RamirezLuis.pdf]], [[./RamirezLuis/P1_RamirezLuis.pdf][P1_RamirezLuis.pdf]]
+- Comentarios ::
+  - ¿Por qué entregas como dos archivos /separados/ el /avance/ y el proyecto
+    propiamente dicho? 🙁
+    - La práctica justo se trataba de mostrar cómo /con el mismo nombre de
+      archivo/ no vas a perder el avance (y los puntos del desarrollo conforme
+      pasa el tiempo) a lo largo de la historia de tu proyecto.
+  - Me parecen buenos resúmenes, aunque me faltó un poco sentir –a diferencia de
+    lo que veo en casi todos las otras entregas– el /qué te mueve/ o /cómo te
+    llega/ cada uno de estos artículos.
+- Calificación :: 9
+
+** Rodríguez Santiago
+- Archivos :: [[./RodríguezSantiago/RodríguezSantiago_Proyecto1.md][RodríguezSantiago_Proyecto1.md]]
+- Comentarios ::
+  - No incluyes en tu entrega las indicaciones de cuál fascículo trabajaste 🙁
+    Me resulta útil para poder cotejar, comparar un poco el texto con lo
+    desarrollado, particularmente cuando no estoy seguro de lo que quieres decir
+    con algo.
+  - Efectivamente, Epson es de las (¿pocas?) empresas que se han ido
+    especializando en el nicho que identificas (impresoras) — yo diría que, en
+    general, en imagen (/scanners/, proyectores...) Pero es una empresa ya con
+    80 años de historia. ¡Asómate a [[https://epson.com.mx/historia-de-empresa][la historia de la empresa]]! Se me hizo un
+    recorrido interesante. ¡Y menciona expresamente al HX-20!
+  - Buena relación con el 2° artículo. ¡Bien vinculado!
+- Calificación :: 9
+
+** Vargas Adan
+- Archivos :: [[./VargasAdan/ReseñaVargasAdan.pdf][ReseñaVargasAdan.pdf]]
+- Comentarios ::
+  - Te sugiero trabajar un poco en una redacción más clara. Caes varias veces en
+    cortar una frase y continuar con una conjunción ("Con base en el
+    lenguaje...", "Ya que tenía interfaces..."), lo cual indicaría que esás
+    continuando una idea, no abordando una idea nueva.
+  - ¡Ojo con los dedazos! Te aseguro que el año a que hace mención (último
+    párrafo, página 1) no es 1093...
+  - Creo que sobra decirlo, pero... las /poco probables/ apuestas de esos años
+    al mercado de computadoras para la educación resultaron muy ganadoras con el
+    paso de los años.
+- Calificación :: 9
+
+** Villaseñor Carlos
+- Archivos :: [[./VillaseñorCarlos/VillaseñorCarlos.md][VillaseñorCarlos.md]]
+- Comentarios ::
+  - Buenos comentarios y vinculación de lo que vimos y has observado con lo que
+    este artículo cuenta sobre un chip de ROM.
+  - Claro, la BBC Micro prácticamente no llegó a México. Yo la vi una única vez,
+    en una feria del libro... Su gran innovación es que venía con EBASIC: BASIC,
+    pero traducido al español. Pero en Europa, y sobre todo en el Reino Unido,
+    fue una computadora muy exitosa. La BBC es la empresa estatal de televisión
+    y radio. ¡Tenía una enorme fuerza!
+- Calificación :: 10
+
