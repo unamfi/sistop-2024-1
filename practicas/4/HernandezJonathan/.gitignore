@@ -1,0 +1,6 @@
+*.exe
+*.out
+*.o
+*.sqlite
+*.log
+*.class
