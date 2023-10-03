@@ -10,9 +10,9 @@ import random
 import time
 from colorama import Fore, Back
 
-num_lectores = 4
-num_escritores = 1
-colores = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.WHITE]
+num_lectores = 10
+num_escritores = 2
+colores = [Fore.RED, Fore.GREEN, Fore.CYAN, Fore.MAGENTA, Fore.WHITE]
 
 pizarron = ''
 mutex_pizarron = threading.Semaphore(1)
@@ -24,11 +24,12 @@ def lector(x):
     global pizarron
     global lectores_ahora
 
-    torniquete.acquire()
-    torniquete.release()
-
     while True:
-#        time.sleep(0.01)
+        time.sleep(0.01)
+
+        torniquete.acquire()
+        torniquete.release()
+
         # Al llegar, verifico si hay otro "de mi calaña" en el salón
         mutex_lectores_ahora.acquire()
         if lectores_ahora == 0:
@@ -39,7 +40,6 @@ def lector(x):
         print(Back.CYAN + colores[x % len(colores)] + 'El lector %d está leyendo' % x)
         print('Dice que «%s»' % pizarron)
         time.sleep(random.random())
-        mutex_pizarron.release()
 
         # Al salir, veo si permanece algún colega, y si no, libero el salón
         mutex_lectores_ahora.acquire()
@@ -52,7 +52,7 @@ def lector(x):
 def escritor(x):
     global pizarron
     while True:
-#        time.sleep(0.01)
+        time.sleep(0.01)
         torniquete.acquire()
         mutex_pizarron.acquire()
         sabiduria = random.random()
@@ -68,3 +68,4 @@ for i in range(num_lectores):
 
 for i in range(num_escritores):
     threading.Thread(target=escritor, args=[i]).start()
+
