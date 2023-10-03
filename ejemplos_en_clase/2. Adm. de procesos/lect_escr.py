@@ -12,13 +12,18 @@ from colorama import Fore, Back
 
 num_lectores = 10
 num_escritores = 2
-colores = [Fore.RED, Fore.GREEN, Fore.CYAN, Fore.MAGENTA, Fore.WHITE]
+color_texto = [Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.MAGENTA, Fore.WHITE, Fore.BLACK]
+fondo_texto = [Back.BLUE, Back.RED]
 
 pizarron = ''
 mutex_pizarron = threading.Semaphore(1)
 lectores_ahora = 0
 mutex_lectores_ahora = threading.Semaphore(1)
 torniquete = threading.Semaphore(1)
+
+def digo(rol, num, msg):
+    mi_color = fondo_texto[rol % len(fondo_texto)] + color_texto[num % len(color_texto)]
+    print(mi_color + msg)
 
 def lector(x):
     global pizarron
@@ -37,8 +42,8 @@ def lector(x):
         lectores_ahora += 1
         mutex_lectores_ahora.release()
 
-        print(Back.CYAN + colores[x % len(colores)] + 'El lector %d está leyendo' % x)
-        print('Dice que «%s»' % pizarron)
+        digo(0, x, 'El lector %d está leyendo (y somos %d)' % (x, lectores_ahora))
+        digo(0, x, 'Dice que «%s»' % pizarron)
         time.sleep(random.random())
 
         # Al salir, veo si permanece algún colega, y si no, libero el salón
@@ -56,16 +61,18 @@ def escritor(x):
         torniquete.acquire()
         mutex_pizarron.acquire()
         sabiduria = random.random()
-        print(Back.YELLOW + colores[x] + 'El escritor %d está escribiendo «%s»' % (x, sabiduria))
+        digo(1, x, 'El escritor %d está escribiendo «%s»' % (x, sabiduria))
         pizarron = 'Aquí estuvo el escritor %d y dijo que %f' % (x, sabiduria)
         time.sleep(3 + random.random())
-        print(Back.YELLOW + colores[x] + 'El escritor %d ya se fue.' % x)
+        digo(1, x, 'El escritor %d ya se fue.' % x)
         mutex_pizarron.release()
         torniquete.release()
 
-for i in range(num_lectores):
-    threading.Thread(target=lector, args=[i]).start()
-
 for i in range(num_escritores):
     threading.Thread(target=escritor, args=[i]).start()
+    time.sleep(random.random())
+
+for i in range(num_lectores):
+    threading.Thread(target=lector, args=[i]).start()
+    time.sleep(random.random())
 
