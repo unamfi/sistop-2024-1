@@ -1,7 +1,7 @@
 # Práctica 3: Ignorando archivos *innecesarios*
 
     Práctica creada el 2023.09.21
-	Entrega: 2023.09.28
+	Entrega: 2023.10.03
 
 Los sistemas de control de cambios están hechos para poder dar
 seguimiento a la historia de los archivos que forman parte de nuestro
