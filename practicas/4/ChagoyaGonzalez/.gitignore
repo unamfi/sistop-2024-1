@@ -3,3 +3,4 @@
 *.cbp*
 /bin/
 /obj/
+*.c
