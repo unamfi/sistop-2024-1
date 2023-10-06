@@ -27,8 +27,8 @@ concurrente en el que sea necesario emplear algún mecanismo de sincronización.
 
 Les mostré una presentación con siete problemas de sincronización.  <!-- Si -->
 <!-- todo fue como lo planeé, resolvimos ya uno de los problemas en clase, -->
-<!-- con lo cual quedarían seis (y si no hicimos una solución en clase, --> <!--
-pueden elegir entre los siete).  -->La presentación, como todas las demás, está
+<!-- con lo cual quedarían seis (y si no hicimos una solución en clase, --> 
+<!-- pueden elegir entre los siete).  -->La presentación, como todas las demás, está
 en [el sitio Web de la materia](http://gwolf.sistop.org/), y lleva por título
 [Ejercicios de
 sincronización](http://gwolf.sistop.org/laminas/06b-ejercicios-sincronizacion.pdf).
