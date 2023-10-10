@@ -67,6 +67,22 @@ ingenieros hacia su vida profesional.
   - ¡Buenísimo que acudan a fuentes adicionales de información! 😃
 - Calificación :: 10
 
+** Chagoya Leonardo, Sánchez David
+- Archivos :: [[ChagoyaGonzalez-SanchezGutierrez_2/resumen.html][resumen.html]]
+- Comentarios ::
+  - Recibo fuera de fecha por error en el envío (lo mandaron como un
+    /submodule/, una característica de Git con la que... prefiero que no nos
+    metamos por ahora 😉)
+  - ¡Ojo! Están confundiendo /memoria/ y /almacenamiento/. Supongo que el
+    artículo no menciona almacenamiento para el /Oric-1/ porque... probablemente
+    no venía nada de serie. Si manejaba almacenamiento en /cassette/, la
+    capacidad dependería de la /longitud/ de la cinta y de la /codificación/
+    utilizada... ¡Los 16K (ampliables a 48K) se refieren a la memoria!
+  - Ya que me expresan la inquietud, voy a intentar recordar en clase mostrarles
+    un emulador de C64 o de alguna máquina de la época. ¡Recuérdenme si no lo
+    hago!
+- Calificación :: 10
+
 ** Cruz Emilio, Garciliano Giovanni
 - Archivos :: [[./CruzEmilio-GarcilianoGiovanni/CruzEmilio-GarcilianoGiovanni_Proyecto1.troff][CruzEmilio-GarcilianoGiovanni_Proyecto1.troff]]
 - Comentarios ::
