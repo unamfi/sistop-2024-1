@@ -1,4 +1,4 @@
-# Práctica 3: Ignorando archivos *innecesarios*
+# Práctica 4: Ignorando archivos *innecesarios*
 
     Práctica creada el 2023.09.21
 	Entrega: 2023.10.03
