@@ -1,0 +1,2 @@
+#ignoramos los archivos creados .exe
+*.exe
