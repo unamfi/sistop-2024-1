@@ -43,48 +43,48 @@ El patrón de diseño utilizado en este código es el patrón de "Semáforos" o 
 
     Se importan las bibliotecas necesarias: **'threading'** para trabajar con hilos, **'time'** para introducir retrasos simulados y **'random'** para generar valores aleatorios.
 
-    <div align = "center"><img src="img/1.-ImportacionDeBibliotecas.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/1.-ImportacionDeBibliotecas.png" width="266" height="133"></div>
 
   - ### " Definición de variables "
 
     Se definen las variables que especifican la cantidad de gatos, ratones, platos y turnos.
 
-    <div align = "center"><img src="img/2.-DefinicionDeVariables.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/2.-DefinicionDeVariables.png" width="653" height="219"></div>
 
   - ### " Inicialización de semáforos "
 
     Se crean varios semáforos que se utilizan para coordinar el comportamiento de gatos y ratones. Cada semáforo tiene un propósito específico: **'mutex_platos'** para controlar el acceso a los platos, **'gato_come'** para señalizar que un gato comienza a comer, **'raton_come'** para señalizar que un ratón comienza a comer y **'gato_observa'** para señalizar que un gato ve a un ratón comiendo.
 
-    <div align = "center"><img src="img/3.-InicializacionDeSemaforos.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/3.-InicializacionDeSemaforos.png" width="575" height="223"></div>
 
   - ### " Definición de funciones para gatos y ratones "
 
     Se definen las funciones que representan el comportamiento de gatos y ratones. Estas funciones se ejecutarán en hilos separados.
 
-    <div align = "center"><img src="img/4.-DefinicionFuncionGatos.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/4.-DefinicionFuncionGatos.png" width="724" height="302"></div>
     <br>
-    <div align = "center"><img src="img/5.-DefinicionFuncionRatones.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/5.-DefinicionFuncionRatones.png" width="794" height="395"></div>
 
   - ### " Creación de hilos "
 
     Se crean hilos para gatos y ratones y se agregan a una lista de hilos **'threads'**.
 
-    <div align = "center"><img src="img/6.-CreacionDeHilos.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/6.-CreacionDeHilos.png" width="730" height="207"></div>
 
   - ### " Inicio de hilos "
 
     Todos los hilos se inician, lo que ejecutará las funciones **'gato'** y **'raton'** en paralelo.
 
-    <div align = "center"><img src="img/7.-InicioDeHilos.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/7.-InicioDeHilos.png" width="270" height="105"></div>
 
   - ### " Espera a que todos los hilos terminen "
 
     El programa principal espera a que todos los hilos terminen su ejecución antes de continuar.
 
-    <div align = "center"><img src="img/8.-EsperaHilosTerminen.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/8.-EsperaHilosTerminen.png" width="488" height="106"></div>
 
   - ### " Mensaje de finalización "
 
     Se muestra un mensaje que indica que todos los gatos y ratones han terminado sus actividades.
 
-    <div align = "center"><img src="img/9.-MensajeDeFinalizacion.png" width="300" height="200"></div>
+    <div align = "center"><img src="img/9.-MensajeDeFinalizacion.png" width="585" height="40"></div>
