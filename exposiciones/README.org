@@ -11,11 +11,11 @@
   como lo refleja la rúbrica, obtiene una calificación un poco más alta)
   el que ustedes me planteen los temas de su interés.
 
-  |----------+--------------------------------------------+-------------------------------------------------------------+-------+------------+-----------+------------+---|
-  | Fecha    | Tema                                       | Integrantes                                                 | Video | Documentos | Preguntas | Evaluación |   |
-  |----------+--------------------------------------------+-------------------------------------------------------------+-------+------------+-----------+------------+---|
-  | 9–13/oct | Problema de sincronización: /Building H₂O/ | Ernesto Danjiro López Sugahara, Luis Ángel Ramírez Martínez |       |            |           |            |   |
-  |----------+--------------------------------------------+-------------------------------------------------------------+-------+------------+-----------+------------+---|
+  |----------+--------------------------------------------+-------------------------------------------------------------+----------------+-----------------------+-------------------+--------------|
+  | Fecha    | Tema                                       | Integrantes                                                 | Video          | Documentos            | Preguntas         | Evaluación   |
+  |----------+--------------------------------------------+-------------------------------------------------------------+----------------+-----------------------+-------------------+--------------|
+  | 9–13/oct | Problema de sincronización: /Building H₂O/ | Ernesto Danjiro López Sugahara, Luis Ángel Ramírez Martínez | [[https://youtu.be/J7iFm1PFwwc][Liga a Youtube]] | [[./LopezErnesto-RamirezAngel/Escrito_LopezErnesto_RamirezAngel.pdf][Escrito]], [[./LopezErnesto-RamirezAngel/Presentacion_LopezErnesto_RamirezAngel.pdf][Presentación]] | [[https://github.com/unamfi/sistop-2024-1/discussions/160][Foro de discusión]] | [[https://questionpro.com/t/ARiwuZ0FTK][Cuestionario]] |
+  |----------+--------------------------------------------+-------------------------------------------------------------+----------------+-----------------------+-------------------+--------------|
   #+TBLFM: 
 
 * Rúbrica de evaluación
