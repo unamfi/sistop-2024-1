@@ -1,0 +1,41 @@
+Integrantes:
+Villaseñor Venegas Carlos Miguel
+Rodríguez Kobeh Santiago
+
+Problema seleccionado:
+Intersección de caminos
+
+Lenguaje y entorno:
+Lenguaje: Python
+Entorno:
+Python 3.9.13 (recomendado)
+Librerías threading, time, random y numpy descargadas.
+Compilar el archivo .py  en la terminal o cualquier compilador deseado.
+
+Estrategia de sincronización:
+La función se divide en 4 partes que, dependiendo del número asignado a cada hilo al momento de inicializarlo, determinará su movimiento.
+1.   	Cada parte empieza escogiendo la dirección que tomará durante su trayecto al azar, 0 es girar a la derecha y 1 es ir recto.
+2.   	En caso de caer en dirección recta, hace un acquiere al multiplex "dir_semaphore", esto con la finalidad de limitar el acceso a más de 3 hilos a este tipo de movimiento a la vez.
+3.   	Se hace un chequeo de la posición a la que le correspondería moverse usando el semáforo que le corresponda a su posición según “GuiaPos”.
+4.   	Una vez validada la disponibilidad, se utiliza un mutex para manipular la matriz que representa la calle (zona crítica).
+5.   	Este último paso se repite para cada una de las posiciones que le corresponden.
+6.   	Este mismo patrón se repite cuando la ruta sea a la derecha, omitiendo el uso del multiplex “dir_semaphore”.
+7.   	El conjunto de las instrucciones para cuando un hilo quiere ir en línea recta o quiere girar a la derecha se repite para todos los carriles, dando un total de 4.
+Notas:
+1.   	Se imprime el resultado después de cada movimiento.
+2.   	Se hizo uso de la instrucción “time.sleep” después de cada impresión para visualizar de mejor forma su comportamiento y para que se intercalen de mejor manera los hilos.
+3.   	El uso del multiplex es para evitar la situación en la que los 4 hilos quieren ir recto y se encuentran en la posición central, creando así un bloqueo mutuo. Esta restricción se levanta al momento en el que se mueve de lugar alguno de los hilos.
+4.   	Se utilizan otros dos mutex en la función “Inicio()” para manipular variables globales que nos sirven para limitar el número de ejecuciones del método “Moverse()” y de esta forma el programa dure lo que se desee.
+
+
+Refinamiento 1
+El bloquear cada punto de la matriz que está siendo ocupado resulta ineficiente porque para cada movimiento de cada coche se tiene que hacer uso de varios semáforos solo para modificar un punto de esta.
+Para evitar los bloqueos mutuos se agregó un múltiplex que limita el número de coches que pueden ir en línea recta en las casillas centrales a 3, como se explica en el punto 2 del apartado  “Estrategia de sincronización”.
+
+
+Aspectos por mejorar
+Implementar mejores técnicas para reducir aún más la inanición.
+Reducir el código creando alguna función que simplificara su visualización.
+Hacer más pruebas.
+
+
