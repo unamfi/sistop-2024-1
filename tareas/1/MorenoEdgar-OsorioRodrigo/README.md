@@ -1,5 +1,9 @@
 # Ejercicio de sincronización
 
+## Integrantes del equipo
+- Moreno Chalico Edgar Ulises
+- Osorio Ángeles Rodrigo Jafet
+
 ## El problema a resolver
 
 El ejercicio resuelto es: "De gatos y ratones"
