@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <strong>
+    Mota García Carolina <br/>
+Sistemas Operativos 2024-1</strong>
+<br/><br/>
+<strong>Planteamiento:</strong><br/>
+Un profesor de la facultad asesora a varios estudiantes, y estamos en su horario de atención.<br/> 
+Modelar la interacción durante este horario de modo que la espera (para todos) sea tan corta como sea posible.<br/><br/>
+
+Un profesor tiene x sillas en su cubículo 
+Cuando no hay alumnos que atender, las sillas sirven como sofá, y el profesor se acuesta a dormir la siesta.<br/>
+ Los alumnos pueden tocar a su puerta en cualquier momento, pero no pueden entrar más de x alumnos. <br/>
+Para evitar confundir al profesor, sólo un alumno puede presentar su duda (y esperar a su respuesta) al mismo tiempo.  <br/>
+Los demás alumnos sentados deben esperar pacientemente su turno. Cada alumno puede preguntar desde 1 y hasta y preguntas 
+(permitiendo que los demás alumnos pregunten entre una y otra).
+<br/><br/>
+
+Con base al planteamiento, podemos asumir algunas cosas:<br/>
+Hay un número limitado de alumnos x que pueden entrar al cubículo. Es decir, si todas las sillas están ocupadas, no pueden entrar más alumnos.<br/>
+Cuando un alumno resuelve todas sus dudas, se retira del cubículo, dando oportunidad a otro alumno de entrar y resolver sus dudas.<br/>
+El profesor debe esperar a que el alumno termine de plantear su duda.<br/>
+El alumno que planteó su duda, debe esperar a que el profesor termine de responder su propia duda.<br/>
+Los demás alumnos se mantienen en espera hasta que sea su turno de resolver su duda.<br/>
+Se debe permitir el turno de dudas alternadamente entre los estudiantes, es decir, un alumno no puede acaparar toda la atención del profesor 
+y preguntar todas sus dudas.<br/>
+El número de dudas que pueden tener es finito.<br/>
+El profesor siempre se despertará con dolor de espalda por dormir encima de las sillas.<br/>
+<br/><br/>
+
+<strong>Desarrollo:</strong><br/>
+Al analizar el planteamiento del problema, podemos entender varias cosas:<br/>
+Para el ingreso al cubículo simplemente es necesario que puedan ingresar x o menos alumnos.<br/>
+Existe un espacio de espera en general: Los alumnos esperando a que sea resuelta su duda.<br/>
+Cada estudiante es un hilo con y número de dudas.<br/>
+Cuando un estudiante es asignado, mantiene la autoridad hasta que termina de resolver el profesor una duda, tras lo cual el 
+estudiante perderá la autoridad y se le asignará a otro alumno.<br/>
+Es decir, el estudiante con autoridad bloquea las dudas y avances de los demás estudiantes hasta que termine una duda, tras 
+lo cual su número de dudas y disminuye en 1.<br/><br/>
+
+Para los alumnos esperando a que sea resuelta su duda, deben de esperar a que se les asigne.<br/>
+La asignación se designará de tal manera que el estudiante más rápido en pedir la autoridad, la tenga (si no hay asignado otro alumno).<br/>
+Un alumno no puede tener infinitas dudas porque el profesor eventualmente debe de descansar. En este caso y como ejemplo, su energía es de 1000.<br/>
+<br/>
+Este análisis nos lleva, inevitablemente, a plantearnos varias cuestiones.<br/>
+<br/>
+¿Cómo podemos resolver la espera de tal manera que el tiempo sea el más eficaz posible?<br/>
+¿Cuántas sillas tiene el profesor?<br/>
+¿Puede existir el momento en el que se bloqueé porque el alumno con autoridad se retiró al no tener más dudas?<br/>
+El programa puede finalizar por dos situaciones: Ya no hay más alumnos con dudas dentro del cubículo o el profesor se cansó de resolver dudas.<br/>
+<br/><br/>
+
+<strong>Resolución del problema:</strong><br/>
+
+Al iniciar el programa, se declaran las variables y se despiertan a los hilos.<br/>
+Cada estudiante(hilo) al entrar el cubículo tiene un número de dudas aleatorio en mente y hace dos cosas al estar en el cubículo: pensar y preguntar.<br/>
+Cuando un estudiante quiere preguntar, primero levanta la mano. Cuando el profesor le ceda la palabra, expresará su duda y seguido de 
+esto el profesor le responderá su duda.<br/>
+Cuando resuelva su duda, si el estudiante ya no tiene más dudas, se irá. Si aún tiene dudas, pensará un poco y volverá a pedir 
+permiso para preguntar.<br/>
+Muchos estudiantes pueden tener la mano levantada con su duda lista, pero sólo uno puede expresarla y esperar la respuesta del profesor.<br/>
+Si no hay más estudiantes en el cubículo o el profesor se cansó, éste se va a dormir.<br/>
+<br/><br/>
+
+Desarrollado en Python 3<br/>
+Estrategia de sincronización: Mutex para la autoridad de expresar y resolver duda.<br/>
+<br/><br/>
+Posibles mejoras:<br/>
+Añadir un contador que represente el horario de clase. Al finalizar, los estudiantes deben retirarse.<br/>
+Minimizar la cantidad de tiempo.<br/>
+
+</body>
+</html>
+
