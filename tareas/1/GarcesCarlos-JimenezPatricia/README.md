@@ -18,10 +18,11 @@ Reglas:
 
 ## Lenguaje y entrono de desarrollo
 
-	Python 3.0.12
+	Python 3.10.12
 	GCC 11.4.0
+	Sublime Text
 
 ## Estrategia de sincronizaciòn
 
-Se utilizaron Objetos de Semàforos
-y Patrón de sincronizacion: Multiplex
+Se utilizò la primitiva de sincronizacion: `Objetos de Semàforos`.
+Y debido a que se considerò que cada solicitud es independiente y su procesamento no requiere recursos de otros se utilizò el Patrón de sincronizacion: `Señalizar`.
