@@ -73,7 +73,7 @@ public class CatsAndRats
             gatoMutex.Release();
             platos.Release();
 
-            AnsiConsole.MarkupLine($":cat: [blue]Gato {id} regreza a dormir :zzz:[/]");
+            AnsiConsole.MarkupLine($":cat: [blue]Gato {id} regresa a dormir :zzz:[/]");
         }
     }
 
@@ -118,7 +118,7 @@ public class CatsAndRats
             platos.Release(); // El ratón libera el plato.
 
             if (vivo) // Si sigue vivo, puede regresar a su refugio.
-                AnsiConsole.MarkupLine($":rat: [green]Ratón {id} regreza a refugiarse.[/]");
+                AnsiConsole.MarkupLine($":rat: [green]Ratón {id} regresa a refugiarse.[/]");
         }
     }
 
@@ -163,3 +163,4 @@ public class CatsAndRats
         AnsiConsole.MarkupLine("¡Ganan los gatos! :cat_with_wry_smile: :3");
     }
 }
+
