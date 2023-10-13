@@ -1,0 +1,5 @@
+Se decidió abordar el ejercicio 1 sobre gatos y ratones.
+El lenguaje de programación utilizado es Python. Es necesario tener Python instalado en su computadora para compilar el ejercicio.
+El mecanismo de sincronización se basa en semáforos. Los semáforos permiten que los gatos y ratones accedan a los platos de comida y también se utilizan para que los gatos puedan detectar a los ratones.
+No se realizaron refinamientos adicionales en el código.
+Para lograr una sincronización efectiva, se requirió la asistencia de ChatGPT para abordar los desafíos de coordinar la competencia entre gatos y ratones mediante el uso de semáforos. Con esta colaboración, se logró que se cumplieran las reglas y se obtuvo un código funcional.
