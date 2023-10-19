@@ -98,6 +98,37 @@ ingenieros hacia su vida profesional.
     mantener en mente nuestra contribución para la vida en sociedad.
 - Calificación :: 9
 
+** Galván Ricardo
+- Archivos :: [[./GalvanRicardo/Proyecto1-316034616.md][Proyecto1-316034616.md]]
+- Comentarios ::
+  - Tienes razón, cuesta mucho trabajo imaginar que 192K sea un número
+    "masivo". Pero en una época donde lo común era tener computadoras personales
+    entre los 16 y los 64K... 😉
+  - Y claro, las computadoras se llamaban por su "nombre propio" porque no sólo
+    eran equipos diferentes — ¡eran arquitecturas mutuamente incompatibles!
+  - Acerca del teclado: ¡yo le echo la culpa directamente a IBM!
+    - El teclado de la IBM PC era de los muy pocos que incorporaban teclado
+      numérico en 1981, cuando fue anunciado. A fin de cuentas, venían del mundo
+      de los *fierros grandes*, del *mainframe*...
+    - La IBM PC original [[http://vintagecomputer.net/ibm/5150/5150_A/IBM-5150_sn0192592_keyboard.jpg][tenía un teclado de 84 teclas]], y fue utilizado para
+      todos sus modelos hasta 1987.
+    - Distintos fabricantes hicieron redistribuciones del
+      teclado... Particularmente, con el éxito de la hoja de cálculo *VisiCalc*,
+      resultaba muy común querer usar las flechas del cursor (¡no había mouse!)
+      y el teclado numérico al mismo tiempo.
+    - Para 1987, cuando lanzó la línea PS/2, IBM estandarizó la
+      [[https://cdn11.bigcommerce.com/s-2ktyxsrgtc/images/stencil/1280x1280/products/112368/117857/1439772850__28151.1512771306.jpg?c=2][distribución
+      de 101/102 teclas]] (según idioma) a la que estamos acostumbrados hoy. En
+      1995, a iniciativa de Microsoft, se agregaron las teclas *Windows*
+      (derecho e izquierdo) y *Menú*.
+  - Me gusta tu comentario respecto al *complemento a dos*. Y sí, era
+    conocimiento útil, si bien no vital, en la época... Sobre todo partiendo de
+    que los programadores se veían necesariamente obligados a trabajar más cerca
+    de los *fierros* que nosotros, y a veces tenían incluso que implementar o
+    emular en espacio de usuario lo que alguna plataforma muy sencilla no
+    implementaba nativamente.
+- Calificación :: 10
+
 ** Garces Carlos, Jimenez Patricia
 - Archivos :: [[./GarcesCarlos-JimenezPatricia/Proyecto_SO.txt][Proyecto_SO.txt]]
 - Comentarios ::
