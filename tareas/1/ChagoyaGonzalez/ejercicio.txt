@@ -1,0 +1,13 @@
+Chagoya Gonzalez Leonardo
+
+Problema a resolver: Los alumnos y el asesor
+
+Lenguaje de desarrollo: Python, utilizando el editor de texto de visual studio code
+
+Estrategia de sincronizacion: Se utilizaron dos semaforos , uno para sincronizar el comportamiento del profesor
+ de tal forma que siempre este dormido hasta que lo interrumpa un alumno, y el otro semaforo corresponde a las sillas
+ este semaforo sirve para controlar el numero de alumnos que estan dentro del cubiculo. Adicionalmente a ello ocupamos un
+mutex atravez de todo el programa esto con el fin de que no se interrumpa un hilo con otro al momento de estar ejecutando una accion
+como por ejemploe , cuando un alumno esta hablando con el profesor.
+
+Puntos de mejora: Causar una mejor interaccion entre el alumno y el profesor, hasta el momento la interaccion es la siguiente el profesor esta dormido, un alumno entra al cubiculo y espera su turno, ahi el profesor se despierta, pero en la interaccion al responder la pregunta entre alumno y profesor todo se realiza atravez de un mutex en una sola linea de codigo poniendo la leyenda el alumno esta hablando con el profesor seria mucho mejor que alumno preguntara, profesor respondiera, alumno se sintiera satisfecho y alumno se marchará
