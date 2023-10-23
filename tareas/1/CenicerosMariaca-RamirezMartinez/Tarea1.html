@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea1</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: #a18262;
+        }
+    </style>
+</head>
+<body>
+    
+    <h2 align="center">Tarea #1</h2>
+    <p>Realizado por:</p>
+    <p>Ceniceros Mariaca Carlos <br>Ramírez Martínez Luis Ángel </p>
+    <h3>¿Qué problema se eligió?</h3>
+    <p align="justify">Elegimos resolver el problema "<u>El servidor Web</u>" modelándolo con las interacciones entre jefe y trabajador</p>
+    <h3>Lenguaje y entorno utilizado</h3>
+    <p align="justify">Se utilizo el lenguaje de programación Python en Visual Studio Code sin haber instalado una librería especial, solo mediante la paquetería estándar. El archivo se puede hacer funcionar en la terminal, con los comandos adecuados para cada sistema operativo, como cualquier programa .py</p>
+    <h3>Estrategias Usadas</h3>
+    <p align="justify">Las herramientas usadas fueron los <u>semáforos</u> e <u>hilos</u></p>
+    <p align="justify">La estrategia de sincronización utilizada en este código se basa en el uso de semáforos para coordinar la comunicación y la interacción entre los hilos. Los semáforos son una herramienta fundamental para la sincronización en programación concurrente, ya que permiten controlar el acceso a recursos compartidos y coordinar la ejecución de diferentes partes del programa</p>
+    <p align="justify">En particular, este código utiliza dos semáforos: wakeWorker y requestClient. Explicaré cómo se utilizan y qué función desempeñan en la coordinación de la ejecución de hilos</p>
+    <p align="justify">wakeWorker - Semáforo para despertar a los trabajadores:</p>
+    <p align="justify">Este semáforo se utiliza para despertar a los trabajadores cuando hay una solicitud de un cliente. Inicialmente, su valor es 0, lo que significa que los trabajadores estarán dormidos hasta que el semáforo se libere. Cuando un cliente genera una solicitud (requestClient.release()), se libera el semáforo wakeWorker (wakeWorker.release()), lo que despierta a un trabajador para que atienda la solicitud</p>
+    <p align="justify">requestClient - Semáforo para indicar la solicitud de un cliente:</p>
+    <p align="justify">Este semáforo se utiliza para indicar que hay una solicitud de un cliente. Cuando un cliente tiene una nueva solicitud, se libera el semáforo (requestClient.release()). En la función del jefe (Boss), se espera en este semáforo (requestClient.acquire()) hasta que un cliente genera una solicitud. Una vez que se libera, el jefe despierta a un trabajador para que atienda la solicitud</p>
+    <p align="justify">La estrategia es la siguiente:</p>
+    <p align="justify">El jefe (Boss) espera en el semáforo requestClient hasta que un cliente genere una solicitud. Cuando un cliente genera una solicitud, libera el semáforo requestClient. El jefe despierta a un trabajador liberando el semáforo wakeWorker. Un trabajador, que ha sido despertado por el jefe, atiende la solicitud y luego se va a descansar.Esta estrategia asegura que los trabajadores estén dormidos hasta que haya una solicitud y se despierten solo cuando haya algo que hacer. Los semáforos garantizan que la sincronización ocurra de manera adecuada, evitando condiciones de carrera y asegurando que los hilos se coordinen de manera efectiva en la atención de las solicitudes de los clientes.</p>
+    <h3>¿Se hizo algún refinamiento?</h3>
+    <p align="justify">En esta ocasión optamos por no hacer el refinamiento propuesto</p>
+
+</body>
+</html>
