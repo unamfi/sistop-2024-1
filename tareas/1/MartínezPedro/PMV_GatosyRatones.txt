@@ -1,0 +1,48 @@
+												       			   12 de octubre del 2023
+TAREA 1
+Alumno:Martínez Villegas Pedro
+Sistemas operativos
+
+*Abrir el .txt en oantalla completa, para apreciarlo mejor jaja*
+
+Ejercicio: Resolver un problema de programación concurrente en el que sea necesario emplear algún mecanismo de sincronización.
+
+- Problema a resolver: 'De Gatos y Ratones':
+	Tengo k gatos (y desafortunadamente, l ratones) en su casa. Le sirvo la comida a mis gatos en m platos, gatos y ratones han 
+	llegado a un acuerdo para repartirse el tiempo y comida. Pero tienen que convencerme de que están haciendo su trabajo.                                                                                                                                                                                                 
+         
+	REGLAS:                                                                                                                                                                                  
+		1. Los gatos pueden comer de sus m platos de comida.
+		2. Los ratones pueden comer de esos mismos platos siempre y cuando no sean vistos.
+		3. Si un gato ve a un ratón comiendo, se lo debe comer (para mantener su reputación)
+		4. Los platos están puestos uno junto al otro
+		5. Sólo un animal puede comer de cada plato a la vez
+		6. Si un gato está comiendo y un ratón comienza a comer de otro plato, el gato lo ve (y se lo come).
+		7. Por acuerdo de caballeros, los gatos no se van a acercar a los platos mientras hay ratones comiendo.                                                                                                                                                               
+
+Importante: ¡Hay que evitar la inanición, porfa indícame en el código, con comentarios, para que sirve cada cosa
+
+
+El método que decidí utilizar para resolver el problema fue el de semaforos, esto debido a que fue al que menos problemas tuve para entender,
+utilice el lenguaje python más que nada por la comodidad y facilidad.
+
+¿Qué tengo que saber / tener / hacer para ejecutar su programa en mi computadora?
+
+	-Al igual que yo, me gustaría qye tuviera un IDE con soporte para python, si no es el caso, descargar python eh instalarlo en terminal:
+	 para esto, desde la pagina de python, descargar la version acorde a sus sistema operativo y verificar en terminal su instalacion. Usted 
+	 utiliza Linux y aunque se que que usted es un Master para esto, no hace falta recordar que, desde la terminal, debe aplicar los siguien-
+	 tes comandos:
+			- sudo apt install python3
+			- sudo apt install python3.pip #Administrador de paquetes
+			- python3 --version #verificar instalación
+
+	- Para probar el programa:
+			- cd /ruta/al/directorio #navegar al directorio en el que se encuentre el programa que le proporcione
+			- python3 mi_programa.py #seguido de 'python3 va el nombre de mi programa
+
+¿Por qué del metodo del semaforo?
+
+El metodode semáforos es esencial para garantizar un comportamiento correcto y seguro cuando múltiples hilos (gatos y ratones) comparten recursos
+(platos de comida) y deben seguir ciertas reglas. Ayudan a prevenir situaciones de competencia que podrían llevar a resultados incorrectos o 
+inesperados.
+
