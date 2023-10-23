@@ -1,0 +1,28 @@
+
+López Sugahara Ernesto Danjiro
+
+Problema resuelto
+
+1. Cruce del Río: Este fue el problema al que le dediqué mayor enfoque.
+2. Servidor WEB: Este quise probar una solución.
+
+Lenguaje y entorno
+
+La solución la realicé en el lenguaje de programación Python a través del editor de texto VScode. 
+
+Únicamente es necesario tener las librerías de threading y colorama. Con esto, es posible copiar el código y guardarlo para ser ejecutado en terminal.
+
+
+Estrategia de sincronización
+
+1. 
+
+En este caso se utilizaron semáforos. Para esto, se trabajaron los semáforos como mutex para las zonas críticas y se utilizó una barrera par llevar a cabo la gestión de acceso a la balsa. Igualmente, se utilizaron dos semáforos para marcar una cola de programadores de Linux y de Windows. En este caso fue necesario tener un indicador para la liberación del mutex cuando todos los desarrolladores hayan realizado la navegación. 
+
+2. 
+
+Para este caso se manejo al jefe como una función que recibe conexiones y, mediante mutex, mantiene a los trabajadores pendientes de recibir conexiones. Cada que llega una conexión, el jefe libera el mutex de conexión para cualquier hilo y genera un nuevo trabajador.
+
+Nota: En el código se describe elemento por elemento lo mejor posible.
+
+Nota: El problema no contaba con refinamientos.
