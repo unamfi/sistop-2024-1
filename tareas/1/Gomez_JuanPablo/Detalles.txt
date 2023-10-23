@@ -1,0 +1,17 @@
+Decidi realizar el ejericio de Santa Claus
+
+El lenguaje utilizado es python debido a las bibliotecas de hilos
+
+Se utilizo la bibliotecha Threading para la gestion de los hilos y la sincronizacion de los mismos.
+
+**Ejecucion**
+Para poder ejecutar el programa, es necesario tener instalado Python (Preferentemente compatible con Python 3). No se requiere de ningun componente extra, debido a que la biblioteca Threading es una biblioteca estandar de Python.
+
+**Estrategia Sincronizacion**
+
+La estrategia de sincronizacion que se utilizo en el programa se basa en el uso de semaforos, como lo vimos en clase. Se util,izan 2 semaforos, los cuales son elfos_esperando y renos_de_vuelta.
+Los elfos esperan a Santa Claus cuando necesitan ayuda, y Santa Claus se despierta cuando se cumplen ciertas condiciones: cuando 9 renos están de vuelta y cuando hay 3 elfos esperando ayuda. Estos semáforos se utilizan para sincronizar los hilos y permitir que Santa Claus se despierte y atienda a los elfos y los renos según las reglas dadas.
+
+NO se implemento ningun refinamiento, el programa es lo mas basico posible, pero cumple su proposito ademas de incluir los requisitos del problema de manera satisfactoria
+
+Gomez Vazquez Juan Pablo
