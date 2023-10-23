@@ -1,0 +1,35 @@
+UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO
+FACULTAD DE INGENIERÍA
+
+Sistemas Operativos.
+Profesor: Ing. Gunnar Eyal Wolf Iszaevich. 
+Grupo: 06
+Alumno: Hernández Hernández Samuel
+Tarea 01: Ejercicios de sincronización
+
+Fecha de entrega: 12/10/2023
+
+Los alumnos y el asesor.
+
+Planteamiento
+Un profesor de la facultad asesora a varios estudiantes, y estamos en su horario de atención.
+Modelar la interacción durante este horario de modo que la espera (para todos) sea tan corta como sea posible.
+
+Reglas
+•Un profesor tiene x sillas en su cubículo. 
+ oCuando no hay alumnos que atender, las sillas sirven como sofá, y el profesor se acuesta a dormir la siesta. 
+•Los alumnos pueden tocar a su puerta en cualquier momento, pero no pueden entrar más de x alumnos.
+•Para evitar confundir al profesor, sólo un alumno puede presentar su duda (y esperar a su respuesta) al mismo tiempo.
+ oLos demás alumnos sentados deben esperar pacientemente su turno.
+ oCada alumno puede preguntar desde 1 y hasta x preguntas (permitiendo que los demás alumnos pregunten entre una y otra).
+
+Lenguaje y entorno en que se desarrolló. 
+Se uso el lenguaje de programación Python versión 3.12, en el sistema Windows 10.
+Instrucciones para ejecutar.
+Contar con Python 3.12 en Windows 10 o superior
+Para ejecutarlo solo hay que abrir la terminal de comandos CMD y arrastrar el archivo .py a la terminal y dar “enter” para ejecutarlo.
+
+¿Qué estrategia de sincronización (mecanismo / patrón) que se utilizó?
+Utilice la estrategia de sincronización que se emplea en el problema "Productor-Consumidor" con el fin de gestionar la interacción entre el profesor (productor) y los estudiantes (consumidores). En otras palabras, el patrón Productor-Consumidor lo aplique con el propósito de coordinar la producción y el consumo de recursos compartidos por múltiples hilos, con el fin de prevenir condiciones de carrera y asegurar que los hilos se bloqueen o esperen cuando sea necesario.
+En el contexto del problema, los estudiantes desempeñan el papel de consumidores de los recursos, representados por las sillas disponibles en el cubículo del profesor. Por otro lado, el profesor asume el papel de productor de estos recursos. Utilice dos semáforos: acquire() y release() los cuales permiten  que los estudiantes adquieran acceso a una silla en el cubículo y otorga al profesor el control sobre dicho acceso.
+Además del patrón Productor-Consumidor, se implementa un semáforo adicional un mutex para asegurar que únicamente un estudiante pueda hacer una pregunta al profesor en un momento dado, previniendo de esta manera que varios estudiantes realicen preguntas de manera simultánea, en pocas palabras, que los alumnos no le echen montón al profesor.
