@@ -166,7 +166,24 @@ ingenieros hacia su vida profesional.
     nombre del mouse!
 - Calificación :: 8
 
-** Hernandez Samuel
+** Hernández Alberto, Vázquez Iván
+- Archivos :: [[./HernandezAlberto-VazquezIvan/proyecto1.html][proyecto1.html]]
+- Comentarios ::
+  - No incluyeron en su entrega las indicaciones de cuál fascículo trabajaron 🙁
+    Me resulta útil para poder cotejar, comparar un poco el texto con lo
+    desarrollado, particularmente cuando no estoy seguro de lo que quieren decir
+    con algo.
+  - No siguieron las indicaciones del trabajo: hicieron dos resúmenes de
+    fascículos completos, no un resumen de dos artículos del mismo
+    fascículo. Presentan además ambos resúmenes –a diferencia de lo que observé
+    en el trabajo de todos sus compañeros– en presente, sin contrastar con las
+    notorias diferencias que se observan en 40 años de desarrollo del campo.
+  - Si el trabajo es /honestamente/ realizado por ustedes, por favor corrijan mi
+    apreciación, y reviso más a detalle lo que escriben. Pero me parece que este
+    es un texto generado por un /chatbot/ tipo LLM.
+- Calificación :: No considerado.
+
+** Hernández Samuel
 - Archivos :: [[./HernandezSamuel/HernandezSamuel_Practica3.png][HernandezSamuel_Practica3.png]], [[./HernandezSamuel/HernandezSamuel_Proyecto1.md][HernandezSamuel_Proyecto1.md]], [[./HernandezSamuel/HernandezSamuel_Proyecto1.txt][HernandezSamuel_Proyecto1.txt]]
 - Comentarios ::
   - ¡Ups! Me parece que tu entrega de la práctica 3 cayó acá, mezclada con la
