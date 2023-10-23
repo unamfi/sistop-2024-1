@@ -1,0 +1,44 @@
+Para esta tarea, elegí resolver el problema "El cruce del río" el cual plantea inicialmente lo siguiente:
+
+  Para llegar a un encuentro de desarrolladores de sistemas operativos, hace falta cruzar un río en balsa.
+  Los desarrolladores podrían pelearse entre sí, hay que cuidar que vayan con un balance adecuado
+
+Después, el problema indica las siguientes condiciones:
+
+  En la balsa caben cuatro (y sólo cuatro) personas.
+  Al encuentro están invitados hackers y serfs.
+  Para evitar peleas, debe mantenerse un buen balance: 
+    No debes permitir que aborden tres hackers y un serf, o tres serfs y un hacker. 
+    Pueden subir cuatro del mismo bando, o dos y dos.
+  Hay sólo una balsa.
+  No se preocupen por devolver la balsa.
+
+Para resolverlo, me basé en el ejemplo de clase "combate multijugador", pues identifiqué una similitud principal entre ambos; se establece una cantidad específica de elementos que pueden entrar a una sección. En el caso del combate, son de 5 en 5, en el problema de la balsa son de 4 en 4.
+
+A partír del código mencionado modifiqué las variables con las cantidades correspondientes, además de agregar dos arreglos donde se lleva el conteo de los hackers y los serfs que entran a la balsa.
+
+Para "subirlos a la balsa" implementé de manera arbitraria que hubiera la misma cantidad de desarrolladores de cada bando, 10 de uno y 10 de otro. Concretamente, implementé que aquellos pares fueran hackers y los impares fueran serfs. 
+A partir de esto seguí el mismo procedimiento que con el combate; una vez que hay 4 desarrolladores en la balsa, se "produce el viaje" y después se sueltan las barreras y los multiplex para ceder su lugar en la balsa.
+
+Los arreglos de conteo se emplean para mostrar en pantalla cuántos y cuáles desarrolladores de cada bando hay en la balsa al momento de cruzar el río.
+
+Esta implementación no logró resolver el problema completamente, aunque conseguí cumplir algunas cosas.
+
+Lo que se logró:
+  - El programa corre sin errores, o ciclos infinitos.
+  - Los 20 desarrolladores cruzan el río.
+  - La balsa transporta a los desarrolladores en grupos de 4.
+
+Lo que no se logró:
+  - Restringir que viajaran la misma cantidad de desarrolladores de cada bando (2 y 2) o todos de un único bando (4 y 0),
+    por lo que mis desarrolladores terminaron peleándose ):
+
+Una observación importante es que, al parecer en mi implementación los desarrolladores viajan de 4 en 4, pero no necesariamente suben 4 y bajan 4, sino que, al principio suben 4, y a partir de ese momento sucede que baja uno, y su lugar lo ocupa el siguiente, y después al final bajan los 4 'de golpe'.
+Me queda la duda de si esto es correcto o no, pues en cuanto al escenario que plantea el problema, esto significaría que algunos desarrolladores viajan de ida y de regreso varias veces... ?
+
+Finalmente, en cuanto a la restricción que nos permite evitar las peleas, pensé que la manera de resolverlo sería implementando una exclusión categórica, definiendo los límites en cuanto a cantidad de cada grupo, o que cada desarrollador 'checara' si podía ser admitido en la balsa según los pasajeros que estuvieran en ella, sin embargo, no logré hacerlo funcionar.  
+
+------
+
+Para realizar esta tarea, programé la implementación en Python3, escribí el código en Visual Studio, y lo probé desde la línea de comandos de Windows 10. 
+    

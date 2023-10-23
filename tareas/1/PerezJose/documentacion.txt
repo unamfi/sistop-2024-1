@@ -1,0 +1,26 @@
+DOCUMENTACION 
+Perez Uribe Jose Alberto
+El problema que decidi resolver fue de gatos y ratones:
+El problema que se resuelve en este código es un escenario de competencia entre gatos y ratones 
+por los platos de comida. Los gatos pueden comer de los platos o cazar ratones, mientras que los
+ratones solo pueden comer (ya sea escabullendose en el horario de gatos o comiendo en horario de 
+ratones).
+
+El lenguaje y entorno en que se desarrollo:
+El ejercicio esta desarrollado en C y el entorno fue en una computadora con windows que puede usar  
+el programa llamado Dev-C++, dado que hice el codigo de tal manera que se desarrolle infinitamente, 
+en este caso el limite seria lacapacidad de la computadora de llegar hasta el limite de esta misma.
+
+La estrategia de sincronización (mecanismo / patrón) que les funcionó
+La estrategia de sincronización utilizada en este programa se basa en el uso de semáforos. Se utilizan 
+tres semáforos: raton_puede_comer, gato_puede_comer, y platos_comida, para coordinar y sincronizar el 
+acceso de gatos y ratones a los platos de comida. Los semáforos permiten controlar cuántos hilos pueden 
+acceder a ciertas secciones críticas del código, evitando conflictos y garantizando un acceso ordenado 
+a los recursos compartidos. En este problema no se ve necesario el usar refinamientos, por lo que no
+hice uso de estos.
+Por ultimo me gustaria agregar que trate de hacerlo lo mas completo y lo mas apegado posible teniendo 
+en cuenta las reglas dadas por este mismo problema, hice que hubieran dos horarios, tal vez no de manera 
+explicita conprintf pero los gatos no comen ratones en el horario de ratones, solo en el de gatos y 
+cuando lo vean, no halle o mas bien por falta de tiempo no pude realizarlo tan cerradamente como me 
+hubiera gustado como en las reglas, pero aqui esta mi entrega, saludos.
+
