@@ -1,0 +1,22 @@
+Para realizar esta tarea hice uso del lenguaje JAVA; codifiqué y probé la solución en Visual Studio Code.
+
+Decidí plantear a los procesos como objetos, y que sus valores en tiempos fueran atributos.
+
+Las cargas de los procesos se generan aleatoriamente en cada ronda, excepto en la primera, donde utilicé
+los valores de ejemplo presentes en el planteamiento de la tarea.
+
+Entre los problemas que presentaron los algoritmos cabe destacar:
+ - Algunas variaciones en los tiempos promedio de penalización.
+ - En RR1, por ejemplo, los procesos que llegaban más tarde caían en la inanición, pues los procesos de ejecución 
+   temprana tomaban incluso más ticks de los que debían, a pesar de que las condiciones están aplicadas... supuestamente.
+ - Se volvió un poco complicado "ordenar" y definir cuál proceso sigue después de cuál, particularmente cuando
+   se necesita llevar un control de múltiples procesos esperando al mismo tiempo.
+
+Debido a las dificultades, conseguí implementar dos algoritmos de planificación: FCFS y RR1, generando cinco rondas
+para cada algoritmo, con cargas diferentes.
+
+
+
+           "No es mucho, pero es trabajo honesto" (: . 
+
+ 
