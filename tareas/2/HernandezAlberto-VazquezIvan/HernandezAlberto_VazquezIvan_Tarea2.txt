@@ -1,0 +1,51 @@
+Alumnos: Hernandez Gallardo Alberto Javier y Vázquez Gómez Carlos Iván
+
+Se realizó el código corriespondiente a la tarea 2 con el enfoque de analizar los mecanismos de planifiación de procesos: FCFS, RR y SPN.
+En el código se utiliza lo siguiente:
+Importación de bibliotecas:
+
+import random: Importa el módulo random, que se utiliza para generar números aleatorios.
+from collections import deque: Importa la clase deque del módulo collections, que se utiliza para crear colas (queues) de manera eficiente.
+
+Definición de la clase Proceso:
+
+Se define una clase llamada Proceso que representa un proceso con tres atributos: nombre, tiempo_llegada y tiempo_ejecucion.
+
+Función generar_procesos(num_procesos, max_tiempo_ejecucion):
+
+Genera una lista de procesos aleatorios con nombres de letras del alfabeto, tiempos de llegada aleatorios y tiempos de ejecución aleatorios en un rango dado.
+Devuelve una lista de objetos Proceso.
+Función calcular_metricas(resultados, tiempo_llegada):
+
+Calcula métricas como tiempo de respuesta total, tiempo de espera promedio y proporción de penalización para un conjunto de resultados de procesos y el tiempo de llegada total.
+Devuelve estas métricas como una tupla.
+
+Función fifo(procesos):
+
+Implementa el algoritmo de planificación FIFO/FCFS (First-In-First-Out) para los procesos en una cola.
+Calcula el tiempo de espera para cada proceso y registra los resultados en una lista.
+Devuelve una lista de tuplas con los resultados.
+Función round_robin(procesos, quantum):
+
+Implementa el algoritmo de planificación Round Robin para los procesos en una cola, utilizando un quantum dado.
+Calcula el tiempo de espera para cada proceso y realiza una simulación de planificación en tiempo compartido.
+Devuelve una lista de tuplas con los resultados.
+Función spn(procesos):
+
+Implementa el algoritmo de planificación SPN (Shortest Process Next) para los procesos en una cola, ordenándolos por su tiempo de ejecución más corto.
+Calcula el tiempo de espera para cada proceso y los ejecuta en orden según su tiempo de ejecución.
+Devuelve una lista de tuplas con los resultados.
+Función mostrar_comparaciones(ejecucion, procesos, resultados_fifo, resultados_rr, resultados_spn, tiempo_llegada):
+
+Imprime las comparaciones de los resultados de los tres algoritmos de planificación (FIFO, Round Robin y SPN) para una ejecución específica.
+Muestra información sobre los procesos generados y las métricas de cada algoritmo.
+
+Función main():
+
+Establece los parámetros iniciales, como el número de procesos, el tiempo máximo de ejecución y el quantum.
+Ejecuta cinco iteraciones de planificación de procesos, generando procesos aleatorios en cada iteración y comparando los resultados de los tres algoritmos.
+Condición if __name__ == "__main__"::
+
+Asegura que el código en la función main() solo se ejecute si el archivo se ejecuta como un programa independiente y no se importa como un módulo.
+
+El código en su conjunto simula la planificación de procesos para diferentes conjuntos de datos y compara los resultados de tres algoritmos de planificación: FIFO, Round Robin y SPN. Luego, muestra métricas como el tiempo de respuesta total, el tiempo de espera promedio y la proporción de penalización para cada algoritmo en varias ejecuciones.
