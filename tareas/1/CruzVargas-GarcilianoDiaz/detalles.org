@@ -1,0 +1,11 @@
+* Integrantes
+- Cruz Vargas Emilio
+- Garciliano Diaz Giovanni Alfredo
+* Problema
+Se eligió el servidor web.
+* Programas utilizados
+Se usó Python3 para elaborar la solución
+* Estrategia de sincronización
+Se utilizó el patrón jefe-trabajador
+* Refinamientos
+Se completó el refinamiento para mantener la contabilidad en una lista
