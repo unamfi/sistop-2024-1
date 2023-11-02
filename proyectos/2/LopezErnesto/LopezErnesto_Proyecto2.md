@@ -1,18 +1,17 @@
-# Concurso de baile con parejas aleatorias
+# Restaurante Casa de Toño
 
 ## Descripción
 
-Se llevará a cabo una competencia de baile con parejas dadas de forma desconocida, es decir, a cada hombre que vaya llegando se le asignará con una mujer aleatoria. En la pista solo podrá haber un total de 5 parejas bailando, las cuales serán evaluadas al mismo tiempo durante un intervalo de tiempo dado. Posteriormente se calificará 
-a los bailarines individuales y se dejará una pareja restante. Esto continua hasta que se haya elegido una pareja final. En este caso, se considera que el concurso es para 50 parejas; es decir, habrá un total de 25 mujeres y 25 hombres que irán llegando de forma aleatoria, con lo que se asignarán las respectivas parejas aleatorias. 
+Día a día el restaurante Casa de Toño recibe grandes cantidades de gente en sus establecimientos. Aquellos que han comido en dicho lugar conocen muy bien la fila de esperar que llega a existir a ciertas horas. En estas horas, la gente va llegando y conforme se desocupa un lugar para el tamaño del grupo, pasa dicho grupo al establecimiento. En ningún punto meten gente que cuando no hay cupo disponible, y pueden llegar a meter a un grupo que llegó después que otro dependiendo el tamaño de este.
+
+Con esto en mente, se intentará simular el programa que se encarga de mostrar los turnos que tocan en pantalla considerando la cola de espera, así como el tamaño de grupo en cuestión.
 
 ## Elementos de concurrencia
 
-En este caso se pueden observar diferentes casos donde la concurrencia puede ser negativa:
+En este caso se observa lo siguiente:
 
-1. El concurso está diseñado para que un hombre baile con una mujer, por lo mismo, si llegan dos hombres no pueden comenzar a bailar hasta que llegue una mujer.
-2. En la pista únicamente puede entrar un total de 5 parejas. En este punto los demás deberán de esperar a que termine el tiempo de la canción.
-3. Se tiene que esperar a que 5 poarejas completas estén listas antes de comenzar la evaluación.
-4. Los participantes que ya hayan pasado, deberán de esperar que se hayan evaluado a los participantes de la primera ronda (en cada una de las rondas
-   se eligen dos concursantes que pasarán a la siguiente etapa: una mujer y un hombre)
+1. El restaurante cuenta con un tamaño específico de mesas para un tamaño específico de grupo. Por ello, la primera consideración es que no puede entrar gente si todas las mesas están ocupadas.
 
-En este caso se observa que el ordenamiento relativo no tiene importancia alguna, lo único importante es que cada participante pase. El participante tiene dos posibilidades: seguir avanzando y ser descalificado.
+2. Se tiene un tamaño de grupo asignado por mesa, por lo mismo, para el restaurante es importante optimizar la asignación de mesas dependiendo de este factor, es decir, no puede asignar una mesa de cuatro personas a una persona. 
+
+3. Se tiene que observar que, aunque pueda pasar que un grupo de 4 que llegó después que una persona pase primero, si hay otros grupos de 4 esperando, estos deberán de pasar primero que aquel que llegó último, es decir, hay un orden en cómo llegan las personas en los diferentes grupos.
