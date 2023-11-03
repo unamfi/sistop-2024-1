@@ -1,0 +1,50 @@
+= Título del Documento
+:author: Tu Nombre
+:email: tu@email.com
+:doctype: book
+:icons: font
+
+== Resumen
+
+Escribe un breve resumen o introducción sobre el contenido del documento.
+
+== Capítulo 1: Introducción
+
+Este es el primer capítulo de tu documentación. Puedes agregar más capítulos según sea necesario.
+
+=== Sección 1.1: Subtítulo
+
+Aquí puedes agregar subsecciones o títulos para organizar el contenido.
+
+== Capítulo 2: Otra Sección
+
+Este es otro capítulo de la documentación.
+
+== Referencias
+
+Bibliografía y referencias adicionales.
+
+== Agradecimientos
+
+Agradecimientos a las personas o recursos que contribuyeron a la documentación.
+
+// Puedes agregar más capítulos y secciones según sea necesario.
+
+== Apéndice A: Título del Apéndice
+
+Puedes incluir apéndices para información adicional.
+
+== Apéndice B: Otro Apéndice
+
+Añade más apéndices si es necesario.
+
+// Puedes personalizar aún más la plantilla con tus propias configuraciones y estilos.
+
+== Fuentes
+
+Los íconos utilizados en este documento son proporcionados por la fuente "font" y se utilizan con permisos.
+
+== Comentarios finales
+
+¡Gracias por leer este documento! Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto conmigo en {email}.
+
