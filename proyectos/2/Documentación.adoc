@@ -1,50 +1,43 @@
-= Título del Documento
-:author: Tu Nombre
-:email: tu@email.com
+= Una situación cotidiana paralelizable
+v1.0.0, 2023-11-03
+:author: Cruz Vargas Emilio, Garciliano Diaz Giovanni Alfredo
+:email: emilio.cruz.vargas123@gmail.com, giobeatle10@gmail.com
 :doctype: book
 :icons: font
 
+[Desarrollo]
 == Resumen
 
-Escribe un breve resumen o introducción sobre el contenido del documento.
+El objetivo de este documentación es explicar la descripción del algoritmo para la implementación del segundo proyecto "Una situación cotidiana paralelizable" de la materia "Sistemas Operativos". Enfocado en la representación de la concurrencia en una situación de la vida cotidiana.
 
-== Capítulo 1: Introducción
+== Descripción de la situación
+Una de las principales necesidades de los seres humanos es comunicarse, esto en consecuencia de las grandes distancias entre las personas y la necesidad de mantenerse informados de las situaciones que acontecen.
+Aunado a esto, tienen que existir empresas que se dediquen a gestionar sistemas telefónicos, que permitan a sus clientes **hacer y recibir llamadas**, así como acceder a funciones avanzadas como transferencias de llamadas, correo de voz y **enrutamiento de llamadas**.
 
-Este es el primer capítulo de tu documentación. Puedes agregar más capítulos según sea necesario.
+Esto, garantizando la integridad de las llamadas y la independencia del ususario con los mecanismos de enrutamiento.
+Básicamente, que el usuario pueda hacer una **llamada**, en dado caso que la línea con el remitente este ocupada entonces **esperar** y **colgar la llamada**.
 
-=== Sección 1.1: Subtítulo
+Un poco más técnico...
+Lo que buscamos que es que múltiples emisores estén tratando de contactarse con múltiples receptores, el detalle está en que al un receptor estar recibiendo la llamada tenga que esperar a que está entre y si el intenta hacer una llamada no se lo permita porque el emisor llevaba más timepo esperando. 
+También controlar la cola de llamadas que tenga un mismo receptor, controlar que el recpetor este disponible para ser llamado y no pueda tener mútiples llamadas al mismo tiempo.
+Se considera que la cantidad de emisores y receptores es ilimitada, pero la cantidad de líneas es finita, y no hya un límite de tiempo de llamada
 
-Aquí puedes agregar subsecciones o títulos para organizar el contenido.
+=== ¿Dónde pueden verse las consecuencias nocivas de la concurrencia? ¿Qué eventos pueden ocurrir que queramos controlar?
+Las consecuencias que esperamos evitar es que el emisor tenga que esperar demasiado tiempo en ser conectada su llamada y que nunca pueda hablar con el recepetor, que si un receptor está esperando una llamada esté no este tratando de hacer una llamada y el tiempo que estaba esperando sea mayor el emisor que se quería contactar con él.
+Los eventos que pretendemos controlar es cuando multiples emisores pretendan hacer llamadas a un mismo receptor y esste pueda atender cada llamada, independientemente de la duración de esta.
 
-== Capítulo 2: Otra Sección
 
-Este es otro capítulo de la documentación.
+
+=== ¿Hay eventos concurrentes para los cuales el ordenamiento relativo no resulta importante?
+¿?
+
 
 == Referencias
 
 Bibliografía y referencias adicionales.
 
-== Agradecimientos
-
-Agradecimientos a las personas o recursos que contribuyeron a la documentación.
-
-// Puedes agregar más capítulos y secciones según sea necesario.
-
-== Apéndice A: Título del Apéndice
-
-Puedes incluir apéndices para información adicional.
-
-== Apéndice B: Otro Apéndice
-
-Añade más apéndices si es necesario.
-
-// Puedes personalizar aún más la plantilla con tus propias configuraciones y estilos.
-
 == Fuentes
 
 Los íconos utilizados en este documento son proporcionados por la fuente "font" y se utilizan con permisos.
 
-== Comentarios finales
-
-¡Gracias por leer este documento! Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto conmigo en {email}.
 
