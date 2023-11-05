@@ -25,11 +25,25 @@ def desocupaLugar(quien, cual):
     dice(quien, '¡Que alivio! Desocupo el mingitorio %d' % cual)
     esquemaMings[cual] = '-' 
     mostrarEsquema(esquemaMings)
-    
-    desbloqueaLugar(cual+1)
+
+    if(cual == 0):
+        desbloqueaLugar(cual+1) 
+    if(cual == 7):
+        desbloqueaLugar(cual-1) 
+    if(cual > 0 and cual < 7): 
+        desbloqueaLugar(cual-1)
+        desbloqueaLugar(cual+1)
 
 def ocupaLugar(quien, cual):
     mings[cual].acquire() 
+
+    if(cual == 0):
+        bloqueaLugar(cual+1) 
+    if(cual == 7):
+        bloqueaLugar(cual-1) 
+    if(cual > 0 and cual < 7): 
+        bloqueaLugar(cual-1)
+        bloqueaLugar(cual+1)
 
     dice(quien, 'Ocupo el mingitorio %d' % cual)
     esquemaMings[cual] = 'X' 
