@@ -4,7 +4,9 @@ import random
 
 numUsuarios = 5  
 numMings = 8;     
-esquemaMings = ['-', '-', '-', '-', '-', '-', '-', '-'] 
+esquemaMings = ['-', '-', '-', '-', '-', '-', '-', '-']
+contador = 0
+mut_contador = threading.Semaphore(1)
 
 mings = [threading.Semaphore(1) for i in range(numMings)] 
 
@@ -35,6 +37,7 @@ def desocupaLugar(quien, cual):
         desbloqueaLugar(cual+1)
 
 def ocupaLugar(quien, cual):
+    global contador
     mings[cual].acquire() 
 
     if(cual == 0):
@@ -45,6 +48,11 @@ def ocupaLugar(quien, cual):
         bloqueaLugar(cual-1)
         bloqueaLugar(cual+1)
 
+    mut_contador.acquire()
+    contador += 1
+    print("\n")
+    mut_contador.release()
+
     dice(quien, 'Ocupo el mingitorio %d' % cual)
     esquemaMings[cual] = 'X' 
     mostrarEsquema(esquemaMings)
@@ -52,7 +60,7 @@ def ocupaLugar(quien, cual):
     desocupaLugar(quien, cual) 
 
 def dice(quien, msg):
-    print('[%d] - %s' % (quien, msg))
+    print('[%d] || [%d] - %s' % (contador, quien, msg))
 
 def busca(quien):
     dice(quien, 'Buscando...')
