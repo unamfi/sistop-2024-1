@@ -1,0 +1,74 @@
+#+title: Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Building H₂O
+
+- Tema presentado por :: Ernesto López y Ángel Ramírez
+- Calificación global :: Por favor revisen más adelante para ver de
+  dónde vienen todos estos números 😉
+
+|------------------------+-------+--------------------+------+---------|
+| Evaluación  compañeros | Valor | Evaluación docente | Peso | *Total* |
+|------------------------+-------+--------------------+------+---------|
+|                 9.7334 |   0.3 |               9.25 |  0.7 |    9.40 |
+|------------------------+-------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 |  5 | Total |
+|--------------+---+---+---+---+----+-------|
+| Originalidad | 0 | 0 | 0 | 1 | 14 | 9.867 |
+| Nivel        | 0 | 0 | 0 | 3 | 12 |   9.6 |
+| Relevancia   | 0 | 0 | 0 | 1 | 14 | 9.867 |
+| Claridad     | 0 | 0 | 0 | 2 | 13 | 9.733 |
+| Presencia    | 0 | 0 | 0 | 3 | 12 |   9.6 |
+|--------------+---+---+---+---+----+-------|
+|              |   |   |   |   |    |  9.73 |
+#+TBLFM: @7$7=vmean(@2$7..@6$7); f-2
+
+
+|--------------+-------+------------+----------+-----------+--------|
+| Originalidad | Nivel | Relevancia | Claridad | Presencia |  Total |
+|--------------+-------+------------+----------+-----------+--------|
+|        9.867 |   9.6 |      9.867 |    9.733 |       9.6 | 9.7334 |
+|--------------+-------+------------+----------+-----------+--------|
+#+TBLFM: @2$6=vmean($1..$5)
+
+** Comentarios de los compañeros
+
+Tu exposición recibió los siguientes comentarios anonimizados por
+parte de tus compañeros:
+
+- No, me pareció una buena exposición
+- Excelente presentación, con claridad y dominio del tema para hacerlo más ágil.
+- muy claros buena presentacion
+- Ninguno
+- Nop, me parecio muy buena
+- Me pareció bonita la presentación
+- Buena presentación
+
+* Evaluación por parte del docente
+
+| *Aspecto*              | *Peso* | *Evaluación* | *Puntos* |
+|------------------------+--------+--------------+----------|
+| Originalidad del tema  |    0.1 |           10 |       1. |
+| Material desarrollado  |    0.2 |          7.5 |      1.5 |
+| Contenido              |    0.2 |           10 |       2. |
+| Fuentes bibliográficas |    0.1 |          7.5 |     0.75 |
+| Uso del tiempo         |    0.1 |           10 |       1. |
+| Dominio del tema       |   0.15 |           10 |      1.5 |
+| Presencia              |   0.15 |           10 |      1.5 |
+|------------------------+--------+--------------+----------|
+| *Global*               |        |              |     9.25 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
