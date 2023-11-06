@@ -1,0 +1,12 @@
+Tarea 2: Comparacion de planificadores
+LENGUAJE: Se utilizo Python en el editor Visual Studio code
+
+FCFS: Para este codigo fue bastante sencillo implementar el sentido logico de Lo primero que entra es lo primero que sale, 
+lo complicado fue entender como calcular las metricas asi que para ello se calcularon tiempos finales iniciales y apartir de alli se fueron 
+operando junto con el tiempo de llega de cada proceso y el tiempo requerido
+
+RONDA: En este codigo la logica se modifico a diferencia del primero pues recorrimos cada uno de los procesos hasta que se ejecuten completamente, para esto fue necesario poner un condicional y una variable auxiliar llamada contador. Asi mismo para que la infromacion
+fuera integra una vez terminados los procesos teniamos que ordenarlos, ya que si C terminaba despues de D o E al momento de realizar
+los calculos de las metricas fallaba
+
+Observaciones: En ocaciones al colocar como parametro un numero mayor a 4 (que es el quantum) el programa se traba y no se le llega a dar un tratamineto logico a posibles huecos entre procesos  por lo que aveces influye en el calculo de la metricas, esto podria solucionarse con un condicional y que si existe huecos entre procesos el tiempo de espera parta  desde 0
