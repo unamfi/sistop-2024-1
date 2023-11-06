@@ -7,7 +7,8 @@ from threading import *
 
 
 # Número de familias esperadas
-num_familias = 15
+num_familias = 50
+num_familias = 50
 
 # Tamaños de familia
 tamaños = [1,2,4]
@@ -26,10 +27,6 @@ mesasUno = {}
 mutexAsignacionMesa = Semaphore(1)
 mutexLiberacionMesa = Semaphore(1)
 mutexAcceso = Semaphore(1)
-# Cola de gente esperando por categoria
-colaUno = {}
-colaDos = {}
-colaCuatro = {}
 
 # Determinar qué famila está utilizando qué mesa
 mesa_familia = {}
@@ -144,12 +141,15 @@ def llegadaFamilia(fam,tam,mutex,mesas):
     mutexAcceso.release()
     # Como se trabajará con una variable global, se toma un mutex para realizar la asignación de la mesa respectiva
     mutexAsignacionMesa.acquire()
-    for key,value in mesas.items():
-        if value[0] == True: # Hay mesas disponibles
-            root.after(0,update_gui,key,fam,tam,mesas)
-            # Se asigna la mesa al grupo respectivo
-            mesa_familia[fam] = key
-            break
+    mesa_asignada = False
+    while not mesa_asignada:
+        for key,value in mesas.items():
+            if value[0] == True: # Hay mesas disponibles
+                root.after(0,update_gui,key,fam,tam,mesas)
+                # Se asigna la mesa al grupo respectivo
+                mesa_familia[fam] = key
+                mesa_asignada = True
+                break
     mutexAsignacionMesa.release()
 
     # El grupo estará un tiempo aleatorio dentro del establecimiento
