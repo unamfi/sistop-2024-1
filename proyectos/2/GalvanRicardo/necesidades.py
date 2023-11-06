@@ -1,20 +1,22 @@
 import threading
 import time
 import random
+from colorama import Fore, Style
 
 numUsuarios = 5  
 numMings = 8;     
 esquemaMings = ['-', '-', '-', '-', '-', '-', '-', '-']
 contador = 0
 mut_contador = threading.Semaphore(1)
+color_texto = [Fore.YELLOW, Fore.GREEN, Fore.BLUE, Fore.LIGHTRED_EX, Fore.LIGHTMAGENTA_EX]
 
 mings = [threading.Semaphore(1) for i in range(numMings)] 
 
 def mostrarEsquema(mings): 
-    print("[", end = "")
+    print("\n  [", end = "")
     for i in range(0,8):
          print(mings[i], end = "") 
-    print("]")
+    print("]\n")
 
 def desbloqueaLugar(cual): 
     mings[cual].release()
@@ -50,7 +52,7 @@ def ocupaLugar(quien, cual):
 
     mut_contador.acquire()
     contador += 1
-    print("\n")
+    #print("\n")
     mut_contador.release()
 
     dice(quien, 'Ocupo el mingitorio %d' % cual)
@@ -60,7 +62,8 @@ def ocupaLugar(quien, cual):
     desocupaLugar(quien, cual) 
 
 def dice(quien, msg):
-    print('[%d] || [%d] - %s' % (contador, quien, msg))
+    mi_color = color_texto[quien % len(color_texto)]
+    print(Style.DIM + mi_color + '[%d] || [Usuario %d] - %s' % (contador, quien, msg))
 
 def busca(quien):
     dice(quien, 'Buscando...')
