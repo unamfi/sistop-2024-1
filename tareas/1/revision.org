@@ -484,7 +484,7 @@
 - Calificación :: 
 
 ** Miranda Víctor
-- Documentación :: 
+- Documentación :: [[./MirandaVictor/MirandaVictor_Tarea1.pdf][MirandaVictor_Tarea1.pdf]]
 - Archivos :: [[./MirandaVictorT1.cpp][MirandaVictorT1.cpp]]
 - Problema resuelto :: Gatos y ratones
 - Comentarios ::
