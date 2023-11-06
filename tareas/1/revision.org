@@ -474,6 +474,24 @@
       /atrape/ al ratón, por más que no le guste hacerlo)
 - Calificación :: 8
 
+** Martínez Santiago
+- Documentación :: [[./MartínezSantiago/descripcion_problema.txt][descripcion_problema.txt]]
+- Archivos :: [[./MartínezSantiago/ejercicio_gatos.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Entregado a tiempo; lo recibo extemporáneo por confusión con el directorio
+    de entrega
+- Calificación :: 
+
+** Miranda Víctor
+- Documentación :: 
+- Archivos :: [[./MirandaVictorT1.cpp][MirandaVictorT1.cpp]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Entregado a tiempo; lo recibo extemporáneo por confusión con el directorio
+    de entrega
+- Calificación :: 
+
 ** Moreno Edgar, Osorio Rodrigo
 - Documentación :: [[./MorenoEdgar-OsorioRodrigo/README.md][README.md]], [[./MorenoEdgar-OsorioRodrigo/img/fin_programa.png][fin_programa.png]], [[./MorenoEdgar-OsorioRodrigo/img/inicio_programa.png][inicio_programa.png]]
 - Archivos :: [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/CatsAndRats.sln][CatsAndRats.sln]], [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/sistop/CatsAndRats.cs][CatsAndRats.cs]], [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/sistop/Program.cs][Program.cs]], [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/sistop/sistop.csproj][sistop.csproj]]
@@ -552,3 +570,4 @@
       intentar /meterle tijera/!
 - Calificación :: 10
 
+  
