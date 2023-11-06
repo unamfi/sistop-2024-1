@@ -7,8 +7,10 @@ numUsuarios = 5 #usuarios totales que usaran los mingitorios
 numMings = 8;   #numero de mingitorios disponibles  
 esquemaMings = ['-', '-', '-', '-', '-', '-', '-', '-'] #esquema visual para representar el estado
 contador = 0 #para llevar un mejor seguimiento de los eventos que ocurren
-mut_contador = threading.Semaphore(1) #mutex para que solo uno pueda modificar el contador a la vez
-color_texto = [Fore.YELLOW, Fore.GREEN, Fore.BLUE, Fore.LIGHTRED_EX, Fore.LIGHTMAGENTA_EX, Fore.WHITE] #colores
+mutexContador = threading.Semaphore(1) #mutex para que solo uno pueda modificar el contador a la vez
+mutexOcupar = threading.Semaphore(1) #mutex para que los hilos ocupen y bloqueen los lugares "de golpe"
+mutexImprime = threading.Semaphore(1) #mutex para que cada hilo imprima el esquema visual uno a la vez y no se distorsione
+color_texto = [Fore.YELLOW, Fore.GREEN, Fore.BLUE, Fore.LIGHTRED_EX, Fore.LIGHTMAGENTA_EX, Fore.WHITE] #colores de texto
 
 mings = [threading.Semaphore(1) for i in range(numMings)] #por cada mingitorio se crea un semaforo
 
@@ -28,9 +30,12 @@ def bloqueaLugar(cual): #adquiere el semaforo
 #las siguientes dos funciones manejan que un usuario ocupe y desocupe un mingitorio
 def desocupaLugar(quien, cual):
     mings[cual].release() #el mingitorio utilizado se desocupa, se libera el semaforo
-    dice(quien, '¡Que alivio! Desocupo el mingitorio %d' % cual)
+
+    mutexImprime.acquire() #region de exclusion para que el esquema se modifique e imprima por cada hilo
+    dice(quien, '¡Que alivio! Desocupo el mingitorio %d.' % cual)
     esquemaMings[cual] = '-' #se actualiza la representacion en el esquema visual
     mostrarEsquema(esquemaMings)
+    mutexImprime.release() #se libera la region de exclusion para acceder al esquema
 
     #checar la posicion ocupada, para liberar los que corresponda
     if(cual == 0): #si es el mingitorio de la izquierda...
@@ -43,6 +48,8 @@ def desocupaLugar(quien, cual):
 
 def ocupaLugar(quien, cual):
     global contador #globalizar la variable para visualizar cambios de estado
+
+    mutexOcupar.acquire() #se entra en una region de exclusion, pues el bloqueo de lugares debe hacerse 'de golpe'
     mings[cual].acquire() #se ocupa el mingitorio; se adquiere el semaforo
 
     #checar la posicion ocupada, para ocupar los que corresponda
@@ -53,15 +60,19 @@ def ocupaLugar(quien, cual):
     if(cual > 0 and cual < 7): 
         bloqueaLugar(cual-1)
         bloqueaLugar(cual+1)
+    mutexOcupar.release() #una vez bloqueados los lugares, se sale de region de exclusion
 
     #el hilo en proceso adquiere el mutex para modificar el contador, y lo libera despues
-    mut_contador.acquire()
+    mutexContador.acquire()
     contador += 1
-    mut_contador.release()
+    mutexContador.release()
 
+    mutexImprime.acquire() 
     dice(quien, 'Ocupo el mingitorio %d' % cual) #el usuario informa su accion
     esquemaMings[cual] = 'X' #se actualiza el esquema visual
     mostrarEsquema(esquemaMings)
+    mutexImprime.release()
+
     time.sleep(random.randint(1,3)) #el usuario se toma su tiempo para hacer sus necesidades...
     desocupaLugar(quien, cual) #... y cuando termina, desocupa el mingitorio
 
