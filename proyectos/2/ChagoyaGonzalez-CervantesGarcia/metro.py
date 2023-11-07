@@ -19,61 +19,64 @@ m_eleccion = threading.Semaphore(1)
 #mutex para controlar la salida de los metros
 m_salida  = threading.Lock()
 
+# Semáforos para controlar la apertura de las puertas de cada carril
+semPuertasA = threading.Semaphore(0)
+semPuertasB = threading.Semaphore(0)
+semPuertasC = threading.Semaphore(0)
+
+#
+listaEspera=[]
+
+m_persona = threading.Lock()
+m_listaEspera = threading.Lock()
+
 # Función para que el metro elija por cual carril quiere entrar
-def metroElige(num):
-    #METER AQUI LA ELECCIPON DE CARRIL PARA QUE SE COMPAGINE CON EL MULTIPLEX
+def carrilEleccion():
     carril = random.choice(['A','B','C'])
     return carril
 
-# Función para que un metro se coloque en un carril y se marche después de un tiempo
-def llegaMetro(numMetro):
+# Función que simula la estancia del metro en un carril y su salida
+def gestiondeCarriles(numMetro, carril, c_id):
+    print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+    carriles[id_carriles[carril]] = f'Ocupado por metro:{numMetro}'
+    print(f'Metro {numMetro} llegó al carril {id_carriles_inv[c_id]}')
+    m_eleccion.release()
+    print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+    time.sleep(random.uniform(0.01, 0.05))
+    salida(numMetro, c_id)
+    print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
 
+# Función para que un metro se coloque en un carril y se marche después de un tiempo
+def llegaMetro(numMetro):           
     #el metro intenta entrar a la estación
     estacion.acquire()
     print(f'Metro {numMetro} puede entrar en la estación.')
-
     #el metro elige carril
     m_eleccion.acquire()
-    carril = metroElige(numMetro)
+    carril = carrilEleccion()
 
     #el metro llega al carril
     if id_carriles[carril] == 0:
         with m_carrilA:
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-            carriles[id_carriles[carril]] = 'Carril A: ocupado por metro:%d' % numMetro
-            print(f'Metro {numMetro} llegó al carril A')
-            m_eleccion.release()
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-            time.sleep(random.uniform(0.01, 0.05))
-            salida(numMetro, 0)
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-        
+            gestiondeCarriles(numMetro, carril, 0)           
     elif id_carriles[carril] == 1:
         with m_carrilB:
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-            carriles[id_carriles[carril]] = 'Carril B: ocupado por metro:%d' % numMetro
-            print(f'Metro {numMetro} llegó al carril B')
-            m_eleccion.release()
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-            time.sleep(random.uniform(0.01, 0.05))
-            salida(numMetro, 1)
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-
+            gestiondeCarriles(numMetro, carril, 1)
     elif id_carriles[carril] == 2:
         with m_carrilC:
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-            carriles[id_carriles[carril]] = 'Carril C: ocupado por metro:%d' % numMetro
-            print(f'Metro {numMetro} llegó al carril C')
-            m_eleccion.release()
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-            time.sleep(random.uniform(0.01, 0.05))
-            salida(numMetro, 2)
-            print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-    
+            gestiondeCarriles(numMetro, carril, 2)
 
 def salida(numMetro, carril):
     #el metro abre sus puertas
     print(f'Metro {numMetro} abre las puertas ')
+
+    if(carril==0):
+        semPuertasA.release()
+    elif(carril==1):
+        semPuertasB.release()
+    elif(carril==2):
+        semPuertasC.release()
+    
     time.sleep(random.uniform(0.01, 0.05))  # Tiempo en que las puertas estan abiertas
     #el metro cierra sus puertas
     print(f'Metro {numMetro} cierra las puertas')
@@ -84,10 +87,44 @@ def salida(numMetro, carril):
         print(f'Metro {numMetro} sale de la terminal dejando libre el carril {id_carriles_inv[carril]}')
         carriles[carril] = 'Empty'
         estacion.release()
+    
+    
+def persona(numPersona):
+    with m_persona:
+        print(f'Persona {numPersona} llega a la estación ')
+        listaEspera.append(numPersona)
+        llegadaPersona(numPersona)
+
+def abordaPersona(numPersona, carril):
+    print(f'**Persona {numPersona} decide abordar el metro del carril {carril}.')
+    listaEspera.remove(numPersona)
+
+def llegadaPersona(numPersona):
+        time.sleep(random.uniform(0.01,0.05))
+        carrilMetro = carrilEleccion()
+        if (carrilMetro == 'A' and carriles[0]!='Empty'):
+            semPuertasA.acquire()
+            abordaPersona(numPersona, id_carriles_inv[0])
+            semPuertasA.release()  # Liberar el semáforo después de abordar
+        elif (carrilMetro == 'B' and carriles[1]!='Empty'):
+            semPuertasB.acquire()
+            abordaPersona(numPersona, id_carriles_inv[1])
+            semPuertasB.release()  # Liberar el semáforo después de abordar
+        elif (carrilMetro == 'C' and carriles[2]!='Empty' ):
+            semPuertasC.acquire()
+            abordaPersona(numPersona, id_carriles_inv[2])
+            semPuertasC.release()  # Liberar el semáforo después de abordar
+        else:
+            print(f'Persona {numPersona} está esperando para abordar {carrilMetro}.')
 
 def main ():
-    # Crear e iniciar los hilos de los metros, por cada metro un hilo
-    for i in range(1, 15): 
-        threading.Thread(target=llegaMetro, args=[i]).start()
+    for i in range(1,10):
+        threading.Thread(target=persona, args=[i]).start()
 
+    # Crear e iniciar los hilos de los metros, por cada metro un hilo
+    var=1
+    while(len(listaEspera)>0 and var==1):
+        for i in range(5): 
+            threading.Thread(target=llegaMetro, args=[i]).start()
+            var=var+1
 main()
