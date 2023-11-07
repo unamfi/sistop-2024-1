@@ -1,5 +1,4 @@
 
-
 import tkinter as tk
 from tkinter import messagebox, simpledialog, Toplevel, Label, Button, Entry
 import threading
@@ -32,7 +31,7 @@ class Aplicacion:
 
         self.boton_salir = tk.Button(master, text="Salir", command=self.salir)
         self.boton_salir.pack()
-        
+        # Llamar a la función de actualización de la interfaz cada cierto tiempo
         self.iniciar_actualizaciones_automaticas()
 
     def iniciar_actualizaciones_automaticas(self):
@@ -46,10 +45,12 @@ class Aplicacion:
         self.actualizar_inventario_interfaz()
 
     def actualizar_inventario_interfaz(self):
+        # Actualiza la interfaz gráfica con el inventario actual y programa la próxima actualización
         self.actualizar_inventario_label()
         self.master.after(5000, self.actualizar_inventario_interfaz)  # Actualizar cada 5 segundos (5000 ms)
 
     def actualizar_inventario_label(self):
+        # Actualiza la etiqueta de inventario en la interfaz gráfica con los valores actuales del inventario
         with condition:
             for widget in self.frame_inventario.winfo_children():
                 widget.destroy()
@@ -57,6 +58,7 @@ class Aplicacion:
                 Label(self.frame_inventario, text=f"{producto}: {cantidad}").pack()
 
     def agregar_producto(self):
+        # Abre un cuadro de diálogo para agregar un nuevo producto al inventario
         producto = simpledialog.askstring("Agregar Producto", "Nombre del Producto:")
         if producto:
             with condition:
@@ -68,6 +70,7 @@ class Aplicacion:
             self.actualizar_inventario_label()
 
     def modificar_stock(self):
+        # Abre una ventana emergente para modificar el stock de un producto
         self.top = Toplevel(self.master)
         self.top.title("Modificar Stock")
 
@@ -90,6 +93,7 @@ class Aplicacion:
         self.boton_despachar_stock.pack()
 
     def agregar_stock(self):
+        # Aumenta la cantidad de stock para un producto dado, según la entrada del usuario
         producto = self.entry_producto.get()
         try:
             cantidad = int(self.entry_cantidad.get())
@@ -108,6 +112,7 @@ class Aplicacion:
         self.top.destroy()
 
     def despachar_stock(self):
+        # Reduce la cantidad de stock para un producto según la entrada del usuario
         producto = self.entry_producto.get()
         try:
             cantidad = int(self.entry_cantidad.get())
@@ -126,19 +131,22 @@ class Aplicacion:
         self.top.destroy()
 
     def salir(self):
+        # Muestra un mensaje de confirmación antes de cerrar la aplicación
         if messagebox.askokcancel("Salir", "¿Estás seguro de que quieres salir?"):
             self.master.destroy()
     
     def actualizar_inventario_automaticamente(self):
+        # Actualiza automáticamente el inventario agregando valores aleatorios a las existencias de los productos
         while True:
             with condition:
                 for producto in self.inventario:
                     cantidad = random.randint(1, 10)
                     self.inventario[producto] += cantidad
                     condition.notify_all()
-            time.sleep(random.randint(5, 10))
+            time.sleep(30)
 
 if __name__ == "__main__":
+    # Creación de la ventana principal y ejecución de la aplicación
     root = tk.Tk()
     inventario = {'Producto1': 20}  # Añade un producto inicial al inventario para que las actualizaciones puedan empezar
     app = Aplicacion(root, inventario)
