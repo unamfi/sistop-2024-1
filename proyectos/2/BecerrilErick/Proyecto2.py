@@ -25,8 +25,9 @@ def reserva_asiento(cliente, asiento_seleccionado):
 
 # Función para mostrar el estado actual de las reservas
 def estado_reservas():
+    reservas_frame.config(text="Reservas existentes:\n")
     for asiento, cliente in reservas_clientes.items():
-        print(f"Asiento {asiento} está reservado por {cliente}.")
+        reservas_frame.config(text=reservas_frame.cget("text") + f"Asiento {asiento} está reservado por {cliente}.\n")
 
 # Función para actualizar la lista de asientos disponibles en la interfaz gráfica
 def actualizar_lista_asientos():
@@ -38,6 +39,7 @@ def reservar_asiento():
     if reserva_asiento(cliente_nombre.get(), asiento_seleccionado):
         actualizar_lista_asientos()
         entry_asiento.delete(0, tk.END)
+        estado_reservas()  # Actualizar la visualización de las reservas
 
 # Crear ventana de la interfaz gráfica
 ventana = tk.Tk()
@@ -63,6 +65,10 @@ boton_reservar.pack()
 # Etiqueta para mostrar la lista de asientos disponibles
 lista_asientos = tk.Label(ventana, text=", ".join(map(str, asientos_disponibles)))
 lista_asientos.pack()
+
+# Etiqueta para mostrar las reservas existentes
+reservas_frame = tk.Label(ventana, text="Reservas existentes:\n")
+reservas_frame.pack()
 
 # Crear clientes (hilos) que intentarán reservar asientos
 clientes = []
