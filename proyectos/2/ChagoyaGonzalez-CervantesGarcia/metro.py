@@ -44,23 +44,23 @@ def carrilEleccion():
 
 # Función que simula la estancia del metro en un carril y lo prepara para su salida
 def gestiondeCarriles(numMetro, carril, c_id):
-    print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+    print('\x1b[4;33m' + f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
     if len(listaEspera) == 1:
         listaEspera.remove(0)
-        print(f'\n\t\t !!!LA ESTACION ESTA TERMINANDO OPERACIONES, EL METRO DEL CARRIL: {id_carriles_inv[c_id]}, SALDRÁ VACÍO O NO SALDRÁ Y LOS SIGUIENTES TRENES TAMBIÉN!!!\t\t\n')
+        print('\x1b[7;31m' + f'\n\t\t !!!LA ESTACION ESTA TERMINANDO OPERACIONES, EL METRO DEL CARRIL: {id_carriles_inv[c_id]}, SALDRÁ VACÍO O NO SALDRÁ Y LOS SIGUIENTES TRENES TAMBIÉN!!!\t\t\n')
     else:
         carriles[id_carriles[carril]] = f'Ocupado por metro:{numMetro}'
-        print(f'Metro {numMetro} llegó al carril {id_carriles_inv[c_id]}')
+        print('\x1b[0;36m' + f'\t\t\t\tMetro {numMetro} llegó al carril {id_carriles_inv[c_id]}')
         m_eleccion.release()
-        print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
-        print(f'Metro {numMetro} abre las puertas ')
+        print('\x1b[4;33m' + f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+        print('\x1b[0;36m' + f'\t\t\t\tMetro {numMetro} abre las puertas ')
         time.sleep(random.uniform(0.01, 0.05))
 
 # Función para que un metro se coloque en un carril y se marche después de un tiempo o de haber recibido a algunas personas
 def llegaMetro(numMetro): 
     while len(listaEspera) >= 1: #LOS HILOS DE TRENES  SE EJECUTARAN MIENTRRAS HAYA 1 O MÁS PASAJEROS          
         estacion.acquire() #el metro intenta entrar a la estación, si hay algún lugar disponible
-        print(f'Metro {numMetro} puede entrar en la estación.')
+        print('\x1b[0;36m'+f'\t\t\t\tMetro {numMetro} puede entrar en la estación.')
         m_eleccion.acquire() #el metro elige carril, la variable carril se protege para que no haya cambios o elecciones inesperadas
         carril = carrilEleccion()
 
@@ -88,35 +88,35 @@ def salida(numMetro, carril, listaCarril):
         semAndenC.acquire()
 
     #el metro cierra sus puertas
-    print(f'Metro {numMetro} cierra las puertas')
-    print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+    print('\x1b[0;36m' + f'\t\t\t\tMetro {numMetro} cierra las puertas')
+    print('\x1b[4;33m' + f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
 
     # Controlamos la salida de los metros
     with m_salida: #este mutex nos ayuda a que no puedan salir dos carrilles al mismo tiempo 
-        print(f'\n\t\tMetro {numMetro} sale de la terminal dejando libre el carril {id_carriles_inv[carril]}\t\t')
-        print(f'Las personas con los ID de tarjeta:{listaCarril} salen de la terminal por el carril {id_carriles_inv[carril]}')
+        print('\x1b[0;36m' + f'\n\t\tMetro {numMetro} sale de la terminal dejando libre el carril {id_carriles_inv[carril]}\t\t')
+        print('\x1b[0;32m' + f'Las personas con los ID de tarjeta:{listaCarril} salen de la terminal por el carril {id_carriles_inv[carril]}')
         global listaEspera
         if len(listaEspera) == 1:
             listaEspera.remove(0)
-            print(f'\n\t\t !!!LA ESTACION ESTA TERMINANDO OPERACIONES, EL METRO DEL CARRIL: {id_carriles_inv[carril]}, SALDRÁ VACÍO O NO SALDRÁ Y LOS SIGUIENTES TRENES TAMBIÉN!!!\t\t\n')
+            print('\x1b[7;31m' + f'\n\t\t !!!LA ESTACION ESTA TERMINANDO OPERACIONES, EL METRO DEL CARRIL: {id_carriles_inv[carril]}, SALDRÁ VACÍO O NO SALDRÁ Y LOS SIGUIENTES TRENES TAMBIÉN!!!\t\t\n')
         else:
             for i in range (len(listaCarril)):
                 listaEspera.remove(listaCarril.pop()) #Se vacía la lista de espera del anden con los que se fueron en el metro y también se quitan de la lista general
         carriles[carril] = 'Empty' #Se libera el carril en el arreglo que representa la estación
         estacion.release() #El metro sale de la estación
-    print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+    print('\x1b[4;33m' + f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
     #QUIZÁ AQUÍ SE PUEDE AGREGARR UN WAIT PARA SIMULAR EL TIEMPO QUE TARDA EL METRO EN VOLVER A LA TERMINAL
     
     
 def llegadaPersona(numPersona):
     with m_persona:
-        print(f'Persona {numPersona} llega a la estación ')
+        print('\x1b[0;32m' + f'Persona {numPersona} llega a la estación ')
         global listaEspera
         listaEspera.append(numPersona)
         gestionPersona(numPersona)
 
 def abordaPersona(numPersona, carril, listaEspera):
-    print(f'**Persona {numPersona} decide abordar el metro en el anden {carril}.')
+    print('\x1b[0;32m' + f'Persona {numPersona} decide abordar el metro en el anden {carril}.')
     listaEspera.append(numPersona)
 
 def gestionPersona(numPersona):
@@ -132,7 +132,7 @@ def gestionPersona(numPersona):
         abordaPersona(numPersona, id_carriles_inv[2], listaEsperaC)
         semAndenC.release()
     else:
-        print(f'Persona {numPersona} está esperando para salir en un metro en el anden:{carrilMetro}.')
+        print('\x1b[0;32m' + f'Persona {numPersona} está esperando para salir en un metro en el anden:{carrilMetro}.')
 
 def main ():
     global listaEspera
