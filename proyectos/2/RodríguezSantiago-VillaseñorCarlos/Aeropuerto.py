@@ -31,19 +31,16 @@ departure = "-"
 prueba2 = "-"
 hora = 0
 texto = "-"
-textoEspera = "Esperando"
+textoEspera = "En camino"
 textoLlegada = "LLegó"
 textoCDMX = "Ciudad de México"
 contadorA1 = 0
 contadorA2 = 0
-
-filaA1 = []
-filaA2 = []            
+          
 
 
 def tipoAvion1():
     global hora
-    global filaA1
     global id
     global contadorA1
     #Entra a la pista un avión a la vez
@@ -60,51 +57,37 @@ def tipoAvion1():
     duracion = random.choice((8,10,15,3))
     lugar = lugares.get(duracion)
     avion = Avion(id,hora,contadorA1,lugar)
-    print("Creamos avión: "+str(avion.id)+" en fila 1")
     datos_mutex.release()
-    
-    #Uno modifica la cola a la vez
-    #Agregamos al avion a la fila
-    filaA1_mutex.acquire()
-    filaA1.append(avion)
-    print("Agregamos avión: "+str(avion.id)+" a la fila 1")
-    print("Tamaño fila 1: "+str(len(filaA1)))
-    filaA1_mutex.release()
+
     #Modificamos terminal con mutex
     terminal_mutex.acquire()
     #Asignamos los valores a la terminal según el contador de llegada
     # El contador relaciona cada avión con una celda de la terminal 
-    print("Contador actual A1: "+str(contadorA1))
     if(avion.contador == 1):
         myLabelFlight1.config(text = str(avion.id))
         myLabelSalida1.config(text = str(avion.departure))
         myLabelDestino1.config(text = str(avion.destino))
         myLabelEstado1.config(text =textoEspera)
-        print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 2):
         myLabelFlight2.config(text = str(avion.id))
         myLabelSalida2.config(text = str(avion.departure))
         myLabelDestino2.config(text = str(avion.destino))
         myLabelEstado2.config(text =textoEspera)
-        print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 3):
         myLabelFlight3.config(text = str(avion.id))
         myLabelSalida3.config(text = str(avion.departure))
         myLabelDestino3.config(text = str(avion.destino))
         myLabelEstado3.config(text =textoEspera)
-        print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 4):
         myLabelFlight4.config(text = str(avion.id))
         myLabelSalida4.config(text = str(avion.departure))
         myLabelDestino4.config(text = str(avion.destino))
         myLabelEstado4.config(text =textoEspera)
-        print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 5):
         myLabelFlight5.config(text = str(avion.id))
         myLabelSalida5.config(text = str(avion.departure))
         myLabelDestino5.config(text = str(avion.destino))
         myLabelEstado5.config(text =textoEspera)
-        print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     terminal_mutex.release()
     #Tiempo de vuelo
     time.sleep(duracion)
@@ -125,7 +108,6 @@ def tipoAvion1():
 def tipoAvion2():
     
     global hora
-    global filaA2
     global id
     global contadorA2
     #Entra a la pista un avión a la vez
@@ -138,15 +120,9 @@ def tipoAvion2():
     duracion = random.choice((8,10,15,3))
     lugar = lugares.get(duracion)
     avion = Avion(id,hora,contadorA2,lugar)
-    print("Creamos avión: "+str(avion.id)+" en fila 2")
+    #print("Creamos avión: "+str(avion.id)+" en fila 2")
     datos_mutex.release()
-    #Uno modifica la cola a la vez
-    #Agregamos al avion a la fila
-    filaA2_mutex.acquire()
-    filaA2.append(avion)
-    print("Agregamos avión: "+str(avion.id)+" a la fila 2")
-    print("Tamaño fila 2: "+str(len(filaA2)))
-    filaA2_mutex.release()
+
     #Modificamos terminal
     terminal_mutex.acquire() 
     if(avion.contador == 1):
@@ -154,31 +130,31 @@ def tipoAvion2():
         myLabelSalida6.config(text = str(avion.departure))
         myLabelDestino6.config(text = str(avion.destino))
         myLabelEstado6.config(text =textoEspera)
-        print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
+        #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 2):
         myLabelFlight7.config(text = str(avion.id))
         myLabelSalida7.config(text = str(avion.departure))
         myLabelDestino7.config(text = str(avion.destino))
         myLabelEstado7.config(text =textoEspera)
-        print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
+        #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 3):
         myLabelFlight8.config(text = str(avion.id))
         myLabelSalida8.config(text = str(avion.departure))
         myLabelDestino8.config(text = str(avion.destino))
         myLabelEstado8.config(text =textoEspera)
-        print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
+        #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 4):
         myLabelFlight9.config(text = str(avion.id))
         myLabelSalida9.config(text = str(avion.departure))
         myLabelDestino9.config(text = str(avion.destino))
         myLabelEstado9.config(text =textoEspera)
-        print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
+        #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 5):
         myLabelFlight10.config(text = str(avion.id))
         myLabelSalida10.config(text = str(avion.departure))
         myLabelDestino10.config(text = str(avion.destino))
         myLabelEstado10.config(text =textoEspera)
-        print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
+        #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     terminal_mutex.release()
     #Tiempo de vuelo
     time.sleep(duracion)
@@ -199,7 +175,7 @@ def tipoAvion2():
 
 def Volar(tipoAvion):
     #Primer tipo de avión
-    print("Entra avión tipo: "+str(tipoAvion))
+    #print("Entra avión tipo: "+str(tipoAvion))
     if(tipoAvion == 1):
         tipoAvion1()
     if(tipoAvion == 2):
