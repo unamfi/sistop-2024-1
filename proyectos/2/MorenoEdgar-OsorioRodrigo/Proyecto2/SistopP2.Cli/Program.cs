@@ -7,7 +7,7 @@ internal static class Program
 {
     private static readonly SemaphoreSlim PistaAterrizaje = new(0);
     private static readonly SemaphoreSlim ComunicacionAvion = new(1);
-    private static readonly SemaphoreSlim ComunicationTorre = new(0);
+    private static readonly SemaphoreSlim ComunicacionTorre = new(1);
     private static readonly SemaphoreSlim AndenPasajeros = new(10);
     private static readonly SemaphoreSlim AndenMercancia = new(6);
 
@@ -23,12 +23,6 @@ internal static class Program
         Pasajeros
     }
 
-    private static readonly Dictionary<TipoAvion, string> TipoAvionStr = new()
-    {
-        { TipoAvion.Comercial, "comercial" },
-        { TipoAvion.Pasajeros, "pasajeros" }
-    };
-
     /// <summary>
     /// Representa un avión.
     /// </summary>
@@ -40,50 +34,67 @@ internal static class Program
         var anden = tipo == TipoAvion.Comercial ? AndenMercancia : AndenPasajeros;
         var tipoStr = tipo.ToString();
         // El avión solicita aterrizaje en la pista
-        AnsiConsole.MarkupLine($"[blue on purple]Avión {id} (Tipo: {tipoStr}) solicita aterrizaje.[/]");
+        AnsiConsole.MarkupLine($"[purple]Avión {id} (Tipo: {tipoStr}) solicita aterrizaje.[/]");
         ComunicacionAvion.Wait();
         _solicitud = id.ToString();
-        ComunicationTorre.Release();
+        ComunicacionTorre.Release();
 
         PistaAterrizaje.Wait();
         // Descarga de tripulantes o de mercancía
-        AnsiConsole.MarkupLine($"[blue on magenta]Avión {id} ha aterrizado.[/]");
+        AnsiConsole.MarkupLine($"[purple]Avión {id} ha aterrizado.[/]");
         anden.Wait();
         Thread.Sleep(Random.Shared.Next(1000, 4000));
-        AnsiConsole.MarkupLine($"[blue on magenta]Avión de {tipoStr} ha terminado de descargar.[/]");
-        
+        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} ha terminado de descargar.[/]");
+
         // Carga de otros tripulantes o de mercancía
-        AnsiConsole.MarkupLine($"[blue on magenta]Avión de {tipoStr} esperando a estar listo para el siguiente vuelo[/].");
+        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} esperando a estar listo para el siguiente vuelo[/].");
         Thread.Sleep(Random.Shared.Next(1000, 4000));
         anden.Release();
-        AnsiConsole.MarkupLine($"[blue on magenta]Avión de {tipoStr} solicitando despegue.[/]");
+        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} solicitando despegue.[/]");
         ComunicacionAvion.Wait();
         _solicitud = id.ToString();
-        ComunicationTorre.Release();
+        ComunicacionTorre.Release();
         PistaAterrizaje.Wait();
-        AnsiConsole.MarkupLine($"[blue on magenta]Avión de {tipoStr} sale del aereopuerto.[/]");
+        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} sale del aereopuerto.[/]");
     }
 
-#pragma warning disable CA2016
     /**
      * Representa la torre de control para comunicarse con los aviones.
      */
-    [SuppressMessage("ReSharper", "MethodSupportsCancellation")]
-    public static void TorreControl(CancellationToken token)
+    private static void TorreControl(CancellationToken token)
     {
-        AnsiConsole.Markup("[green]:tower: Torre de control lista[/]");
+        AnsiConsole.MarkupLine("[green]:tower: Torre de control lista[/]");
         // Continúa operaciones mientras no se solicite que pare
         while (!token.IsCancellationRequested)
         {
-            ComunicationTorre.Wait();
-            AnsiConsole.Markup($"[green on dark] Torre de control dice: {_solicitud} puede aterrizar.");
+            ComunicacionTorre.Wait();
+            AnsiConsole.MarkupLine($"[green] Torre de control dice: {_solicitud} puede aterrizar.[/]");
             PistaAterrizaje.Release();
             ComunicacionAvion.Release();
         }
     }
-#pragma warning restore CA2016
 
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
+        var salir = new CancellationTokenSource();
+        var aviones = new List<Task>();
+        // ReSharper disable once MethodSupportsCancellation
+        var torre = new Task(() => TorreControl(salir.Token));
+        torre.Start();
+
+        const int numAviones = 15;
+
+        for (var i = 0; i < numAviones; i++)
+        {
+            var tipo = Random.Shared.Next(0, 2) == 0 ? TipoAvion.Pasajeros : TipoAvion.Comercial;
+            var id = i;
+            var task = new Task(() => Avion(id, tipo));
+            task.Start();
+            aviones.Add(task);
+            Task.Delay(Random.Shared.Next(500, 1000));
+        }
+
+        await Task.WhenAll(aviones);
+        salir.Cancel();
     }
 }
