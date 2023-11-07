@@ -1,14 +1,18 @@
 import threading
 from colorama import Fore
+from time import sleep
 
 
 color_texto = [Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.MAGENTA, Fore.RED, Fore.BLACK]
+triage_clasif = ["Rojo", "Amarillo", "Verde"]
 triage_rojo=[]
 triage_amarillo=[]
 triage_verde=[]
 
 
 color_doctor = Fore.WHITE
+print(color_doctor + "Bienvenido a la sala de Urgencias. Primero necesitamos clasificar a los pacientes que llegan con base a su prioridad.")
+print(color_doctor + "Después, se atenderán en el orden que corresponde.")
 num_pacientes = int(input(color_doctor + "Número de sillas y/o camillas en el hospital: "))
 contador = 0
 mut_contador = threading.Semaphore(1)
@@ -30,6 +34,7 @@ def digo(num, msg):
 #Se adquiere con acquire
 def revision_medica(quien):
     dudas[(quien + 1) % num_pacientes].acquire()
+    digo(quien, 'Mis lesiones y/o hallazgos clínicos son: [inserte clínica del paciente]\n')
 
 #Se cede el control con release
 def atencion(quien):
@@ -42,7 +47,7 @@ def clasificando_paciente(quien):
     num_emergencias_pacientes[quien] = num_emergencias_pacientes[quien]-1
     if num_emergencias_pacientes[quien] <= 0:
         if(num_pacientes_urgencias == 0):
-            print("Todos los pacientes han sido clasificados.")
+            print(color_doctor + "Todos los pacientes han sido clasificados.")
 
 
 #Se expresan la clasificación de todos los pacientes actualmente
@@ -50,22 +55,27 @@ def clasificando_paciente(quien):
 #Se adquiere el poder para ofrecerle atención de parte del doctor y posteriormente se libera.
 def salaUrgencias(quien):
     global contador
+    digo(quien, 'Estoy esperando en Urgencias.')
     mut_contador.acquire()
     revision_medica(quien)
     contador += 1
     atencion(quien)
     if (contador==energia_doctor):
+        print(color_doctor + "El turno ha terminado. ¡Adiós!")
         exit()
     mut_contador.release()
     
 
 
 def paciente(num):
+    digo(num, '¡Tuve una emergencia!')
+    digo(num, 'Me estoy trasladando a Urgencias.')
     while num_emergencias_pacientes[num] > 0:
         salaUrgencias(num)
     
 
 pacientes = [threading.Thread(target=paciente, args=[i]) for i in range(num_pacientes)]
 
+print(color_doctor + "Soy el doctor encargado de Urgencias, estoy empezando mi turno.")
 for i in pacientes:
     i.start()
