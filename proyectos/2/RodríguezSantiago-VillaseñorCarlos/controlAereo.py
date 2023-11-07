@@ -23,7 +23,7 @@ pistaA2_mutex = threading.Semaphore(1)
 datos_mutex = threading.Semaphore(1)
 
 #Diccionario destinos por duracion
-lugares = {8: 'Francia',10: 'Portugal',15:'Japón',3:'Estados Unidos'}
+lugares = {8: ' Francia  ',10: ' Portugal ',15:'  Japón   ',3:'   EEUU   '}
 
 #Variables usadas
 id = 1000
@@ -36,7 +36,7 @@ textoLlegada = "LLegó"
 textoCDMX = "Ciudad de México"
 contadorA1 = 0
 contadorA2 = 0
-          
+           
 
 
 def tipoAvion1():
@@ -57,52 +57,59 @@ def tipoAvion1():
     duracion = random.choice((8,10,15,3))
     lugar = lugares.get(duracion)
     avion = Avion(id,hora,contadorA1,lugar)
-    datos_mutex.release()
-
+    #print("Creamos avión: "+str(avion.id)+" en fila 1")
+    datos_mutex.release()   
+    #Uno modifica la cola a la vez
     #Modificamos terminal con mutex
     terminal_mutex.acquire()
     #Asignamos los valores a la terminal según el contador de llegada
     # El contador relaciona cada avión con una celda de la terminal 
+    #print("Contador actual A1: "+str(contadorA1))
     if(avion.contador == 1):
-        myLabelFlight1.config(text = str(avion.id))
-        myLabelSalida1.config(text = str(avion.departure))
-        myLabelDestino1.config(text = str(avion.destino))
-        myLabelEstado1.config(text =textoEspera)
+        myLabelFlight1.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida1.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino1.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado1.config(text ="| " + textoEspera + " |")
+        #print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 2):
-        myLabelFlight2.config(text = str(avion.id))
-        myLabelSalida2.config(text = str(avion.departure))
-        myLabelDestino2.config(text = str(avion.destino))
-        myLabelEstado2.config(text =textoEspera)
+        myLabelFlight2.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida2.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino2.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado2.config(text ="| " + textoEspera + " |")
+        #print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 3):
-        myLabelFlight3.config(text = str(avion.id))
-        myLabelSalida3.config(text = str(avion.departure))
-        myLabelDestino3.config(text = str(avion.destino))
-        myLabelEstado3.config(text =textoEspera)
+        myLabelFlight3.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida3.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino3.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado3.config(text ="| " + textoEspera + " |")
+        #print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 4):
-        myLabelFlight4.config(text = str(avion.id))
-        myLabelSalida4.config(text = str(avion.departure))
-        myLabelDestino4.config(text = str(avion.destino))
-        myLabelEstado4.config(text =textoEspera)
+        myLabelFlight4.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida4.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino4.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado4.config(text ="| " + textoEspera + " |")
+        #print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 5):
-        myLabelFlight5.config(text = str(avion.id))
-        myLabelSalida5.config(text = str(avion.departure))
-        myLabelDestino5.config(text = str(avion.destino))
-        myLabelEstado5.config(text =textoEspera)
+        myLabelFlight5.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida5.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino5.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado5.config(text ="| " + textoEspera + " |")
+        #print("Avión tipo 1 modificó horario a las : "+str(avion.departure))
     terminal_mutex.release()
     #Tiempo de vuelo
     time.sleep(duracion)
     #Aterizan de uno en uno 
     terminalLlegada_mutex.acquire()
     if(avion.contador == 1):
-        myLabelEstado1.config(text = textoLlegada)
+        myLabelEstado1.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 2):
-        myLabelEstado2.config(text = textoLlegada)
+        myLabelEstado2.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 3):
-        myLabelEstado3.config(text = textoLlegada)
+        myLabelEstado3.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 4):
-        myLabelEstado4.config(text = textoLlegada)
+        myLabelEstado4.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 5):
-        myLabelEstado5.config(text = textoLlegada)
+        myLabelEstado5.config(text = "| " + textoLlegada + " |")
     terminalLlegada_mutex.release() 
 
 def tipoAvion2():
@@ -122,38 +129,37 @@ def tipoAvion2():
     avion = Avion(id,hora,contadorA2,lugar)
     #print("Creamos avión: "+str(avion.id)+" en fila 2")
     datos_mutex.release()
-
     #Modificamos terminal
     terminal_mutex.acquire() 
     if(avion.contador == 1):
-        myLabelFlight6.config(text = str(avion.id))
-        myLabelSalida6.config(text = str(avion.departure))
-        myLabelDestino6.config(text = str(avion.destino))
-        myLabelEstado6.config(text =textoEspera)
+        myLabelFlight6.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida6.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino6.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado6.config(text ="| " + textoEspera + " |")
         #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 2):
-        myLabelFlight7.config(text = str(avion.id))
-        myLabelSalida7.config(text = str(avion.departure))
-        myLabelDestino7.config(text = str(avion.destino))
-        myLabelEstado7.config(text =textoEspera)
+        myLabelFlight7.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida7.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino7.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado7.config(text ="| " + textoEspera + " |")
         #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 3):
-        myLabelFlight8.config(text = str(avion.id))
-        myLabelSalida8.config(text = str(avion.departure))
-        myLabelDestino8.config(text = str(avion.destino))
-        myLabelEstado8.config(text =textoEspera)
+        myLabelFlight8.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida8.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino8.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado8.config(text ="| " + textoEspera + " |")
         #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 4):
-        myLabelFlight9.config(text = str(avion.id))
-        myLabelSalida9.config(text = str(avion.departure))
-        myLabelDestino9.config(text = str(avion.destino))
-        myLabelEstado9.config(text =textoEspera)
+        myLabelFlight9.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida9.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino9.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado9.config(text ="| " + textoEspera + " |")
         #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     if(avion.contador == 5):
-        myLabelFlight10.config(text = str(avion.id))
-        myLabelSalida10.config(text = str(avion.departure))
-        myLabelDestino10.config(text = str(avion.destino))
-        myLabelEstado10.config(text =textoEspera)
+        myLabelFlight10.config(text = "| " + str(avion.id) + " |")
+        myLabelSalida10.config(text = "| " + str(avion.departure) + " |")
+        myLabelDestino10.config(text = "| " + str(avion.destino) + " |")
+        myLabelEstado10.config(text ="| " + textoEspera + " |")
         #print("Avión tipo 2 modificó horario a las : "+str(avion.departure))
     terminal_mutex.release()
     #Tiempo de vuelo
@@ -161,15 +167,15 @@ def tipoAvion2():
     #Aterizan de uno en uno 
     terminalLlegada_mutex.acquire()
     if(avion.contador == 1):
-        myLabelEstado6.config(text = textoLlegada)
+        myLabelEstado6.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 2):
-        myLabelEstado7.config(text = textoLlegada)
+        myLabelEstado7.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 3):
-        myLabelEstado8.config(text = textoLlegada)
+        myLabelEstado8.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 4):
-        myLabelEstado9.config(text = textoLlegada)
+        myLabelEstado9.config(text = "| " + textoLlegada + " |")
     if(avion.contador == 5):
-        myLabelEstado10.config(text = textoLlegada)
+        myLabelEstado10.config(text = "| " + textoLlegada + " |")
     terminalLlegada_mutex.release() 
 
 
@@ -199,37 +205,37 @@ root.title('Aeropuerto')
 #root.geometry('460x250')
 root.configure(bg = "black")
 #root.configure(bg = 'black')
-myLabelTitle = Label(root,text = "Vuelos planeados",bg = "yellow",pady=15, font = 20)
+myLabelTitle = Label(root,text = "Departure and Arrivals",bg = "black",fg = "goldenrod",pady=15, font = ('Arial', 40, 'bold'))
 myLabelTitle.grid(row=0,column=0, columnspan=8,sticky=W+E+N+S)
 #Encabezado Aeropuertos
-myLabelAirport1 = Label(root,text ="Aeropuerto de la CDMX",bg = "blueviolet")
+myLabelAirport1 = Label(root,text ="Aeropuerto Int. De la Ciudad de México",bg = "navajowhite", font = ('Arial', 20, 'bold'))
 myLabelAirport1.grid(row=1,column=0, columnspan=4,sticky=W+E+N+S)
 
-myLabelAirport2 = Label(root,text = "Aeropuertos Internacionales",bg = "blueviolet")
+myLabelAirport2 = Label(root,text = "Aeropuertos Int. ",bg = "navajowhite", font = ('Arial', 20, 'bold'))
 myLabelAirport2.grid(row=1,column=4, columnspan=4,sticky=W+E+N+S)
 
 #Encabezado tiempo de salida
-myLabelTime1 = Label(root,text = "Salida",bg = "blue2",fg = "white")
+myLabelTime1 = Label(root,text = "| Salida |",bg = "darkgoldenrod3",fg = "black" , font = ('Arial', 12, 'bold'))
 myLabelTime1.grid(row=2,column=1,sticky=W+E+N+S)
-myLabelTime2 = Label(root, text="Salida",bg = "blue2",fg = "white")
+myLabelTime2 = Label(root, text="| Salida |",bg = "darkgoldenrod3",fg = "black" , font = ('Arial', 12, 'bold'))
 myLabelTime2.grid(row=2,column=5,sticky=W+E+N+S)
 
 #Encabezado Vuelos
-myLabelVuelo1 = Label(root,text = "Vuelo",bg = "blue2",fg = "white")
+myLabelVuelo1 = Label(root,text = "| Vuelo |",bg = "darkgoldenrod3",fg = "black" , font = ('Arial', 12, 'bold'))
 myLabelVuelo1.grid(row=2,column=0,sticky=W+E+N+S)
-myLabelVuelo2 = Label(root, text="Vuelo",bg = "blue2",fg = "white")
+myLabelVuelo2 = Label(root, text=" | Vuelo |",bg = "darkgoldenrod3",fg = "black", font = ('Arial', 12, 'bold'))
 myLabelVuelo2.grid(row=2,column=4,sticky=W+E+N+S)
 
 #Encabezado Destino
-myLabelDestination1 = Label(root,text = "Hacia",bg = "blue2",fg = "white")
+myLabelDestination1 = Label(root,text = "| Destino |",bg = "darkgoldenrod3",fg = "black", font = ('Arial', 12, 'bold'))
 myLabelDestination1.grid(row=2,column=2,sticky=W+E+N+S)
-myLabelDestination2 = Label(root, text="Desde",bg = "blue2",fg = "white")
+myLabelDestination2 = Label(root, text="| Desde |",bg = "darkgoldenrod3",fg = "black", font = ('Arial', 12, 'bold'))
 myLabelDestination2.grid(row=2,column=6,sticky=W+E+N+S)
 
 #Encabezado Estado
-myLabelCurrently1 = Label(root,text = "Estado",bg = "blue2",fg = "white")
+myLabelCurrently1 = Label(root,text = "| Estado |",bg = "darkgoldenrod3",fg = "black", font = ('Arial', 12, 'bold'))
 myLabelCurrently1.grid(row=2,column=3,sticky=W+E+N+S)
-myLabelCurrently2 = Label(root, text="Estado",bg = "blue2",fg = "white")
+myLabelCurrently2 = Label(root, text="| Estado |",bg = "darkgoldenrod3",fg = "black", font = ('Arial', 12, 'bold'))
 myLabelCurrently2.grid(row=2,column=7,sticky=W+E+N+S)
 
 #Texto Vuelos
@@ -326,7 +332,12 @@ myLabelSalida10 = Label(root, text=texto,bg = "black",fg = "white")
 myLabelSalida10.grid(row=7,column=5)
 
 #Buton inicio
-myButton = Button(root, text="iniciar",command=threading.Thread(target=Inicio,daemon=True).start)
-myButton.grid(row=8,column=0,columnspan=8)
+myButton = Button(root, text="Start",command=threading.Thread(target=Inicio,daemon=True).start)
+myButton.grid(row=8,column=3)
 #Inicia ventana
+#Botón salida
+salida = Button(root, text = "Exit", command = root.quit)
+salida.grid(row=8,column=4)
+#Ícono
+#root.iconbitmap('icon.ico')
 root.mainloop()
