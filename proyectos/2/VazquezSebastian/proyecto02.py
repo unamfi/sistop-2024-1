@@ -75,6 +75,7 @@ def main():
     for i in range(3):
         print("\n- " + conciertosDisponibles[i][1])
     numCompradores = int(input("\n¿Cuantos compradores en total hay hoy?: (de preferencia un numero mayor a 20)"))
+    #Creamos un arreglo de hilos para su ejecucion y creacion simultanea
     compradores = [threading.Thread(target=comprador, args=[i]).start() for i in range(numCompradores)]
 
 main()
