@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Mono.Options" Version="6.12.0.148" />
       <PackageReference Include="Spectre.Console" Version="0.47.0" />
     </ItemGroup>
 
