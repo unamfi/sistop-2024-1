@@ -10,62 +10,84 @@ import random
 from threading import *
 
 #definicion de variables
-random = False
 
 #para representar cuantas gorditas tiene que hacer cada empleado segun el tipo
 pedidosCocedor = 0
-pediddosCarbon = 0
+pedidosCarbon = 0
 pedidosComal = 0
+mutex = Semaphore(1)
+mutexTomaPedidos = Semaphore(1)
 
 #contador de todos los pedidos que ha terminado el local
 contadorTotal = 0
 
 def comenzarHilos():
     Thread(target=tomaOrdenes,args=[],daemon=True).start()
-    Thread(target=cocinarCocedor,args=[],daemon=True).start()
-    Thread(target=cocinarComal,args=[],daemon=True).start()
-    Thread(target=cocinarComal,args=[],daemon=True).start()
+    Thread(target=cocinarCocedor,args=[pedidosCocedor],daemon=True).start()
+    Thread(target=cocinarComal,args=[pedidosComal],daemon=True).start()
+    Thread(target=cocinarCarbon,args=[pedidosCarbon],daemon=True).start()
+    #para cerrar programa
+    cerrar_btn = Button(
+            frame_botones,
+            text="Cerrar",
+            width=20,
+            height=3,
+            bg = "red",
+            command=quit,
+        )
+    cerrar_btn.grid(row=5,column=1)
+
+def actualizarInterfaz(tipo:int,pedidos:int):
+	#para actualizar el texto de los botones de cada puesto de trabajo segun los pedidos que tengan
+	if tipo == 0:
+		puestos[tipo].config(text="Gorditas de cocedor -> {pedidos}", state="normal")
+	elif tipo == 1:
+		puestos[tipo].config(text="Gorditas de harina o maiz -> {pedidos}", state="normal")
+	else: 
+		puestos[tipo].config(text="Gorditas de carbon -> {pedidos}", state="normal")
 
 def tomaOrdenes(): 
 	print("tomando ordenes")
 	#se deben tomar pedidos cada cierto tiempo aleatorio
-	sleep(random.random() * random.randint(10,25))
+	sleep(random.random() * random.randint(10,20))
 	#segun el numero son la cantidad de gorditas que tienen que realizar
+	mutexTomaPedidos.acquire()
 	pedido = random.randint(1,4)
-	if(random == True):
-		#para decidir de que tipo de gordita sera
-		tipo = random.randint(0,2)
-		if tipo == 0:
-			pedidosCocedor += pedido
-			pedido_txt = "Se pidieron " + pedido + " de cocedor"
-			print(pedido_txt.text) 
-		elif tipo == 1:
-			pedidosComal += pedido
-			pedido_txt = "Se pidieron " + pedido + " de maiz o harina"
-			print(pedido_txt.text)
-		else:
-			pedidosComal += pedido
-			pedido_txt = "Se pidieron " + pedido + " al carbon"
-			print(pedido_txt.text)
+	tipo = random.randint(0,2)
+	actualizarInterfaz(tipo,pedido)
+	if tipo == 0:		
+		pedidosCocedor += pedido
+		pedido_txt = "Se pidieron " + pedido + " de cocedor"
+		print(pedido_txt.text) 
+	elif tipo == 1:
+		pedidosComal += pedido
+		pedido_txt = "Se pidieron " + pedido + " de maiz o harina"
+		print(pedido_txt.text)
+	else:
+		pedidosCarbon += pedido
+		pedido_txt = "Se pidieron " + pedido + " al carbon"
+		print(pedido_txt.text)
+	mutexTomaPedidos.release()
+	
 
-def cocinarCocedor():
-	while (pedidosCocedor > 0):
+def cocinarCocedor(pedidos:int):
+	while (pedidos > 0):
 		sleep(random.random() * random.randint(5,9))
 		print("cocinando gorditas de cocedor")	
-		pedidosCocedor--
-		cocinarCocedor()
-def cocinarCarbon():
-	while (pediddosCarbon > 0):
+		pedidos-=1
+		cocinarCocedor(pedidos)
+def cocinarCarbon(pedidos:int):
+	while (pedidos > 0):
 		sleep(random.random() * random.randint(3,6))
 		print("cocinando gorditas de carbon")	
-		pedidosCarbon--
-		cocinarCarbon()
-def cocinarComal():
-	while (pedidosComal > 0):
+		pedidos-=1
+		cocinarCarbon(pedidos)
+def cocinarComal(pedidos:int):
+	while (pedidos > 0):
 		sleep(random.random() * random.randint(3,6))
 		print("cocinando gorditas de comal")	
-		pedidosComal--
-		cocinarComal()
+		pedidos-=1
+		cocinarComal(pedidos)
 
 #creacion de ventana principal
 root = Tk() 
@@ -135,7 +157,7 @@ abrir_btn = Button(
             bg = "yellow",
             command=lambda: comenzarHilos(),
         )
-abrir.grid(row=4,column=1)
+abrir_btn.grid(row=4,column=1)
 # Execute Tkinter 
 root.mainloop()
 
