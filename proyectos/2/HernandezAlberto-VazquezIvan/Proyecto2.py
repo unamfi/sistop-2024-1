@@ -1,16 +1,19 @@
-import threading
+
+
 import tkinter as tk
 from tkinter import messagebox, simpledialog, Toplevel, Label, Button, Entry
-
-# Inventario inicial
-inventario = {}
+import threading
+import random
+import time
 
 # Condición para sincronizar el acceso al inventario
 condition = threading.Condition()
 
 class Aplicacion:
-    def __init__(self, master):
+    def __init__(self, master, inventario):
         self.master = master
+        self.inventario = inventario 
+        
         master.title('Manejador de Inventario')
 
         self.label_inventario = tk.Label(master, text="Inventario:")
@@ -29,21 +32,38 @@ class Aplicacion:
 
         self.boton_salir = tk.Button(master, text="Salir", command=self.salir)
         self.boton_salir.pack()
+        
+        self.iniciar_actualizaciones_automaticas()
+
+    def iniciar_actualizaciones_automaticas(self):
+        if self.inventario:  # Verifica si hay al menos un producto en el inventario
+            self.hilo_actualizador = threading.Thread(target=self.actualizar_inventario_automaticamente, daemon=True)
+            self.hilo_actualizador.start()
+        else:
+            messagebox.showerror("Error", "Debe haber al menos un producto en el inventario para iniciar las actualizaciones.")
+        
+        # Llamar a la función de actualización de la interfaz cada cierto tiempo
+        self.actualizar_inventario_interfaz()
+
+    def actualizar_inventario_interfaz(self):
+        self.actualizar_inventario_label()
+        self.master.after(5000, self.actualizar_inventario_interfaz)  # Actualizar cada 5 segundos (5000 ms)
 
     def actualizar_inventario_label(self):
-        for widget in self.frame_inventario.winfo_children():
-            widget.destroy()
-        for producto, cantidad in inventario.items():
-            Label(self.frame_inventario, text=f"{producto}: {cantidad}").pack()
+        with condition:
+            for widget in self.frame_inventario.winfo_children():
+                widget.destroy()
+            for producto, cantidad in self.inventario.items():
+                Label(self.frame_inventario, text=f"{producto}: {cantidad}").pack()
 
     def agregar_producto(self):
         producto = simpledialog.askstring("Agregar Producto", "Nombre del Producto:")
         if producto:
             with condition:
-                if producto in inventario:
+                if producto in self.inventario:
                     messagebox.showinfo("Información", "El producto ya existe.")
                 else:
-                    inventario[producto] = 0
+                    self.inventario[producto] = 0
                     condition.notify_all()
             self.actualizar_inventario_label()
 
@@ -78,8 +98,8 @@ class Aplicacion:
             return
 
         with condition:
-            if producto in inventario:
-                inventario[producto] += cantidad
+            if producto in self.inventario:
+                self.inventario[producto] += cantidad
                 condition.notify_all()
             else:
                 messagebox.showerror("Error", "El producto no existe.")
@@ -96,8 +116,8 @@ class Aplicacion:
             return
 
         with condition:
-            if producto in inventario and inventario[producto] >= cantidad:
-                inventario[producto] -= cantidad
+            if producto in self.inventario and self.inventario[producto] >= cantidad:
+                self.inventario[producto] -= cantidad
                 condition.notify_all()
             else:
                 messagebox.showerror("Error", "Stock insuficiente o el producto no existe.")
@@ -108,7 +128,19 @@ class Aplicacion:
     def salir(self):
         if messagebox.askokcancel("Salir", "¿Estás seguro de que quieres salir?"):
             self.master.destroy()
+    
+    def actualizar_inventario_automaticamente(self):
+        while True:
+            with condition:
+                for producto in self.inventario:
+                    cantidad = random.randint(1, 10)
+                    self.inventario[producto] += cantidad
+                    condition.notify_all()
+            time.sleep(random.randint(5, 10))
 
-root = tk.Tk()
-app = Aplicacion(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    inventario = {'Producto1': 20}  # Añade un producto inicial al inventario para que las actualizaciones puedan empezar
+    app = Aplicacion(root, inventario)
+
+    root.mainloop()  # Comienza el bucle de eventos para la aplicación
