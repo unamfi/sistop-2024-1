@@ -1,5 +1,7 @@
 import threading
 from colorama import Fore
+from random import choice
+from random import randint
 from time import sleep
 
 
@@ -44,8 +46,18 @@ def atencion(quien):
 #Se clasifica a un hilo(paciente) aleatoriamente y se modifica el arreglo que contiene las prioridades
 def clasificando_paciente(quien):
     global num_pacientes_urgencias
+    triage_clasificado = choice(triage_clasif)
     num_emergencias_pacientes[quien] = num_emergencias_pacientes[quien]-1
+    digo(quien,"El doctor me ha clasificado como prioridad: " + triage_clasificado)
+    print(color_doctor + "Soy el doctor y estoy libre de nuevo después de clasificar a " + str(quien))
     if num_emergencias_pacientes[quien] <= 0:
+        if(triage_clasificado=="Rojo"):
+            triage_rojo.append(quien)
+        if(triage_clasificado=="Amarillo"):
+            triage_amarillo.append(quien)
+        if(triage_clasificado=="Verde"):
+            triage_verde.append(quien)
+        num_pacientes_urgencias -= 1
         if(num_pacientes_urgencias == 0):
             print(color_doctor + "Todos los pacientes han sido clasificados.")
 
