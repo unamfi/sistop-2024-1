@@ -42,6 +42,20 @@ private static void TorreControl(CancellationToken token)
   ```
 Observamos que tiene una comunicación con el avión, por lo que, recibe las solicitudes de la operación a realizar. Se verifica esta solicitud con la parte `mensaje` y `_solicitd.Split(...)`, que separa el mensaje para revisar el avión y la acción a realizar; considerando este indica si se puede o no realizar la acción. 
 
+
+Por otro lado, el avión puede solicitar una acción utilizando la variable `_solicitud`, en la cual se envía el mensaje _codificado_, el cual consiste en el id del avión, y la acción que desea realizar.
+Estas acciones son aterrizar y despegar.
+```csharp
+    private static void Avion(int id, TipoAvion tipo)
+    {
+        ...
+        AnsiConsole.MarkupLine($"[{color}]:airplane:({tipoStr}) Avión {id} solicita aterrizaje.[/]");
+        ComunicacionAvion.Wait();
+        _solicitud = $"{id},aterrizar";
+        ComunicacionTorre.Release();
+        ...
+```
+
 Una vez que un avión aterriza, este se retira a un andén, donde se descarga, y posteriormente vuelve a ser cargado para realizar otro viaje.
 
 ```csharp
@@ -55,20 +69,6 @@ Una vez que un avión aterriza, este se retira a un andén, donde se descarga, y
         Thread.Sleep(Random.Shared.Next(1000, 4000));
         anden.Release();
         AnsiConsole.MarkupLine($"[{color}]:airplane:({tipoStr}) Avión {id} solicitando despegue.[/]");
-        ...
-```
-
-
-Por otro lado, el avión puede solicitar una acción utilizando la variable `_solicitud`, en la cual se envía el mensaje _codificado_, el cual consiste en el id del avión, y la acción que desea realizar.
-Estas acciones son aterrizar y despegar.
-```csharp
-    private static void Avion(int id, TipoAvion tipo)
-    {
-        ...
-        AnsiConsole.MarkupLine($"[{color}]:airplane:({tipoStr}) Avión {id} solicita aterrizaje.[/]");
-        ComunicacionAvion.Wait();
-        _solicitud = $"{id},aterrizar";
-        ComunicacionTorre.Release();
         ...
 ```
 
