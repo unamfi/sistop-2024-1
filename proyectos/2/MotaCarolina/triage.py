@@ -27,6 +27,14 @@ def digo(num, msg):
     mi_color = color_texto[num % len(color_texto)]
     print(mi_color + '%4d // %d: %s' % (contador, num, msg))
 
+#Se adquiere con acquire
+def revision_medica(quien):
+    dudas[(quien + 1) % num_pacientes].acquire()
+
+#Se cede el control con release
+def atencion(quien):
+    dudas[(quien + 1) % num_pacientes].release()
+    clasificando_paciente(quien)
 
 #Se clasifica a un hilo(paciente) aleatoriamente y se modifica el arreglo que contiene las prioridades
 def clasificando_paciente(quien):
@@ -43,7 +51,9 @@ def clasificando_paciente(quien):
 def salaUrgencias(quien):
     global contador
     mut_contador.acquire()
+    revision_medica(quien)
     contador += 1
+    atencion(quien)
     if (contador==energia_doctor):
         exit()
     mut_contador.release()
