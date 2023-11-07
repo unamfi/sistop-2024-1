@@ -1,55 +1,57 @@
 import threading
-import tkinter as tk
-from tkinter import messagebox, simpledialog
 
-# Parámetros del inventario
-inventario = {'producto': 10}
+# Inventario inicial como un diccionario vacío
+inventario = {}
 
-# Condición para sincronizar el acceso al inventario
+# Objeto Condition para controlar el acceso concurrente al inventario
 condition = threading.Condition()
 
-class Aplicacion:
-    def __init__(self, master):
-        self.master = master
-        master.title('Manejador de Inventario')
+def agregar_producto():
+    producto = input("Introduce el nombre del producto a agregar: ")
+    with condition:
+        if producto in inventario:
+            print("El producto ya existe.")
+        else:
+            inventario[producto] = 0
+            condition.notify_all()
+    mostrar_inventario()
 
-        self.label_inventario = tk.Label(master, text=f"Inventario: {inventario['producto']}")
-        self.label_inventario.pack()
+def modificar_stock():
+    producto = input("Introduce el nombre del producto a modificar: ")
+    cantidad = int(input("Introduce la cantidad a modificar (negativo para despachar): "))
+    with condition:
+        if producto in inventario and (inventario[producto] + cantidad) >= 0:
+            inventario[producto] += cantidad
+            condition.notify_all()
+        else:
+            print("Stock insuficiente o el producto no existe.")
+    mostrar_inventario()
 
-        self.boton_agregar = tk.Button(master, text="Agregar Stock", command=self.agregar_stock)
-        self.boton_agregar.pack()
+def mostrar_inventario():
+    print("Inventario actualizado:")
+    for producto, cantidad in inventario.items():
+        print(f"{producto}: {cantidad}")
 
-        self.boton_despachar = tk.Button(master, text="Despachar Stock", command=self.despachar_stock)
-        self.boton_despachar.pack()
+def menu():
+    while True:
+        print("\n-- Manejador de Inventario --")
+        print("1. Agregar producto nuevo")
+        print("2. Modificar stock de un producto")
+        print("3. Mostrar inventario")
+        print("4. Salir")
+        opcion = input("Introduce una opción: ")
+        if opcion == '1':
+            agregar_producto()
+        elif opcion == '2':
+            modificar_stock()
+        elif opcion == '3':
+            mostrar_inventario()
+        elif opcion == '4':
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida. Por favor, intenta de nuevo.")
 
-        self.boton_salir = tk.Button(master, text="Salir", command=self.salir)
-        self.boton_salir.pack()
-
-    def actualizar_inventario_label(self):
-        self.label_inventario['text'] = f"Inventario: {inventario['producto']}"
-
-    def agregar_stock(self):
-        cantidad = simpledialog.askinteger("Agregar Stock", "Cantidad:", minvalue=1)
-        if cantidad:
-            with condition:
-                inventario['producto'] += cantidad
-                condition.notify_all()
-            self.actualizar_inventario_label()
-
-    def despachar_stock(self):
-        cantidad = simpledialog.askinteger("Despachar Stock", "Cantidad:", minvalue=1)
-        if cantidad:
-            with condition:
-                if inventario['producto'] < cantidad:
-                    messagebox.showerror("Error", "No hay suficiente stock.")
-                    return
-                inventario['producto'] -= cantidad
-            self.actualizar_inventario_label()
-
-    def salir(self):
-        if messagebox.askokcancel("Salir", "¿Estás seguro de que quieres salir?"):
-            self.master.destroy()
-
-root = tk.Tk()
-app = Aplicacion(root)
-root.mainloop()
+# Inicio del programa
+if __name__ == "__main__":
+    menu()
