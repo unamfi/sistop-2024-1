@@ -1,0 +1,40 @@
+Mota García Carolina
+
+Explicación del programa:
+
+Definimos los procesos a partir de una clase que les asigna su id (o nombre), en qué tick llegan y 
+el tiempo t que durará su proceso.
+
+Definiendo los procesos como listas de estos procesos (procesosn)
+
+Al tener la lista de procesos (procesos1, procesos2, …, procesosn) se añaden todas a una nueva lista que 
+incluye todos los ejemplos de procesos (procesosTotales)
+
+Se mandan cada uno de los elementos de la lista procesosTotales que son listas de procesos a la función rondas 
+que le pondrá un poco de formato visual y  ordenará los procesos contenidos en procesosn respecto a su orden de llegada. 
+Posteriormente, mandará la lista de procesosn a cada uno de los algoritmos.
+
+Para FCFS:
+Como ya están los procesosn en orden de llegada, simplemente se realizan por orden cada uno de los procesos hasta agotar 
+su tiempo t.
+
+Para RR1:
+Se define la cantidad de ticks máximo que usarán todos los procesos sumados para finalizar el programa únicamente cuando 
+los ticks transcurridos sea igual a los ticks máximos.
+El algoritmo consiste en que, por orden de llegada (si es que ha llegado el proceso) se resolverá un t de un proceso y se 
+pasará el control al siguiente proceso que resolverá un único t. Este proceso se realiza únicamente si el proceso que tiene 
+el control, su tiempo t no ha terminado (es decir, aún no termina su tarea).
+
+Para RR4:
+Se define la cantidad de ticks máximo que usarán todos los procesos sumados para finalizar el programa únicamente cuando los 
+ticks transcurridos sea igual a los ticks máximos.
+El algoritmo consiste en que, por orden de llegada (si es que ha llegado el proceso) se resolverán cuatro t de un proceso y se 
+pasará el control al siguiente proceso que resolverá cuatro t. Este proceso se realiza únicamente si el proceso que tiene el 
+control, su tiempo t no ha terminado (es decir, aún no termina su tarea). Si su tiempo t ha terminado antes de que hayan 
+terminado los cuatro ciclos de RR4, simplemente cederá el control.
+
+Para SPN:
+Se revisa constantemente por el proceso con menor t original y que cumpla con que ya haya llegado. Si cumple ambas condiciones, 
+realizará todos sus t completos.
+
+

@@ -1,0 +1,573 @@
+* Comentarios generales
+
+1. *¿Por qué tanto =sleep()=*
+
+   Eduardo y Enrique me hicieron un muy buen comentario; me permito rescatarlo,
+   creo que es de interés de todos:
+
+   #+begin_quote
+    En el código se nota mejor la disminución de la inanición si se quitan los
+    "sleep", pero fueron puestos para poder visualizar de mejor forma como
+    sucedía la concurrencía y que lo hiciera sin errores.
+   #+end_quote
+
+   Mi respuesta:
+
+   No comprendan al =sleep()= como parte de /la inanición/. Como les comenté al
+   inicio de esa unidad, el =sleep()= en nuestros programas cumple tres
+   propósitos:
+   1. /Simula el trabajo real/. Nuestros problemas son únicamente jueguitos
+      conceptuales, que /modelan interacción/ que opera en el mundo real, con
+      cargas paralelizables /de las cuales carecemos/.
+   2. El usuario humano no puede apreciar muchos patrones de interacción, y por
+      eso las /alentejamos/ artificialmente
+   3. Para /forzar la mano/ del planificador de Python y obligarlo a alternar
+      entre hilos en programas demasiado simples para que realmente ocurra la
+      interacción que proponemos
+   4. Seguro podemos encontrar otras razones 😉 Pero bueno, la inanición se
+      produce como un /patrón subóptimo/, independientemente de la escala de
+      tiempo. Si tenemos un sistema con inanición, ésta se presentará /de alguna
+      manera/ incluso si reducimos u omitimos los =sleep()=. Tal vez con menor
+      intensidad... pero estará ahí.
+2. *Ubicación de los comentarios*
+
+   He visto que es común que sigan el siguiente patrón al escribir sus
+   comentarios:
+   #+begin_src python
+     while True: # Ciclo infinito para que el trabajador no termine su ejecución nunca (a menos que se cierre el programa).
+
+     num_alumnos =  random.randint(1,20) #numero de alumnos que quieren una asesoria con el profesor
+     semprofesor = threading.Semaphore(1)  # Semáforo para controlar acceso al profesor
+     semalumnos = threading.Semaphore(capacidadMax-1)   # Semáforo para controlar número de alumnos en el cubiculo, se puede ver como las sillas disponibles
+
+     conexiones = [] # Aquí se tendrá un arreglo compartido de conexiones para que los hilos puedan responder la cnexión correspondiente
+     def jefe(conexion): # Preguntar si el jefe será un hilo o podemos manejarlo únicamente de esta manera
+
+     mutex = threading.Semaphore(1)  # Para garantizar exclusión mutua
+     gato_comiendo = threading.Semaphore(0)  # Inicializado en 0 para que el gato espere a que termine el ratón
+     raton_comiendo = threading.Semaphore(0)  # Inicializado en 0 para que el ratón espere a que termine el gato
+   #+end_src
+   Si bien esto es válido, y "pega" el comentario a /lo comentado/, va quedando
+   demasiado ancho, lo cual dificulta la lectura
+   - Se considera /de buen estilo/ no escribir código más ancho que 80
+     columnas, de ser posible
+   - Para escribir un volúmen de texto mayor a 3 o 4 palabras, consideren poner
+     los comentarios /en la línea anterior/ al objeto descrito, y /no a la
+     derecha/ del mismo.
+   - Y claro, estas son /recomendaciones de estilo/, no requisitos de ninguna
+     manera. El código que escriben es válido. (¡o tengo que reportarles dónde
+     /torció el rabo/!)
+3. *No te repitas (Don't Repeat Yourself, DRY)*
+
+   Es muy frecuente ver en su código que el cuerpo de una función se repite,
+   sobre todo en casos como la /intersección de caminos/ o el /cruce de la
+   balsa/, en que todos los hilos son de desarrollo potencialmente igual, con
+   diferencias en algún detalle circunstancial.
+
+   Para código tan sencillo como esta tarea, no es gran cosa... pero los hábitos
+   de programación se forman de muchos pequeños micro-hábitos. Les sugiero muy
+   fuertemente siempre preguntarse si es posible /repetirse menos/.
+
+   DRY surge de la observación de un /anti-patrón/ o de un /olor de código/ en
+   que hay código muy similar repetido. El problema con esto es que si
+   acostumbran escribir así, a futuro tendrán código de muy difícil
+   mantenimiento, y tendrán que estar recordando corregir el mismo detalle /en
+   múltiples lugares/. Siempre que realicen los mismos pasos con muy pequeñas
+   modificaciones entre uno y otro, piensen si es posible extraerlo a una
+   función o parametrizarlo de forma que haya una única copia.
+
+* Calificaciones
+
+** Becerril Erick
+- Documentación :: [[./BecerrilErick/Informacion.md][Informacion.md]]
+- Archivos :: [[./BecerrilErick/Elevador.py][Elevador.py]]
+- Problema resuelto :: El elevador
+- Comentarios ::
+  - Ojo con la redacción 😉
+    - Cuando dices que /Python es un lenguaje mucho más fácil de leer y de
+      escribirse/, tendrías que cerrar tu comparación: ¿Más fácil que qué?
+    - No puedes usar /demasiadas/ para describir algo bueno. Si el lenguaje
+      tiene /demasiadas bibliotecas/, suena a que /hay tantas que me costó
+      trabajo encontrar la buena/...
+  - ¡Excelente que uses un mecanismo de sincronización distinto de los que vimos
+    en clase!
+  - Pero... ¡El código no es funcional! ¡Y por poquitito! 🙁
+    #+begin_src diff
+      diff --git a/tareas/1/BecerrilErick/Elevador.py b/tareas/1/BecerrilErick/Elevador.py
+      index f90682a..4cb0d49 100644
+      --- a/tareas/1/BecerrilErick/Elevador.py
+      +++ b/tareas/1/BecerrilErick/Elevador.py
+      @@ -32,7 +32,7 @@ class Elevador:
+			       self.usuarios.remove(usuario)
+ 
+		   if not self.usuarios and self.todos_han_llegado.is_set():
+      -                print(Todos los usuarios han llegado a su destino. Deteniendo el elevador.)
+      +                print('Todos los usuarios han llegado a su destino. Deteniendo el elevador.')
+		       break
+ 
+		   if self.piso_actual == 5:
+    #+end_src
+    - Esto es: El código tal como lo pusiste /no es funcional/, porque no puede
+      ejecutarse. Agregando las comillas (='=) ya funciona todo bien.
+- Calificación :: 8
+
+** Ceniceros Mariaca, Ramirez Martinez
+- Archivos :: [[./CenicerosMariaca-RamirezMartinez/Tarea1.html][Tarea1.html]], [[./CenicerosMariaca-RamirezMartinez/webServer.py][webServer.py]]
+- Problema resuelto :: Servidor Web
+- Comentarios ::
+  - ¡Muy bien! Implementación sencilla y al punto.
+    - No es para menos: el problema es muy sencillo. ¡pero es lo que corre en el
+      verdadero corazón de muchísimos proyectos reales de servidor en el mundo!
+  - ¡Pero ojo! Cayeron en un error muy habitual en que caemos los novatos en
+    Python:
+    #+begin_src diff
+
+      diff --git a/tareas/1/CenicerosMariaca-RamirezMartinez/webServer.py b/tareas/1/CenicerosMariaca-RamirezMartinez/webServer.py
+      index 4751c7e..17b6c05 100644
+      --- a/tareas/1/CenicerosMariaca-RamirezMartinez/webServer.py
+      +++ b/tareas/1/CenicerosMariaca-RamirezMartinez/webServer.py
+      @@ -40,7 +40,7 @@ def Boss():
+	       print('      Boss: Esperando conexion de red...\n')
+	       requestClient.acquire()
+	       print('      Boss: Despertando a un trabajador...\n')
+      -        wakeWorker.release
+      +        wakeWorker.release()
+	       print('      Boss: Creando nuevo trabajador...\n')
+	       threading.Thread(target=worker, args=[]).start()
+    #+end_src
+    - Esto es: el codigo tal como lo pusieron /no es funcional/, porque no se
+      está liberando el semáforo. Pero agregando el =()= ya funciona todo bien.
+- Calificación :: 8
+
+** Cervantes Eduardo, Nuñez Enrique
+- Documentación :: [[./CervantesEduardo-NuñezEnrique/README.md][README.md]]
+- Archivos :: [[./CervantesEduardo-NuñezEnrique/Interseccion_de_caminos.py][Interseccion_de_caminos.py]]
+- Problema resuelto :: Intersección de caminos
+- Comentarios ::
+  - ¡Muy bien por lanzarse a resolver con un refinamiento! 😃
+  - Dejé la respuesta a uno de sus comentarios en la sección de /comentarios
+    generales/.
+  - Buena implementación, y muy bien documentada. ¡Un gusto!
+    - Como comentario para mejorar su código, sugeriría modularizar y adoptar el
+      /enfoque DRY: Don't Repeat Yourself/ (lee la nota general al respecto,
+      arriba) por los segmentos de la función =intersection_change(a, carril)=,
+      lín. 26–58.
+      - Pero en realidad, es la repetición del mismo código dentro de una
+        condicional sobre =carril=, de ==carril == 1= a =carril == 4=,
+        variando únicamente el nombre de la variable a considerar
+      - Sería mejor, en vez de cuatro arreglos tener un arreglo multidimensional
+        =interseccion=, y referirse a =interseccion[carril]=. ¡Listo! Menor
+        repetición 😃
+- Calificación :: 10
+
+** Chagoya Gonzalez
+- Documentación :: [[./ChagoyaGonzalez/ejercicio.txt][ejercicio.txt]]
+- Archivos :: [[./ChagoyaGonzalez/ejercicio.py][ejercicio.py]]
+- Problema resuelto :: Los alumnos y el asesor
+- Comentarios ::
+  - Desafortunadamente, como ustedes mismos lo identifican en su resolución, la
+    interacción no es todo lo profunda que debería ser 🙁
+  - En realidad, el profesor se va mucho antes de terminar su jornada. El
+    profesor /atiende/ únicamente mientras su hilo está vivo. Si movemos la
+    línea 79 (=print('Se ha terminado...')=) a su lugar correcto (línea 52, pero
+    /fuera/ del =while=), pueden ve que el profesor se fue mucho antes de
+    tiempo.
+    - No es necesario sólo un =mutex= para que no hablen dos alumnos a la vez,
+      hace falta también una (¡o varias!) =señalización= para que el profe
+      interactúe con los alumnos /como se debe/, como ustedes lo identificaron.
+    - No reporten =Alumno {id_alumno} está hablando con el profesor=. El hilo
+      =alumno()= sólo debe poder decir lo que dice el alumno, y /únicamente el
+      hilo =profesor()= debe poder contestarle/.
+- Calificación :: 7
+
+** Cruz Vargas, Garciliano Diaz
+- Archivos :: [[./CruzVargas-GarcilianoDiaz/detalles.org][detalles.org]], [[./CruzVargas-GarcilianoDiaz/tarea.py][tarea.py]]
+- Problema resuelto :: El servidor Web
+- Comentarios ::
+  - ¡Excelente que consideren dar instrucciones al despistado que lo ejecuta sin
+    revisar detalles!
+  - ¡Excelente que faciliten la lectura por rol de la salida!
+  - ... Pero me parece que la sincronización no está funcionando correctamente 🙁
+    - Cuando generamos únicamente un trabajador, tras algunos segundos, el jefe
+      sigue recibiendo solicitudes sin parar a asegurarse de que haya quién la
+      atienda:
+      #+begin_src text
+	$ python3 tarea.py 1
+	(...)
+	Jefe: Recibiendo petición 32
+	Jefe: Recibiendo petición 33
+	tepvb
+	Trabajador 0: Terminó de ejecutarse None, se enviaron 1197196 bytes.
+	Trabajador 0: Atendiendo petición 4
+	Jefe: Recibiendo petición 34
+	Jefe: Recibiendo petición 35
+	(...)
+      #+end_src
+      - Bueno, pero me van a decir que ese requisito no estaba bien
+        formulado. ¡Tienen razón! Tengo que afinar mi planteamiento
+    - En tanto, si generamos 100 trabajadores:
+      #+begin_src text
+	$ python3 tarea.py 1
+	(...)
+	Trabajador 12: Terminó de ejecutarse None, se enviaron 690964 bytes.
+	Trabajador 12: Atendiendo petición 472
+	Jefe: Recibiendo petición 53
+	ogudc
+	Trabajador 60: Terminó de ejecutarse None, se enviaron 2071119 bytes.
+	Trabajador 60: Atendiendo petición 473
+      #+end_src
+      - ¡Estamos atendiendo solicitudes /que no han llegado aún/!
+      - Parte (por lo menos) del error viene de la línea 51: El
+        =self.mutex.release()= tras crear el hilo resulta innecesario...
+      - Además, en la línea 32, el =trabajador()= hace un
+        =self.mutex.release()=... ¡sobre un semáforo que no están usando como
+        mutex! (el uso /real/ que quieren darle es el de señalización).
+      - Corrigiendo eso, ya se maneja un ritmo más consistente, incluso si
+        lanzamos /muchísimos/ trabajadores:
+	#+begin_src text
+	  $ python3 tarea.py 1000
+	  (...)
+	  Trabajador 308: Terminó de ejecutarse None, se enviaron 1203502 bytes.
+	  Jefe: Recibiendo petición 322
+	  Trabajador 322: Atendiendo petición 311
+	  Jefe: Recibiendo petición 323
+	  Trabajador 323: Atendiendo petición 311
+	  cctdi
+	  Trabajador 316: Terminó de ejecutarse None, se enviaron 1069064 bytes.
+	  Jefe: Recibiendo petición 324
+	  Trabajador 324: Atendiendo petición 312
+	  tgdnj
+	  (...)
+	#+end_src
+- Calificación :: 7.5
+
+** Galvan Ricardo
+- Documentación :: [[./GalvanRicardo/Tarea1.txt][Tarea1.txt]]
+- Archivos :: [[./GalvanRicardo/cruceDelRio.py][cruceDelRio.py]]
+- Problema resuelto :: El cruce del río
+- Comentarios ::
+  - Hmmm... ¡Interesante! Creo que es la primera vez que veo una estrategia como
+    la que propones.
+    - Y a pesar de que la describes, tuve que revisar bien la implementación y
+      la ejecución para entender la lógica. ¡Interesante! =[11,12,13,15]= no es
+      una combinación lgal, así que se cambia =11= por =14=:
+      #+begin_src text
+	Viajamos en la balsa: [11, 12, 13, 15] 
+	Viajamos los hackers: [12] y los serfs: [11, 13, 15]
+	[11]: Soy serf, Me bajo de la balsa
+	[14]: Soy hacker, Me subo a la balsa
+      #+end_src
+    - Lo que no entiendo aún es por qué en varios casos se bajan incluso los
+      cuatro, para volver a subir a otros 4 de la misma alineación:
+      #+begin_src text
+	Viajamos en la balsa: [17, 18, 19, 16] 
+	Viajamos los hackers: [18, 16] y los serfs: [17, 19]
+	[17]: Soy serf, Me bajo de la balsa
+	[19]: Soy serf, Me bajo de la balsa
+	[16]: Soy hacker, Me bajo de la balsa
+	[18]: Soy hacker, Me bajo de la balsa
+      #+end_src
+    - Como sea... ¡Ojo! no estás protegiendo el acceso a =hackersDentro= o a
+      =serfsDentro= con un mutex. No me parece que =multiplex= proteja de acceso
+      concurrente.
+- Calificación :: 9
+
+** Garces Carlos, Jimenez Patricia
+- Documentación :: [[./GarcesCarlos-JimenezPatricia/README.md][README.md]]
+- Archivos :: [[./GarcesCarlos-JimenezPatricia/Ejercicio1.py][Ejercicio1.py]]
+- Problema resuelto :: El servidor Web
+- Comentarios ::
+  - Así es, lo único que hace falta para resolver este problemita es una
+    /señalización/
+    - Tal vez sea demasiado sencillo... ¡pero cumple a la perfección con lo que
+      les solicité!
+    - (... ¿me toca dificultar el planteamiento /pa'l futuro/?)
+- Calificación :: 10
+
+** Gomez, Juan Pablo
+- Documentación :: [[./Gomez_JuanPablo/Detalles.txt][Detalles.txt]]
+- Archivos :: [[./Gomez_JuanPablo/Tarea1-Sistop.py][Tarea1-Sistop.py]]
+- Problema resuelto :: Santa Claus
+- Comentarios ::
+  - Desafortunadamente, me parece que no cumples con las premisas del
+    planteamiento 🙁
+  - Los =elfos= no se juntan de 3 en 3 para recibir la ayuda de Santa Claus
+    - Sólo se aseguran con =mutex= de recibirla de uno en uno
+    - =santa_claus()= incluye como parte de su recorrido anual el ayudar a tres
+      elfos después del paseo en trineo, ¡pero los elfos no esperan por éste
+    - Lo mismo con los renos: =santa_claus()= espera a que vengan 9, ¡pero
+      pueden haberse ya retirado al Caribe de vuelta para cuando éste se
+      despierta!
+- Calificación :: 7.5
+
+** Hernandez Alberto Vazquez Ivan
+- Documentación :: [[./HernandezAlbertoVazquezIvan/HernandezAlbertoVazquezIvan.txt][HernandezAlbertoVazquezIvan.txt]]
+- Archivos :: [[./HernandezAlbertoVazquezIvan/HernandezAlbertoVazquezIvan.py][HernandezAlbertoVazquezIvan.py]]
+- Problema resuelto :: Los alumnos y el asesor
+- Comentarios ::
+  - Tal vez sea problema de redacción en mi planteamiento. ¡Realmente quieres
+    hablar con tu asesor! Si no hay lugar en el cubículo, ¡te quedas parado
+    frente a la puerta hasta que alguien sale y libera una silla! ¿Qué es eso de
+    «no encontró espacio en el cubículo y se fue»? 😉
+  - ¡Uy! El profe es medio mala onda... En vez de esperar a que salgan los
+    estudiantes que están hablando con él, cada 1800 segundos (½ hora) dice
+    "permisííííííto", y se echa a dormir
+    - En realidad, tendría que estar durmiendo hasta que el primer alumno tocara
+      a su puerta
+    - y volver a ponerse a dormir si la lista de alumnos que quiere hablarle sea
+      de longitud 0 (y sus sillas estén vacías).
+    - Ahí está, a fin de cuentas, la respuesta a la pregunta que me planteas: El
+      profesor puede quedarse dormido ante un =acquire()=, aunque éste llegue
+      hasta el otro día — o, más elegante, sí podrías regalarle un monitoreo con
+      un =time.sleep(1800)= (o cuanto fuera) para que, al terminar su turno,
+      dijera «Bueeeeno, ¡hora de irme a casita!».
+  - Los alumnos no esperan a la interacción con el profesor
+    - Hacen sus preguntas, pero simulan la respuesta con un =time.sleep(1)=, no
+      esperan a que el profesor les resuelva la duda
+- Calificación :: 8
+
+** Hernandez Jonathan, Perez Paola
+- Documentación :: [[./HernandezJonathan-PerezPaola/README.md][README.md]]
+- Archivos :: [[./HernandezJonathan-PerezPaola/elevador.py][elevador.py]]
+- Problema resuelto :: El elevador
+- Comentarios ::
+  - ¡Guau! ¡Buenísimo! Nadie me había sugerido su estrategia para reducir la
+    inanición. ¡Me encantó! 😃
+  - Muy buen documento de apoyo, ayuda bien a comprender el desarrollo del
+    código.
+- Calificación :: 10
+
+** Hernandez Samuel
+- Documentación :: [[./HernandezSamuel/Tarea1.txt][Tarea1.txt]]
+- Archivos :: [[./HernandezSamuel/tarea1.py][tarea1.py]]
+- Problema resuelto :: Los alumnos y el asesor
+- Comentarios ::
+  - Tu respuesta es *casi* correcta... pero no considera algo importante: Para
+    poder responder al estudiante, ¡el =profesor()= tiene que estar vivo!
+    - El =profesor()= está vivo (activo) mientras no haya terminado la ejecución
+      de su función. ¿Qué pasa si al terminar la función agregamos (línea 27) un
+      mensaje?
+
+      #+begin_src python
+	print('*** El profesor termina su turno y se va.')
+      #+end_src
+    - ...¡Parecería que sigue habiendo interacción!
+      #+begin_src text
+	El profesor ha terminado de atender al estudiante.
+	El profesor ha terminado de atender al estudiante.
+	Estudiante 4 sale del cubículo.
+	Estudiante 2 entra al cubículo.
+	*** El profesor termina su turno y se va.
+	El profesor se despierta y atiende al estudiante.
+	Estudiante 5 pregunta al profesor.
+	Estudiante 3 quiere hacer una pregunta.
+	Estudiante 3 entra al cubículo.
+	El profesor ha terminado de atender al estudiante.
+	Estudiante 5 sale del cubículo.
+      #+end_src
+      ...Esto ocurre porque la respuesta /no te la da el profesor/, sino que el
+      alumno mismo
+      #+begin_src python
+	def estudiante(numero):
+	    preguntas_hechas = 0
+	    while preguntas_hechas < preguntas_por_estudiante:
+		# El estudiante quiere hacer una pregunta
+		print(f"Estudiante {numero} quiere hacer una pregunta.")
+		cubiculo.acquire()
+
+		# El estudiante entra al cubículo
+		print(f"Estudiante {numero} entra al cubículo.")
+
+		# El profesor se despierta y atiende al estudiante
+		mutex.acquire()
+		print("El profesor se despierta y atiende al estudiante.")
+
+		# Realiza su pregunta
+		print(f"Estudiante {numero} pregunta al profesor.")
+		time.sleep(1)  # Simula la respuesta del profesor
+		preguntas_hechas += 1
+
+		# Termina su turno
+		print("El profesor ha terminado de atender al estudiante.")
+		mutex.release()
+      #+end_src
+    - No debería ser el alumno el que dé respuesta a sus preguntas (a menos
+      que...  ¿más que un profesor sea una sesión de psicoanálisis? 😉)
+- Calificación :: 8
+
+** Lara Aguilar, Zuñiga Reyes
+- Documentación :: [[./LaraAguilar-ZuñigaReyes/Tarea1SO.pdf][Tarea1SO.pdf]]
+- Archivos :: [[./LaraAguilar-ZuñigaReyes/Tarea1SO.py][Tarea1SO.py]]
+- Problema resuelto :: El servidor Web
+- Comentarios ::
+  - La resolución es correcta en lo general: Lo más importante para resolver
+    este planteamiento es la /señalización/ que manejas con =trabajadores= entre
+    =jefe()= y =trabajador()es=. Sin embargo...
+    - No proteges al arreglo =trabajadores_disponibles= de accesos simultáneos
+      mediante un /mutex/.
+    - Al lanzar un =trabajadores.release()= desde =trabajador()=, incrementan el
+      contador más allá de lo que requiere la /señalización/, pierde su
+      funcionalidad.
+    - Sin embargo, si comentas la línea #35 (=trabajadores.release()=), funciona
+      correctamente.
+- Calificación :: 9
+
+** Lopez Ernesto
+- Documentación :: [[./LopezErnesto/ErnestoLopez_Tarea1.txt][ErnestoLopez_Tarea1.txt]]
+- Archivos :: [[./LopezErnesto/cruce_rio.py][cruce_rio.py]], [[./LopezErnesto/servidor_web.py][servidor_web.py]]
+- Problema resuelto :: El cruce del río / El servidor Web
+- Comentarios ::
+  - Notarás que me tardé bastante más de lo que les prometí en evaluar la
+    tarea...
+    - Es una tarea difícil de evaluar: No voy sobre los resultados, sino sobre
+      el desarrollo de código de cada uno de ustedes
+    - Formalmente, tendría que enfocarme en /una sola solución/ por parte de
+      cada equipo
+    - Pero bueno... Como sea, ¡muy bien por resolver más allá de lo que les
+      planteo!
+  - Respecto al /Servidor Web/:
+    - Apuntas en comentario que quedaba pendiente preguntar si el =jefe()= tenía
+      que ser un hilo explícito. Recuerda que el hilo /base/ de un proceso es
+      tan hilo como todos los demás, así que tu estrategia es válida.
+    - El semáforo =mutex_trabajador= no implementa un patrón =mutex=, sino
+      =señalización=. El =jefe()= lo va liberando conforme van llegando nuevas
+      conexiones, y eso va despertando =trabajador()es=.
+    - Ojo que no estás protegiendo =conexones= de acceso concurrente: Si bien en
+      =trabajador()= sí usas =mutex_conexion= para hacer =conexiones.pop(0)=, no
+      lo haces en =jefe()=.
+    - La información de contabilidad no llega de vuelta a
+      =jefe()=. Piensa... ¿podrías hacérsela llegar con el diseño actual, de
+      forma que tras cierto tiempo imprimiera el tiempo que ha atendido cada uno
+      de los trabajadores?
+  - Respecto al /Cruce del río/:
+    - ¡Bien! ¡Un alumno por lo menos le trabajó a la representación visual del
+      problema (del /cruce del río/) 😃
+    - La resolución es correcta, no me dejas mucho que agregar
+    - Revisa la nota general: /DRY: No te repitas/
+- Calificación :: 10
+
+** Martínez Pedro
+- Documentación :: [[./MartínezPedro/PMV_GatosyRatones.txt][PMV_GatosyRatones.txt]]
+- Archivos :: [[./MartínezPedro/GatosyRatones.py.py][GatosyRatones.py.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - ¡Piensa en la comodidad de tus lectores más que en la tuya misma!
+
+    En vez de exigirles que /abran el .txt en pantalla completa/, resulta más
+    “considerado” que ajustes el ancho de tu página. Típicamente se considera
+    que un documento de texto debe cortar a los ≈80 caracteres para verse bien
+    en configuraciones estándar y todo tipo de dispositivos.
+    - ¡No dirijas tu documentación a un usuario único! Puede haber cientos de
+      personas que descarguen tu código del repositorio. No pienses únicamente
+      en mí como lector.
+  - Indicas que decidiste usar semáforos, pero no indicas /qué patrones/ usaste
+    para ello. Veo que por lo menos usas un mutex (llamado =mutex=) y dos
+    apagadores cruzados (=gato_comiendo= y =raton_comiendo=).
+    - Sin embargo... Me parece que lo que implementaste no permite el nivel de
+      concurrencia deseable (únicamente puede utilizarse un plato a la vez: No
+      hay nada que verifique si hay lugar en los platos, sólo hay un estado
+      “comiendo” posible, tal vez innecesariamente protegido por el =mutex=)
+    - Tanto =gato()= como =raton()= son muy caballerosos y /ceden el turno/ al
+      terminar su rato de alimento, dando un =release()= a la clase contraria.
+      ¡Pero nunca verifican si su enemigo histórico natural está en la zona! (no
+      implementaste nada que verificara si existe posibilidad de que el gato
+      /atrape/ al ratón, por más que no le guste hacerlo)
+- Calificación :: 8
+
+** Martínez Santiago
+- Documentación :: [[./MartínezSantiago/descripcion_problema.txt][descripcion_problema.txt]]
+- Archivos :: [[./MartínezSantiago/ejercicio_gatos.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Entregado a tiempo; lo recibo extemporáneo por confusión con el directorio
+    de entrega
+- Calificación :: 
+
+** Miranda Víctor
+- Documentación :: [[./MirandaVictor/MirandaVictor_Tarea1.pdf][MirandaVictor_Tarea1.pdf]]
+- Archivos :: [[./MirandaVictorT1.cpp][MirandaVictorT1.cpp]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Entregado a tiempo; lo recibo extemporáneo por confusión con el directorio
+    de entrega
+- Calificación :: 
+
+** Moreno Edgar, Osorio Rodrigo
+- Documentación :: [[./MorenoEdgar-OsorioRodrigo/README.md][README.md]], [[./MorenoEdgar-OsorioRodrigo/img/fin_programa.png][fin_programa.png]], [[./MorenoEdgar-OsorioRodrigo/img/inicio_programa.png][inicio_programa.png]]
+- Archivos :: [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/CatsAndRats.sln][CatsAndRats.sln]], [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/sistop/CatsAndRats.cs][CatsAndRats.cs]], [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/sistop/Program.cs][Program.cs]], [[./MorenoEdgar-OsorioRodrigo/CatsAndRats/sistop/sistop.csproj][sistop.csproj]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Disculpa aceptada 🙃 Espero que no se sientan ofendidos si me limito a leer
+    y comentar el código, sin llegar a ejecutarlo (me duele mover tantos bits
+    para instalar .NET, para tener que borrarlos poquito después...)
+  - ¡Buenísimo por permitir especificar los parámetros desde línea de comando!
+  - Jejeje, me gusta esa parte de la /lógica macabra/ en que es responsabilidad
+    del ratón verificar si fue aniquilado por la presencia de un gato 😉 (no
+    debería ser así, pero... ¡Fuera de ese detalle, manejan una sincronización
+    explícita muy buena!)
+- Calificación :: 10
+
+** Mota Carolina
+- Documentación :: [[./MotaCarolina/TareaCubiculo.html][TareaCubiculo.html]]
+- Archivos :: [[./MotaCarolina/TareaCubiculo.py][TareaCubiculo.py]]
+- Problema resuelto :: Los alumnos y el asesor
+- Comentarios ::
+  - Viendo la ejecución, ¡me emocioné! Salida bonita, colorizada. Buen
+    intercambio de contextos. Sin embargo... no entiendo bien los puntos en que
+    van siendo interrumpidos
+    - Y es que hay sólo dos sincronizaciones: Quién tiene la palabra (=dudas[]=
+      en =pregunto()= / =baja_mano()= y =mut_contador= (en =pregunta()=).
+    - ¡No es el profesor el que resuelve las dudas! El muy flojo se limita a
+      darle entrada a los alumnos, y ni siquiera se queda a escuchar. Para
+      cuando llega el primer =alumno()=, el profesor ya está huyendo rumbo su
+      casita...
+    - Tendría que haber alguna interacción mediada por =señalización= de forma
+      que un =profesor()= fuera dando atención a cada una de las preguntas.
+- Calificación :: 8
+
+** Perez Jose
+- Documentación :: [[./PerezJose/documentacion.txt][documentacion.txt]]
+- Archivos :: [[./PerezJose/TAREA1.cpp][TAREA1.cpp]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - ¡Me gusta tu estrategia de división por horarios! (y la retroalimentación
+    del dueño 😉)
+  - Desarrollando un poco más la idea, el cambio de horarios no debería ser
+    manejado por =raton()= y =gato()=, sino que podría haber un tercer hilo,
+    =reloj()=, manejando los turnos
+    - De forma que no dependiera /tanto/ del azar: Como lo tienen ahora,
+      /cualquier/ =gato()= y /cualquier/ =raton()= causan el cambio de turnos,
+      dejando desprotegidos / mal-obligados a quienes estén aún comiendo o
+      lleguen antes de tiempo
+    - para comprender más respecto a las complejidades del manejo de turnos, les
+      sugiero ver el /problema del jardín bardeado/ como fue planteado, antes de
+      la invención de los semáforos, por Dekker.
+- Calificación :: 10
+
+** Robles Alan
+- Documentación :: [[./RoblesAlan/README.md][README.md]], [[./RoblesAlan/img/1.-ImportacionDeBibliotecas.png][1.-ImportacionDeBibliotecas.png]], [[./RoblesAlan/img/2.-DefinicionDeVariables.png][2.-DefinicionDeVariables.png]], [[./RoblesAlan/img/3.-InicializacionDeSemaforos.png][3.-InicializacionDeSemaforos.png]], [[./RoblesAlan/img/4.-DefinicionFuncionGatos.png][4.-DefinicionFuncionGatos.png]], [[./RoblesAlan/img/5.-DefinicionFuncionRatones.png][5.-DefinicionFuncionRatones.png]], [[./RoblesAlan/img/6.-CreacionDeHilos.png][6.-CreacionDeHilos.png]], [[./RoblesAlan/img/7.-InicioDeHilos.png][7.-InicioDeHilos.png]], [[./RoblesAlan/img/8.-EsperaHilosTerminen.png][8.-EsperaHilosTerminen.png]], [[./RoblesAlan/img/9.-MensajeDeFinalizacion.png][9.-MensajeDeFinalizacion.png]], [[./RoblesAlan/img/Python-logo.png][Python-logo.png]]
+- Archivos :: [[./RoblesAlan/tarea.py][tarea.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Detalle de nombres, no de uso: Tendría que ser =multiplex_platos=, no
+    =mutex_platos=, ¿no?
+  - ¡Me parece muy buena implementación! 😃
+  - Muy buena documentación también.
+- Calificación :: 10
+
+** Rodríguez Santiago, Villaseñor Carlos
+- Documentación :: [[./RodríguezSantiago-VillaseñorCarlos/RodríguezSantiago-VillaseñorCarlos.txt][RodríguezSantiago-VillaseñorCarlos.txt]]
+- Archivos :: [[./RodríguezSantiago-VillaseñorCarlos/interseccion_de_caminos.py][interseccion_de_caminos.py]]
+- Problema resuelto :: Intersección de caminos
+- Comentarios ::
+  - ¡Guau! Me gusta el cómo hicieron la representación gráfica del movimiento,
+    ayuda mucho a entender la resolución del problema. Pero llevó a _muchísima_
+    repetición de código. Lean por favor la nota general sobre /Don't Repeat
+    Yourself (DRY)/. La legibilidad y modularidad de su programa podría
+    beneficiarse *muchísimo* de un poquito de parametrización.
+    - Estoy seguro de que podríamos optimizar más de una cosa, y me encantaría
+      sugerirlo... ¡pero el código no-DRY queda /demasiado barroco/ como para
+      intentar /meterle tijera/!
+- Calificación :: 10
+
+  
