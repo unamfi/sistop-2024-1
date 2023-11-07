@@ -33,29 +33,30 @@ internal static class Program
         // Obtiene el tipo de avión
         var anden = tipo == TipoAvion.Comercial ? AndenMercancia : AndenPasajeros;
         var tipoStr = tipo.ToString();
+        var color = tipo == TipoAvion.Comercial ? "purple" : "teal";
         // El avión solicita aterrizaje en la pista
-        AnsiConsole.MarkupLine($"[purple]Avión {id} (Tipo: {tipoStr}) solicita aterrizaje.[/]");
+        AnsiConsole.MarkupLine($"[{color}]:airplane: Avión {id} (Tipo: {tipoStr}) solicita aterrizaje.[/]");
         ComunicacionAvion.Wait();
-        _solicitud = id.ToString();
+        _solicitud = $"{id},aterrizar";
         ComunicacionTorre.Release();
 
         PistaAterrizaje.Wait();
         // Descarga de tripulantes o de mercancía
-        AnsiConsole.MarkupLine($"[purple]Avión {id} ha aterrizado.[/]");
+        AnsiConsole.MarkupLine($"[{color}]:airplane_arrival: Avión {id} ha aterrizado.[/]");
         anden.Wait();
         Thread.Sleep(Random.Shared.Next(1000, 4000));
-        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} ha terminado de descargar.[/]");
+        AnsiConsole.MarkupLine($"[{color}]:airplane: Avión de {tipoStr} ha terminado de descargar.[/]");
 
         // Carga de otros tripulantes o de mercancía
-        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} esperando a estar listo para el siguiente vuelo[/].");
+        AnsiConsole.MarkupLine($"[{color}]:airplane: Avión de {tipoStr} esperando a estar listo para el siguiente vuelo[/].");
         Thread.Sleep(Random.Shared.Next(1000, 4000));
         anden.Release();
-        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} solicitando despegue.[/]");
+        AnsiConsole.MarkupLine($"[{color}]:airplane: Avión de {tipoStr} solicitando despegue.[/]");
         ComunicacionAvion.Wait();
-        _solicitud = id.ToString();
+        _solicitud = $"{id},despegar";
         ComunicacionTorre.Release();
         PistaAterrizaje.Wait();
-        AnsiConsole.MarkupLine($"[purple]Avión de {tipoStr} sale del aereopuerto.[/]");
+        AnsiConsole.MarkupLine($"[{color}]:airplane_departure: Avión de {tipoStr} sale del aereopuerto.[/]");
     }
 
     /**
@@ -63,12 +64,13 @@ internal static class Program
      */
     private static void TorreControl(CancellationToken token)
     {
-        AnsiConsole.MarkupLine("[green]:tower: Torre de control lista[/]");
+        AnsiConsole.MarkupLine("[green]:satellite_antenna: Torre de control lista[/]");
         // Continúa operaciones mientras no se solicite que pare
         while (!token.IsCancellationRequested)
         {
             ComunicacionTorre.Wait();
-            AnsiConsole.MarkupLine($"[green] Torre de control dice: {_solicitud} puede aterrizar.[/]");
+            var mensaje = _solicitud.Split(",", StringSplitOptions.TrimEntries);
+            AnsiConsole.MarkupLine($"[green]:satellite_antenna: Torre de control dice: {mensaje[0]} puede {mensaje[1]}.[/]");
             PistaAterrizaje.Release();
             ComunicacionAvion.Release();
         }
@@ -91,7 +93,7 @@ internal static class Program
             var task = new Task(() => Avion(id, tipo));
             task.Start();
             aviones.Add(task);
-            Task.Delay(Random.Shared.Next(500, 1000));
+            await Task.Delay(Random.Shared.Next(500, 1000));
         }
 
         await Task.WhenAll(aviones);
