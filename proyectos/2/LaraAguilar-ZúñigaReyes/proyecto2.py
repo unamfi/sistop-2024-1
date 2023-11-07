@@ -1,6 +1,4 @@
 import threading
-import time
-import random
 
 class Metro:
     def __init__(self):
@@ -8,16 +6,21 @@ class Metro:
         self.puertas_abiertas = False
         self.pasajeros_bajando = 0
         self.pasajeros_subiendo = 0
+        self.pasajeros_esperando = 0
         self.mutex = threading.Lock()
         self.cond = threading.Condition(self.mutex)
 
     def abrir_puertas(self):
         with self.mutex:
             self.puertas_abiertas = True
+            self.cond.notify_all()
 
     def cerrar_puertas(self):
         with self.mutex:
+            while self.pasajeros_bajando > 0 or self.pasajeros_subiendo > 0:
+                self.cond.wait()
             self.puertas_abiertas = False
+            self.cond.notify_all()
 
     def bajar_pasajero(self):
         with self.mutex:
@@ -35,32 +38,30 @@ class Metro:
         with self.mutex:
             self.pasajeros_dentro -= 1
             self.pasajeros_bajando -= 1
+            self.cond.notify_all()
 
     def terminar_subir(self):
         with self.mutex:
             self.pasajeros_dentro += 1
             self.pasajeros_subiendo -= 1
+            self.cond.notify_all()
 
-def pasajero(metro):
-    while True:
-        time.sleep(random.randint(1, 5))
-        metro.bajar_pasajero()
-        time.sleep(random.randint(1, 5))
-        metro.terminar_bajar()
-        time.sleep(random.randint(1, 5))
-        metro.subir_pasajero()
-        time.sleep(random.randint(1, 5))
-        metro.terminar_subir()
+    def agregar_pasajero_esperando(self):
+        with self.mutex:
+            self.pasajeros_esperando += 1
 
-def metro(metro):
-    while True:
-        time.sleep(random.randint(1, 5))
-        metro.abrir_puertas()
-        time.sleep(random.randint(1, 5))
-        metro.cerrar_puertas()
+    def quitar_pasajero_esperando(self):
+        with self.mutex:
+            self.pasajeros_esperando -= 1
 
-if __name__ == "__main__":
-    metro_obj = Metro()
-    for i in range(10):
-        threading.Thread(target=pasajero, args=(metro_obj,)).start()
-    threading.Thread(target=metro, args=(metro_obj,)).start()
+    def get_estado_puertas(self):
+        with self.mutex:
+            return self.puertas_abiertas
+
+    def get_pasajeros_dentro(self):
+        with self.mutex:
+            return self.pasajeros_dentro
+
+    def get_pasajeros_esperando(self):
+        with self.mutex:
+            return self.pasajeros_esperando
