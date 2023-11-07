@@ -1,14 +1,20 @@
-import threading
-import time
-import random
-import tkinter as tk
-from queue import Queue
+# Nombre: Becerril Martinez Erick Daniel
+# Materia: Sistemas Operativos
+# Semestre: 2024-1
+
+
+# Se mandan llamar a las bibliotecas necesarias
+import threading  # Para crear hilos y gestionar la concurrencia
+import time       # Para trabajar con temporizadores
+import random     # Para generar números aleatorios (no utilizado en este código)
+import tkinter as tk  # Para crear la interfaz gráfica
+from queue import Queue  # Para gestionar una cola de reservas
 
 # Definición del teatro con 50 asientos
 num_asientos = 50
 asientos_disponibles = list(range(1, num_asientos + 1))
-bloqueo = threading.Lock()
-cola_reservas = Queue()
+bloqueo = threading.Lock()  # Objeto de bloqueo para gestionar la concurrencia
+cola_reservas = Queue()  # Cola para llevar un registro de las reservas
 reservas_clientes = {}  # Diccionario para almacenar las reservas de los clientes
 
 # Función para que un cliente reserve un asiento
