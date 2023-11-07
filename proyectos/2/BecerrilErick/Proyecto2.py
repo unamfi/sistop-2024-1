@@ -1,6 +1,7 @@
 import threading
 import time
 import random
+import tkinter as tk
 from queue import Queue
 
 # Definición del teatro con 50 asientos
@@ -8,29 +9,60 @@ num_asientos = 50
 asientos_disponibles = list(range(1, num_asientos + 1))
 bloqueo = threading.Lock()
 cola_reservas = Queue()
+reservas_clientes = {}  # Diccionario para almacenar las reservas de los clientes
 
 # Función para que un cliente reserve un asiento
-def reserva_asiento(cliente):
+def reserva_asiento(cliente, asiento_seleccionado):
     global asientos_disponibles
-    while True:
-        if not asientos_disponibles:
-            break  # Todos los asientos están reservados
-        asiento = None
-        with bloqueo:
-            if asientos_disponibles:
-                asiento = asientos_disponibles.pop(0)
-        if asiento is not None:
-            print(f"Cliente {cliente} reservó el asiento {asiento}")
-            time.sleep(random.uniform(0.1, 0.5))  # Simula el tiempo que lleva la reserva
+    with bloqueo:
+        if asiento_seleccionado in asientos_disponibles:
+            asientos_disponibles.remove(asiento_seleccionado)
+            cola_reservas.put(asiento_seleccionado)
+            reservas_clientes[asiento_seleccionado] = cliente
+            return True
         else:
-            print(f"Cliente {cliente} no pudo reservar. Todos los asientos están ocupados.")
-            break
-        cola_reservas.put(asiento)  # Agrega el asiento a la cola de reservas
+            return False
 
 # Función para mostrar el estado actual de las reservas
 def estado_reservas():
-    while not cola_reservas.empty():
-        print(f"Asiento {cola_reservas.get()} está reservado.")
+    for asiento, cliente in reservas_clientes.items():
+        print(f"Asiento {asiento} está reservado por {cliente}.")
+
+# Función para actualizar la lista de asientos disponibles en la interfaz gráfica
+def actualizar_lista_asientos():
+    lista_asientos.config(text=", ".join(map(str, asientos_disponibles)))
+
+# Función para manejar la reserva cuando el cliente presiona el botón "Reservar"
+def reservar_asiento():
+    asiento_seleccionado = int(entry_asiento.get())
+    if reserva_asiento(cliente_nombre.get(), asiento_seleccionado):
+        actualizar_lista_asientos()
+        entry_asiento.delete(0, tk.END)
+
+# Crear ventana de la interfaz gráfica
+ventana = tk.Tk()
+ventana.title("Reserva de Asientos")
+
+# Etiqueta para el nombre del cliente
+cliente_nombre = tk.StringVar()
+etiqueta_nombre = tk.Label(ventana, text="Nombre del Cliente:")
+etiqueta_nombre.pack()
+entry_nombre = tk.Entry(ventana, textvariable=cliente_nombre)
+entry_nombre.pack()
+
+# Etiqueta para la selección de asiento
+etiqueta_asiento = tk.Label(ventana, text="Selecciona un Asiento (1-50):")
+etiqueta_asiento.pack()
+entry_asiento = tk.Entry(ventana)
+entry_asiento.pack()
+
+# Botón para reservar un asiento
+boton_reservar = tk.Button(ventana, text="Reservar", command=reservar_asiento)
+boton_reservar.pack()
+
+# Etiqueta para mostrar la lista de asientos disponibles
+lista_asientos = tk.Label(ventana, text=", ".join(map(str, asientos_disponibles)))
+lista_asientos.pack()
 
 # Crear clientes (hilos) que intentarán reservar asientos
 clientes = []
@@ -45,3 +77,6 @@ for cliente in clientes:
 
 # Mostrar el estado final de las reservas
 estado_reservas()
+
+# Iniciar la interfaz gráfica
+ventana.mainloop()
