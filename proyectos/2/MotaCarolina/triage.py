@@ -4,6 +4,7 @@ from random import choice
 from random import randint
 from time import sleep
 
+#Declaración de variables
 
 color_texto = [Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.MAGENTA, Fore.RED, Fore.BLACK]
 triage_clasif = ["Rojo", "Amarillo", "Verde"]
@@ -22,6 +23,7 @@ num_emergencias_pacientes = []
 energia_doctor= 1000
 num_pacientes_urgencias = num_pacientes
 
+#Se le asigna un 1 a la lista por cada hilo(paciente), de tal manera que hay un control de los hilos activos.
 for i in range(num_pacientes):
     num_emergencias_pacientes.append(1)
 
@@ -63,6 +65,8 @@ def clasificando_paciente(quien):
 
 
 #Se expresan la clasificación de todos los pacientes actualmente
+def atencion_urgencias():
+    print(color_doctor,"Hay pacientes rojos: " + str(len(triage_rojo)) + ", amarillos: " + str(len(triage_amarillo)) + ", verdes: " + str(len(triage_verde)))
 
 #Se adquiere el poder para ofrecerle atención de parte del doctor y posteriormente se libera.
 def salaUrgencias(quien):
@@ -75,6 +79,7 @@ def salaUrgencias(quien):
     if (contador==energia_doctor):
         print(color_doctor + "El turno ha terminado. ¡Adiós!")
         exit()
+    atencion_urgencias()
     mut_contador.release()
     
 
