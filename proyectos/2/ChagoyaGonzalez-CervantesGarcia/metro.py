@@ -105,6 +105,7 @@ def salida(numMetro, carril, listaCarril):
         carriles[carril] = 'Empty' #Se libera el carril en el arreglo que representa la estación
         estacion.release() #El metro sale de la estación
     print(f'\n---El estado de los carriles es:\t  A:{carriles [0]}\t B:{carriles [1]}\t C:{carriles [2]}---\n')
+    #QUIZÁ AQUÍ SE PUEDE AGREGARR UN WAIT PARA SIMULAR EL TIEMPO QUE TARDA EL METRO EN VOLVER A LA TERMINAL
     
     
 def llegadaPersona(numPersona):
@@ -135,8 +136,8 @@ def gestionPersona(numPersona):
 
 def main ():
     global listaEspera
-    listaEspera.append(0)
-    for i in range(300):
+    listaEspera.append(0) #Se inicia con un elemento, para que los trrenes o hilos de metro puedan funcionar constantemnete mientras haya personas que atender
+    for i in range(100):
         threading.Thread(target=llegadaPersona, args=[i]).start()
     for j in range(3): 
         threading.Thread(target=llegaMetro, args=[j]).start()
