@@ -1,116 +1,66 @@
-import tkinter as tk
-from threading import Semaphore, Thread, Barrier
-from time import sleep
-from random import randint
+import threading
+import time
+import random
 
-N = 10  # Tolerancia de pasajeros en el metro
-M = 5   # Tolerancia de pasajeros esperando afuera
+class Metro:
+    def __init__(self):
+        self.pasajeros_dentro = 0
+        self.puertas_abiertas = False
+        self.pasajeros_bajando = 0
+        self.pasajeros_subiendo = 0
+        self.mutex = threading.Lock()
+        self.cond = threading.Condition(self.mutex)
 
-# Semáforos y variables de condición
-debeLevantarse = Semaphore(0) # Señalización
-puedeSentarse = Semaphore(0)  # 'Apagador' 
-puertaMetro = Semaphore(1)     # Control de acceso al metro
-metroAbierto = False
-pasajerosDentro = 0
-barreraAbordo = Barrier(N, action=lambda: puedeSentarse.release())
+    def abrir_puertas(self):
+        with self.mutex:
+            self.puertas_abiertas = True
 
-# Variable compartida para almacenar el estado del metro
-estado_metro = {"pasajeros_dentro": pasajerosDentro, "puertas_abiertas": metroAbierto}
-mutex = Semaphore(1) # Mutex para proteger el acceso a la variable compartida
+    def cerrar_puertas(self):
+        with self.mutex:
+            self.puertas_abiertas = False
 
-def pasajero(id):
-    global pasajerosDentro, estado_metro
+    def bajar_pasajero(self):
+        with self.mutex:
+            while not self.puertas_abiertas or self.pasajeros_subiendo > 0:
+                self.cond.wait()
+            self.pasajeros_bajando += 1
 
-    puedeSentarse.acquire()
-    print(f'Pasajero {id} intentando subir al metro...')
+    def subir_pasajero(self):
+        with self.mutex:
+            while not self.puertas_abiertas or self.pasajeros_bajando > 0:
+                self.cond.wait()
+            self.pasajeros_subiendo += 1
 
-    puertaMetro.acquire()
-    pasajerosDentro += 1
-    estado_metro["pasajeros_dentro"] = pasajerosDentro
+    def terminar_bajar(self):
+        with self.mutex:
+            self.pasajeros_dentro -= 1
+            self.pasajeros_bajando -= 1
 
-    if pasajerosDentro == N:
-        puertaMetro.release()
-        debeLevantarse.release()
-    else:
-        puertaMetro.release()
+    def terminar_subir(self):
+        with self.mutex:
+            self.pasajeros_dentro += 1
+            self.pasajeros_subiendo -= 1
 
-    barreraAbordo.wait()
-
-    puertaMetro.acquire()
-    pasajerosDentro -= 1
-    estado_metro["pasajeros_dentro"] = pasajerosDentro
-    if pasajerosDentro == 0:
-        puertaMetro.release()
-    else:
-        puertaMetro.release()
-
-    print(f'Pasajero {id} ha bajado del metro.')
-
-def metro():
-    global pasajerosDentro, metroAbierto, estado_metro
-
+def pasajero(metro):
     while True:
-        debeLevantarse.acquire()
+        time.sleep(random.randint(1, 5))
+        metro.bajar_pasajero()
+        time.sleep(random.randint(1, 5))
+        metro.terminar_bajar()
+        time.sleep(random.randint(1, 5))
+        metro.subir_pasajero()
+        time.sleep(random.randint(1, 5))
+        metro.terminar_subir()
 
-        puertaMetro.acquire()
-        pasajerosDentro = 0
-        estado_metro["pasajeros_dentro"] = pasajerosDentro
-        metroAbierto = True
-        estado_metro["puertas_abiertas"] = metroAbierto
-        puertaMetro.release()
-
-        print('Metro abierto. Pasajeros subiendo...')
-
-        sleep(randint(3, 5))
-
-        puertaMetro.acquire()
-        metroAbierto = False
-        estado_metro["puertas_abiertas"] = metroAbierto
-        puertaMetro.release()
-
-        print('Metro llegó a la siguiente estación y cerró puertas.')
-
-        barreraAbordo.wait()
-
-# Hilo que controla la generación de pasajeros
-def llegadaPasajeros():
-    i = 1
+def metro(metro):
     while True:
-        if randint(0, 2) == 0:
-            Thread(target=pasajero, args=[i]).start()
-            i += 1
-        sleep(1)
+        time.sleep(random.randint(1, 5))
+        metro.abrir_puertas()
+        time.sleep(random.randint(1, 5))
+        metro.cerrar_puertas()
 
-# Hilo de actualización de la GUI
-def update_gui():
-    global estado_metro
-
-    root = tk.Tk()
-    root.title("Simulación Metro")
-
-    label1 = tk.Label(root, text="Estado del Metro")
-    label1.pack()
-
-    label2 = tk.Label(root, text="Pasajeros dentro: 0")
-    label2.pack()
-
-    label3 = tk.Label(root, text="Puertas abiertas: False")
-    label3.pack()
-
-    root.geometry("300x200")
-
-    def refresh():
-        mutex.acquire()
-        label2.config(text="Pasajeros dentro: " + str(estado_metro["pasajeros_dentro"]))
-        label3.config(text="Puertas abiertas: " + str(estado_metro["puertas_abiertas"]))
-        mutex.release()
-        root.after(1000, refresh)
-
-    refresh()
-
-    root.mainloop()
-
-# Iniciar hilos
-Thread(target=metro).start()
-Thread(target=llegadaPasajeros).start()
-Thread(target=update_gui).start()
+if __name__ == "__main__":
+    metro_obj = Metro()
+    for i in range(10):
+        threading.Thread(target=pasajero, args=(metro_obj,)).start()
+    threading.Thread(target=metro, args=(metro_obj,)).start()
