@@ -39,12 +39,13 @@ def comenzarHilos():
 
 def actualizarInterfaz(tipo:int,pedidos:int):
 	#para actualizar el texto de los botones de cada puesto de trabajo segun los pedidos que tengan
-	if tipo == 0:
-		puestos[tipo].config(text="Gorditas de cocedor -> {pedidos}", state="normal")
-	elif tipo == 1:
-		puestos[tipo].config(text="Gorditas de harina o maiz -> {pedidos}", state="normal")
-	else: 
-		puestos[tipo].config(text="Gorditas de carbon -> {pedidos}", state="normal")
+	btn_aux = puestos[tipo] 
+	#if tipo == 0:
+		#btn_aux.Button(text="Gorditas de cocedor -> {pedidos}", state="normal")
+	#elif tipo == 1:
+		#btn_aux.Button(text="Gorditas de harina o maiz -> {pedidos}", state="normal")
+	#else: 
+		#btn_aux.Button(text="Gorditas de carbon -> {pedidos}", state="normal")
 
 def tomaOrdenes(): 
 	print("tomando ordenes")
@@ -64,9 +65,11 @@ def tomaOrdenes():
 		pedido_txt = "Se pidieron " + pedido + " de maiz o harina"
 		print(pedido_txt.text)
 	else:
+		mutex.acquire()
 		pedidosCarbon += pedido
 		pedido_txt = "Se pidieron " + pedido + " al carbon"
 		print(pedido_txt.text)
+		mutex.release()
 	mutexTomaPedidos.release()
 	
 
@@ -75,18 +78,27 @@ def cocinarCocedor(pedidos:int):
 		sleep(random.random() * random.randint(5,9))
 		print("cocinando gorditas de cocedor")	
 		pedidos-=1
+		mutex.acquire()
+		contadorTotal+=1
+		mutex.release()
 		cocinarCocedor(pedidos)
 def cocinarCarbon(pedidos:int):
 	while (pedidos > 0):
 		sleep(random.random() * random.randint(3,6))
 		print("cocinando gorditas de carbon")	
 		pedidos-=1
+		mutex.acquire()
+		contadorTotal+=1
+		mutex.release()
 		cocinarCarbon(pedidos)
 def cocinarComal(pedidos:int):
 	while (pedidos > 0):
 		sleep(random.random() * random.randint(3,6))
 		print("cocinando gorditas de comal")	
 		pedidos-=1
+		mutex.acquire()
+		contadorTotal+=1
+		mutex.release()
 		cocinarComal(pedidos)
 
 #creacion de ventana principal
@@ -118,45 +130,19 @@ for fila in range(2):
         else:
         	texto = "Gorditas al carbon"
         if fila == 0 or (fila == 1 and columna == 1):
-	        btn_nuevo = Button(
-	            frame_botones,
-	            text=texto,
-	            justify="center",
-	            width=24,
-	            height=6,
-	            bg="yellow",
-	            fg="black",
-	            state="normal"
-	        )
+	        btn_nuevo = Button(frame_botones,text=texto,justify="center",width=24,height=6,bg="yellow",fg="black",state="normal")
 	        btn_nuevo.grid(row=fila, column=columna, padx=40, pady=30)
-	        puestos[len(puestos)] = [True,btn_nuevo] # Al inicio, todas las mesas están disponibles
+	        puestos[len(puestos)] = [True,btn_nuevo]
 
 # Leyenda que se debe actualizar al dar click en Cajera
-pedido_txt = Label(
-            frame_botones,
-            text="Gorditas que se pidieron : 0 de ",
-            width=50,
-            height=3
-        )
+pedido_txt = Label(frame_botones,text="Gorditas que se pidieron : 0 de ",width=50,height=3)
 pedido_txt.grid(row=2,column=1)
 # Leyenda que se debe actualizar cuando ya acaben de realizar un pedido 
-total_txt = Label(
-            frame_botones,
-            text="Gorditas vendidas : 0",
-            width=35,
-            height=3
-        )
+total_txt = Label(frame_botones,text="Gorditas vendidas : 0 ",width=30,height=3)
 total_txt.grid(row=3,column=1)
 
 # Dando click debe iniciar a recibir pedidos la cajera
-abrir_btn = Button(
-            frame_botones,
-            text="Abriendo local",
-            width=20,
-            height=3,
-            bg = "yellow",
-            command=lambda: comenzarHilos(),
-        )
+abrir_btn = Button(frame_botones,text="Abriendo local", width=20,height=3,bg = "yellow",command=lambda: comenzarHilos())
 abrir_btn.grid(row=4,column=1)
 # Execute Tkinter 
 root.mainloop()
