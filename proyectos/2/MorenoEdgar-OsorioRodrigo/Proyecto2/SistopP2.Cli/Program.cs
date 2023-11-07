@@ -158,5 +158,27 @@ internal static class Program
         await Task.WhenAll(aviones);
         salir.Cancel();
         await torre;
+        
+        var panel = new Panel(
+            new Rows(
+                Align.Center(
+                    new Markup("Facultad de Ingeniería - UNAM"), VerticalAlignment.Middle
+                ),
+                Align.Center(
+                    new Markup("Moreno Chalico Edgar Ulises"), VerticalAlignment.Middle
+                ),
+                Align.Center(
+                    new Markup("Osorio Ángeles Rodrigo Jafet"), VerticalAlignment.Middle
+                ),
+                Align.Center(
+                    new Markup("Sistemas Operativos - Semestre 2024-1"), VerticalAlignment.Middle
+                )
+            ))
+        {
+            Border = BoxBorder.Rounded,
+            Expand = true,
+            Header = new PanelHeader("Proyecto 2 - Una situación cotidiana paralelizable: Aereopuerto", Justify.Center)
+        };
+        AnsiConsole.Write(panel);
     }
 }
