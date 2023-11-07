@@ -24,7 +24,7 @@ semPuertasA = threading.Semaphore(0)
 semPuertasB = threading.Semaphore(0)
 semPuertasC = threading.Semaphore(0)
 
-#"RENDEZVOUS" PARA SINCRONIZACION DE TRENES Y ABORDO DE PERSONAS
+#SEÑALIZACIONES  PARA SINCRONIZACION DE TRENES Y ABORDO DE PERSONAS
 semAndenA = threading.Semaphore(0)
 semAndenB = threading.Semaphore(0)
 semAndenC = threading.Semaphore(0)
@@ -80,7 +80,7 @@ def llegaMetro(numMetro):
 
 def salida(numMetro, carril, listaCarril):
     time.sleep(random.uniform(0.01, 0.05))  # Tiempo en que las puertas estan abiertas
-    if(carril==0): #EL METRO PIDE PERMISO PARA SALIR, ES DECIR, ESPERA HILOS DE GENTE --- RENDEZVOUS
+    if(carril==0): #EL METRO PIDE PERMISO PARA SALIR, ES DECIR, ESPERA QUE LOS HILOS DE GENTE LE SEÑALIZEN --SEÑALZIACION
         semAndenA.acquire()
     elif(carril==1):
         semAndenB.acquire()
@@ -124,7 +124,7 @@ def gestionPersona(numPersona):
     carrilMetro = carrilEleccion()
     if (carrilMetro == 'A' and numPersona not in listaEsperaA): #Se entrará en cada opción si la persona decide el anden de la opción y no esta ya esperando en el vagon
         abordaPersona(numPersona, id_carriles_inv[0], listaEsperaA)
-        semAndenA.release() #LA PERSONA ESTA DENTRO DEL VAGON, POR TANTO EL METRO PUEDE CERRAR PUERTAS SI NO HAY OTRA PERSONA EN LA PUERTA --- RENDEZVOUS
+        semAndenA.release() #LA PERSONA ESTA DENTRO DEL VAGON, POR TANTO EL METRO PUEDE CERRAR PUERTAS SI NO HAY OTRA PERSONA EN LA PUERTA, SEÑALIZA  --- SEÑALIZACION
     elif (carrilMetro == 'B'and numPersona not in listaEsperaB):
         abordaPersona(numPersona, id_carriles_inv[1], listaEsperaB)
         semAndenB.release()
