@@ -1,0 +1,46 @@
+= Una situación cotidiana paralelizable
+v1.0.0, 2023-11-03
+:author: Cruz Vargas Emilio, Garciliano Diaz Giovanni Alfredo
+:email: emilio.cruz.vargas123@gmail.com, giobeatle10@gmail.com
+:doctype: book
+:icons: font
+
+[Desarrollo]
+== Resumen
+
+El objetivo de esta documentación es explicar la descripción del algoritmo para la implementación del segundo proyecto "Una situación cotidiana paralelizable" de la materia "Sistemas Operativos". Se enfoca en la representación de la concurrencia en una situación de la vida cotidiana.
+
+== Descripción de la situación
+
+Una de las principales necesidades de los seres humanos es comunicarse, debido a las grandes distancias entre las personas y la necesidad de mantenerse informados sobre las situaciones que acontecen. Además, existen empresas que se dedican a gestionar sistemas telefónicos que permiten a sus clientes realizar y recibir llamadas, así como acceder a funciones avanzadas como transferencias de llamadas, correo de voz y enrutamiento de llamadas.
+
+Esto implica garantizar la integridad de las llamadas y la independencia del usuario a través de los mecanismos de enrutamiento. Básicamente, se busca que el usuario pueda realizar una llamada y, en caso de que la línea con el remitente esté ocupada, esperar y luego finalizar la llamada.
+
+Un poco más técnico...
+
+Lo que buscamos es que múltiples emisores estén tratando de contactarse con múltiples receptores. La complejidad radica en que, cuando un receptor está recibiendo una llamada, debe esperar a que esta termine antes de intentar hacer una llamada propia, evitando así que el emisor tenga que esperar en exceso. También se busca controlar la cola de llamadas para un mismo receptor, garantizando que el receptor esté disponible para ser llamado y evitando múltiples llamadas simultáneas. Se considera que la cantidad de emisores y receptores es ilimitada, pero la cantidad de líneas telefónicas es finita, y no existe un límite de tiempo de llamada.
+
+=== ¿Dónde pueden verse las consecuencias nocivas de la concurrencia? ¿Qué eventos pueden ocurrir que queramos controlar?
+
+Las consecuencias negativas que esperamos evitar incluyen que el emisor tenga que esperar demasiado tiempo para establecer su llamada y que nunca pueda hablar con el receptor. También queremos evitar que, si un receptor está esperando una llamada, no intente hacer una llamada él mismo y que el tiempo de espera sea mayor que el tiempo en el que el emisor que quería contactarlo. Los eventos que pretendemos controlar son aquellos en los que múltiples emisores intenten hacer llamadas a un mismo receptor, asegurando que el receptor pueda atender cada llamada, independientemente de la duración de esta.
+
+
+=== ¿Hay eventos concurrentes para los cuales el ordenamiento relativo no resulta importante?
+Si, ya que debe asegurarse de que las llamadas en cola se manejen de manera secuencial, donde la primera llamada en entrar en la cola sea la primera en ser atendida una vez que el receptor esté disponible.
+También es importante controlar la disponibilidad de los receptores para que no reciban múltiples llamadas simultáneamente; también la disponibilidad de las líneas telefónicas y la adquisición de los semáforos tienen que asegurar que las llamadas no se superpongan.
+
+=== ¿Cómo funciona el programa?
+Para empezar, considerando el problema planteado lo primero que se tiene que definir es las líneas que van a estar disponibles para que los usuarios puedan uilizar ya que tiene un límite físico, y se tienen que crear una cola para poder gestiornar las llamadas que se tengan en espera y el semáforo para poder controlar el acceso a las líneas que se tengan disponibles.
+Se definió un constructor de usuarios con independencia si era emisor o recepetor, ya que en un escenario real, estos usuarios podrían jugar ambos papeles ya que como planteamos el problema, no hay ninguna limitación en este aspecto. Y este mismo constructor, nos sirve para poder crear cualquier cantidad de usaurios conforme se quiera para el caso de uso que se quiera observar.
+Por la parte de las funciones, la funcionar llamar se encarga desimular la llamada telefónica entre el emisor y el receptor donde dentro de esta, se adquiere un semáforo que representa la línea telefónica por lo que si la línea está disponible entonces se puede hacer la llamada; dentro de esta se verifica si el receptor está ocupado o no, en dado caso que este ocupado se pone en la cola de llamadas y sino simula una llamada durmiendo una cantidad de tiempo limitada, y una vez hecha la llamada, como en la vida real, se libera la línea y el receptor queda desocupado.
+Y por parte del menejador se encarga de ejecutarse en un hilo separado y gestiona las llamadas en la cola de espera, en dado caso que haya entonces las asgina cuando los receprtos quedan disponibles.
+Es importante considerar que entre cada llamada se toma 1 segundo de espera, esto para liberar la línea en una situación real y para que el flujo no se vea tan rápido.
+
+=== Entorno de trabajo
+El código  es compatible con Python 3. En general, te recomendaría utilizar una versión reciente de Python 3, como Python 3.7 o superior.
+Y no se utiliza ninguna biblioteca que no se encuentre en las más comunes, las que se utilizaron fueron:
+threading y time: Estas bibliotecas son estándar en Python y no suelen tener problemas de compatibilidad con versiones recientes de Python 3. Puedes utilizarlas en Python 3.7 o versiones posteriores sin preocupaciones significativas.
+
+
+
+
