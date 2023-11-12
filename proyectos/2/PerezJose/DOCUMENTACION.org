@@ -1,0 +1,129 @@
+#+title: Documentación
+
+#+BEGIN_SRC yaml
+Realizado por: Pérez Uribe Jose Alberto
+#+END_SRC
+** Descripción de los mecanismos de sincronización empleados
+
+Los mecanismos de sincronización empleados en el código son los siguientes:
+
+- threading.Lock: Se utiliza para crear un objeto de bloqueo llamado print_lock. Este 
+  bloqueo se utiliza para garantizar que la impresión en la pantalla sea sincronizada 
+  entre varios hilos, evitando resultados confusos o desordenados en la salida estándar.
+
+- queue.Queue: Se utiliza para crear una cola llamada personas_en_espera. Esta cola actúa 
+  como un mecanismo de sincronización para coordinar la llegada de personas y la apertura 
+  de las taquillas de manera sincronizada.
+
+- ReadWriteLock: Es una clase personalizada para manejar bloqueos de lectura y escritura. 
+  Permite que varios hilos lean el recurso compartido (en este caso, copias_vendidas_total)
+  simultáneamente de manera segura, pero garantiza que solo un hilo a la vez pueda realizar 
+  operaciones de escritura en el recurso compartido.
+
+Estos mecanismos de sincronización se utilizan para asegurar que la venta de copias de 
+manera concurrente se realice de manera coordinada, evitando problemas como la competencia 
+por recursos compartidos y garantizando que los hilos trabajen de manera ordenada y segura.
+
+** Lógica de operación
+
+El programa simula un sistema de venta de copias de un juego en taquillas, 
+donde las personas llegan y se forman en una cola. Las taquillas procesan las compras 
+y actualizan el total de copias vendidas. El programa finaliza cuando se venden todas 
+las copias o cuando el usuario decide cerrar las taquillas.
+
+- Identificación del estado compartido
+
+  - personas_en_espera: Una cola que almacena las personas esperando ser atendidas.
+
+  - copias_vendidas_total: Un contador global que lleva el registro de las copias vendidas.
+
+  - print_lock: Un candado para sincronizar las impresiones en la consola.
+
+  - rw_lock: Una instancia de ReadWriteLock para controlar el acceso a la variable compartida 
+   copias_vendidas_total.
+
+
+- Descripción algorítmica del avance de cada hilo/proceso:
+
+  Cada hilo en este programa se encarga de una tarea específica dentro de la simulación de 
+  venta de copias del juego. 
+
+  - Hilos de llegada de personas:
+    Se inicia un hilo para simular la llegada de personas a las taquillas. Este hilo generará 
+    un número aleatorio de personas que llegan y, por cada una, iniciará un nuevo hilo para 
+    representar a la persona que se pone en la cola.
+
+  - Hilos de personas en taquillas:
+    Cada persona (hilo) que llega ejecuta la función vender_copias, donde la persona se añade 
+    a la cola personas_en_espera. Este proceso es rápido y no requiere sincronización adicional 
+    debido a la seguridad de hilos de la cola.
+
+  - Hilo de procesamiento de compras:
+    La función abrir_taquillas se ejecuta en su propio hilo y maneja la simulación de las 
+    taquillas abiertas procesando las personas en la cola. Este hilo intentará procesar hasta 
+    cinco compras de la cola personas_en_espera.
+
+  Durante el procesamiento, el hilo bloquea el acceso de escritura a copias_vendidas_total 
+  usando el ReadWriteLock para actualizar el número de copias vendidas de manera segura.
+
+  Una vez que se completa la actualización, se libera el bloqueo de escritura y se marca 
+  la tarea como completa con task_done.
+
+
+- Descripción de la interacción entre hilos
+
+  Los hilos que representan a los clientes y las taquillas operan en un entorno de múltiples 
+  hilos, donde la coordinación se logra mediante estructuras de datos seguras para hilos y 
+  primitivas de sincronización. La interacción entre los hilos se caracteriza por:
+
+  Coordinación y Sincronización de Hilos:
+
+  - Gestión de la Cola de Espera: 
+    Los hilos de llegada de personas actúan como productores que encolan elementos en 
+    personas_en_espera. En contraste, el hilo que ejecuta abrir_taquillas actúa como consumidor 
+    que desencola y procesa dichos elementos. La propia naturaleza de la cola proporciona la 
+    sincronización necesaria para este mecanismo productor-consumidor.
+
+  - Exclusión Mutua en Acceso a Recursos Compartidos: 
+    El print_lock asegura que un solo hilo pueda realizar operaciones de impresión en cualquier 
+    momento, evitando así la superposición de mensajes en la consola. De manera similar, 
+    rw_lock impide que múltiples hilos realicen cambios concurrentes en la variable 
+    copias_vendidas_total, permitiendo la mutua exclusión durante las actualizaciones.
+
+  - Flujo de Control: 
+    Los hilos se coordinan no solo a través de estructuras de sincronización sino también 
+    mediante el flujo de control del programa. Las decisiones de usuario para continuar con 
+    las ventas o cerrar las taquillas influyen directamente en la activación y la terminación 
+    de los hilos.
+
+  - Finalización y Limpieza: 
+    Al concluir las operaciones, los hilos que han terminado de procesar las compras señalizan 
+    su finalización a través de task_done, lo que contribuye al manejo adecuado del ciclo de 
+    vida de los hilos y a la limpieza de recursos. 
+
+  Este diseño de interacción entre hilos garantiza un funcionamiento fluido y ordenado del 
+  sistema de ventas del juego.
+ 
+** Descripción del entorno de desarrollo
+
+- ¿Qué lenguaje emplean? ¿Qué versión?
+
+  El código está escrito en Python. Para ejecutar este código con éxito, se recomendaría 
+  Python 3,ya que Python 2 ya no está soportado y hay diferencias significativas en la sintaxis 
+  y las funciones entre las dos versiones.
+
+- ¿Qué bibliotecas hay más allá de las estándar del lenguaje?
+
+  No hay bibliotecas adicionales más allá de las estándar que se necesitan para ejecutar este 
+  código.
+
+- ¿Bajo qué sistema operativo / distribución lo desarrollaron y/o probaron?
+
+  Fue desarrollado para sistemas Unix. 
+  El uso de os.system('clear') es exclusivo para sistemas unix, para Windows, se usaría 
+  os.system('cls'). 
+
+** Ejemplos o pantallazos de una ejecucion exitosa
+
+Puede consultarse [[file:EJECUCIONES.pdf][aquí]].
+
