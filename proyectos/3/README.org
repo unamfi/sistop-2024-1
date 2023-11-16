@@ -69,9 +69,7 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
   directamente un /volumen/ en la totalidad de su espacio.
 - =FiUnamFS= maneja únicamente un /directorio plano/, no se consideran
   subdirectorios.
-- *¡Tengo que verificar los siguientes valores!*
-
-  El primer cluster (#0) del pseudodispositivo es el
+- El primer cluster (#0) del pseudodispositivo es el
   /superbloque/. Este contiene información en los siguientes bytes:
   - 0--8 :: Para identificación, el nombre del sistema de
             archivos. ¡Debes validar nunca modificar un sistema de
@@ -80,7 +78,7 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
     versión =24.1= (como cadena, no como número). Deben validar que el
     sistema de archivos a utilizar sea de esta versión, para evitar la
     corrupción de datos.
-  - 20--35 :: Etiqueta del volumen
+  - 20--39 :: Etiqueta del volumen
   - 40--44 :: Tamaño del cluster en bytes
   - 45--49 :: Número de clusters que mide el directorio
   - 50--54 :: Número de clusters que mide la unidad completa
@@ -93,15 +91,16 @@ pueden realizar todas las tareas que les solicité con éste. Indíquenme
   directorio mide 64 bytes, consistentes en:
   - 0 :: Tipo de archivo. Dado que el sistema de archivos actual no
     tien soporte para directorios, dispositivos, pipes, ni otros
-    archivos especiales, siempre será el caracter =-= (=0x2d=, =45=)
+    archivos especiales, todos los archivos tendrán el caracter =-= (=0x2d=,
+    =45=). Las entradas vacías tendrán el caracter =/= ('0x0f', '47')
   - 1--15 :: Nombre del archivo
-  - 16--20 :: Tamaño del archivo, en bytes
+  - 16--19 :: Tamaño del archivo, en bytes
   - 20--23 :: Cluster inicial
-  - 24--37 :: Hora y fecha de creación del archivo, especificando
-              AAAAMMDDHHMMSS (p.ej. '20221108182600' para 2022-11-08
+  - 24--38 :: Hora y fecha de creación del archivo, especificando
+              AAAAMMDDHHMMSS (p.ej. '20231108182600' para 2023-11-08
 	      18:26:00)
-  - 38-51 :: Hora y fecha de última modificación del archivo,
-              especificando AAAAMMDDHHMMSS (p.ej. '20221109182600')
+  - 38-52 :: Hora y fecha de última modificación del archivo,
+              especificando AAAAMMDDHHMMSS (p.ej. '20231109182600')
   - 52--64 :: Espacio no utilizado (¿reservado para expansión futura?)
 - Las entradas no utilizadas del directorio se identifican porque
   en el campo de nombre llevan la cadena =---------------=.
