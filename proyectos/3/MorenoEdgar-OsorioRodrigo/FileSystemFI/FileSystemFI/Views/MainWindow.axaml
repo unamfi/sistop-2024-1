@@ -1,0 +1,90 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FileSystemFI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="550"
+        Width="950"
+        Height="550"
+        WindowStartupLocation="CenterScreen"
+        x:Class="FileSystemFI.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="FileSystemFI">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="Auto,*,Auto"
+          RowDefinitions="Auto,*,Auto">
+        <Menu Grid.Row="0" Grid.Column="0"
+              Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="Open"
+                          Command="{ Binding OpenFileCommand }">
+                </MenuItem>
+                <MenuItem Header="Close"></MenuItem>
+                <MenuItem Header="Exit"
+                          Click="OnCloseClick">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Defragment"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"
+                          Click="OnAboutClick">
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <!-- <StackPanel Grid.Column="1" Grid.Row="1" -->
+        <!--             x:Name="MainPanel" -->
+        <!--             VerticalAlignment="Center" -->
+        <!--             HorizontalAlignment="Center"> -->
+        <!--     <Label -->
+        <!--         HorizontalAlignment="Center" -->
+        <!--         Foreground="Silver"> -->
+        <!--         ¡No hay un archivo abierto! -->
+        <!--     </Label> -->
+        <!--     <Label HorizontalAlignment="Center" -->
+        <!--            Content="{Binding FileName}"> -->
+        <!--     </Label> -->
+        <!-- </StackPanel> -->
+        <Grid Grid.Row="1" Grid.Column="1"
+              ColumnDefinitions="Auto, *"
+              RowDefinitions="*, Auto,Auto">
+            <TreeView Grid.Row="0" Grid.Column="0">
+                <!-- <TreeView.ItemTemplate> -->
+                <!--     <TreeDataTemplate ItemsSource="{Binding Subfolders}"> -->
+                <!--         <TextBlock Text="{Binding StrNodeText}"></TextBlock> -->
+                <!--     </TreeDataTemplate> -->
+                <!-- </TreeView.ItemTemplate> -->
+            </TreeView>
+            <Panel Grid.Row="0" Grid.Column="1">
+                <TextBlock></TextBlock>
+            </Panel>
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="5"
+                        Orientation="Horizontal">
+                <Button Margin="0,0,5,0"
+                        IsEnabled="{Binding EnabledManagementButtons}">
+                    Crear nuevo archivo
+                </Button>
+                <Button Margin="0,0,5,0"
+                        IsEnabled="{Binding EnabledManagementButtons}">
+                    Copiar archivo del sistema
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                        Margin="5"
+                        Orientation="Horizontal">
+                <Label Margin="0,0,5,0" Content="{Binding InfoString}"></Label>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
