@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileSystemFI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using FileSystemFI.Extensions;
+using FileSystemFI.Models;
 
 namespace FileSystemFI.ViewModels;
 
@@ -15,8 +18,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty] private string? _fileName = "No hay ningún archivo abierto";
     [ObservableProperty] private string? _infoString = "No hay un sistema de archivos montado.";
     [ObservableProperty] private bool _enabledManagementButtons = false;
-    [ObservableProperty] private FileSystemManager? _fsm = null;
-
+    [ObservableProperty] private FiFileSystemMgr? _fsm = null;
+    [ObservableProperty] private ObservableCollection<FiFile> _files = new();
+    
     [RelayCommand]
     private async Task OpenFile()
     {
@@ -30,7 +34,12 @@ public partial class MainWindowViewModel : ObservableObject
         var file = await filesService.OpenFileAsync();
         if (file is null) return;
         FileName = file.Path.AbsolutePath;
-        ReadFile();
+        if (ReadFileSystem())
+        {
+            var files = Fsm?.GetAllDirectories();
+            if (files is null) return;
+            Files = new ObservableCollection<FiFile>(files);
+        }
     }
 
     [RelayCommand]
@@ -43,14 +52,15 @@ public partial class MainWindowViewModel : ObservableObject
         EnabledManagementButtons = false;
     }
 
-    private void ReadFile()
+    private bool ReadFileSystem()
     {
-        if (FileName is null) return;
-        Fsm = new FileSystemManager();
+        if (FileName is null) return false;
+        Fsm = new FiFileSystemMgr();
         Fsm.OpenFileSystem(FileName);
-        if (!Fsm.IsInitialized) return;
+        if (!Fsm.IsInitialized) return false;
         InfoString = $"Sistema de archivos: {Fsm.Identifier} {Fsm.Version} " +
                      $"| Tamaño de cluster: {Fsm.ClusterSize} bytes.";
         EnabledManagementButtons = true;
+        return true;
     }
 }

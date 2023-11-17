@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Threading.Tasks;
 using FileSystemFI.Extensions;
 
-namespace FileSystemFI;
+namespace FileSystemFI.Models;
 
-public class FileSystemManager : IDisposable
+public class FiFileSystemMgr : IDisposable
 {
     private FileStream? _fs;
     private BinaryReader? _br;
@@ -36,6 +37,40 @@ public class FileSystemManager : IDisposable
         }
     }
 
+    public List<FiFile> GetAllDirectories()
+    {
+        _br.BaseStream.Position = ClusterSize;
+        List<FiFile> files = new();
+
+        while (_br.BaseStream.Position <= ClusterSize * 4)
+        {
+            var type = _br.ReadChar();
+            var filename = _br.ReadString(14);
+            var fileSize = _br.ReadInt32LitEnd();
+            _br.ReadChars(1);
+            var initCluster = _br.ReadInt32LitEnd();
+            var createDate = _br.ReadString(14);
+            var modDate = _br.ReadString(14);
+            _br.ReadChars(12);
+
+            if (filename == "..............") continue;
+
+            var file = new FiFile
+            {
+                Type = type,
+                FileName = filename,
+                Size = fileSize,
+                FirstCluster = initCluster,
+                CreatedDate = DateTime.ParseExact(createDate, "yyyyMMddHHmmss", CultureInfo.InvariantCulture),
+                LastModifiedDate = DateTime.ParseExact(modDate, "yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+            };
+
+            files.Add(file);
+        }
+
+        return files;
+    }
+
     public string? Identifier { get; private set; }
     public string? Version { get; private set; }
     public string? Volume { get; private set; }
@@ -46,6 +81,7 @@ public class FileSystemManager : IDisposable
 
     public void Dispose()
     {
+        IsInitialized = false;
         _fs.Dispose();
         _br.Dispose();
         _bw.Dispose();

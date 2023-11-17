@@ -3,6 +3,8 @@
         xmlns:vm="using:FileSystemFI.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:FileSystemFI.Models"
+        xmlns:objectModel="clr-namespace:System.Collections.ObjectModel;assembly=System.ObjectModel"
         mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="550"
         Width="950"
         Height="550"
@@ -25,18 +27,19 @@
                     Orientation="Horizontal">
             <Menu>
                 <MenuItem Header="File">
-                    <MenuItem Header="Open"
+                    <MenuItem Header="Abrir"
                               Command="{ Binding OpenFileCommand }">
                     </MenuItem>
-                    <MenuItem Header="Close"
+                    <MenuItem Header="Cerrar"
                               Command="{Binding CloseFileCommand}">
                     </MenuItem>
-                    <MenuItem Header="Exit"
+                    <MenuItem Header="Salir"
                               Click="OnCloseClick">
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Edit">
-                    <MenuItem Header="Defragment"></MenuItem>
+                    <MenuItem Header="Desfragmentar"></MenuItem>
+                    <MenuItem Header="Renombrar"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="About"
@@ -56,16 +59,13 @@
         <Grid Grid.Row="1" Grid.Column="1"
               ColumnDefinitions="Auto, *"
               RowDefinitions="*, Auto,Auto">
-            <TreeView Grid.Row="0" Grid.Column="0">
-                <!-- <TreeView.ItemTemplate> -->
-                <!--     <TreeDataTemplate ItemsSource="{Binding Subfolders}"> -->
-                <!--         <TextBlock Text="{Binding StrNodeText}"></TextBlock> -->
-                <!--     </TreeDataTemplate> -->
-                <!-- </TreeView.ItemTemplate> -->
+            <TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Files}">
+                <TreeView.ItemTemplate>
+                    <TreeDataTemplate>
+                        <TextBlock Text="{Binding FileName}"></TextBlock>
+                    </TreeDataTemplate>
+                </TreeView.ItemTemplate>
             </TreeView>
-            <Panel Grid.Row="0" Grid.Column="1">
-                <TextBlock></TextBlock>
-            </Panel>
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"

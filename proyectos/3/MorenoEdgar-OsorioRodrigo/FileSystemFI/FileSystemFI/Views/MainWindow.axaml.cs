@@ -9,10 +9,10 @@ namespace FileSystemFI.Views;
 
 public partial class MainWindow : Window
 {
-    private MainWindowViewModel context = new MainWindowViewModel();
+    private readonly MainWindowViewModel _context = new MainWindowViewModel();
     public MainWindow()
     {
-        DataContext = context;
+        DataContext = _context;
         InitializeComponent();
     }
 
@@ -26,7 +26,7 @@ public partial class MainWindow : Window
 
     protected override void OnClosing(WindowClosingEventArgs e)
     {
-        context.CloseFile();
+        _context.CloseFile();
         base.OnClosing(e);
     }
 }
