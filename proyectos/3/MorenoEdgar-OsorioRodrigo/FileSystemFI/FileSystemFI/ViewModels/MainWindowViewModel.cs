@@ -20,6 +20,8 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty] private bool _enabledManagementButtons = false;
     [ObservableProperty] private FiFileSystemMgr? _fsm = null;
     [ObservableProperty] private ObservableCollection<FiFile> _files = new();
+    [ObservableProperty] private FiFile? _selectedFile = new();
+    [ObservableProperty] private string? _fileInfo = string.Empty;
     
     [RelayCommand]
     private async Task OpenFile()

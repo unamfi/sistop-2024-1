@@ -20,11 +20,9 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <Grid ColumnDefinitions="Auto,*,Auto"
+    <Grid ColumnDefinitions="*"
           RowDefinitions="Auto,*,Auto">
-        <StackPanel Grid.Row="0" Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Menu>
                 <MenuItem Header="File">
                     <MenuItem Header="Abrir"
@@ -48,27 +46,39 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1"
-                    x:Name="MainPanel"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-            <Label HorizontalAlignment="Center"
-                   Content="{Binding FileName}">
-            </Label>
-        </StackPanel>
-        <Grid Grid.Row="1" Grid.Column="1"
-              ColumnDefinitions="Auto, *"
+        <Grid Grid.Row="1" Grid.Column="0"
+              ColumnDefinitions="*, 5*, 2*"
               RowDefinitions="*, Auto,Auto">
-            <TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Files}">
+            <TreeView Grid.Row="0" Grid.Column="0"
+                      ItemsSource="{Binding Files}"
+                      SelectedItem="{Binding SelectedFile}">
                 <TreeView.ItemTemplate>
                     <TreeDataTemplate>
                         <TextBlock Text="{Binding FileName}"></TextBlock>
                     </TreeDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
+            <TextBox Grid.Row="0" Grid.Column="1"></TextBox>
+            <StackPanel Grid.Row="0" Grid.Column="2"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                <StackPanel.Styles>
+                    <Styles>
+                        <Style Selector="Label">
+                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        </Style>
+                    </Styles>
+                </StackPanel.Styles>
+                <Label Content="{Binding SelectedFile.FileName, StringFormat='File: {0}'}"></Label>
+                    <Label Content="{Binding SelectedFile.MbSize, StringFormat='Size: {0:0.00} MB'}"></Label>
+                    <Label Content="{Binding SelectedFile.CreatedDate, StringFormat='Created: {0}'}"></Label>
+                    <Label Content="{Binding SelectedFile.CreatedDate, StringFormat='Modified: {0}'}"></Label>
+            </StackPanel>
+
+            <!-- Parte inferior -->
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="3"
                         Margin="5"
                         Orientation="Horizontal">
                 <Button Margin="0,0,5,0"
@@ -80,7 +90,7 @@
                     Copiar archivo del sistema
                 </Button>
             </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"
                         Margin="5"
                         Orientation="Horizontal">
                 <Label Margin="0,0,5,0" Content="{Binding InfoString}"></Label>

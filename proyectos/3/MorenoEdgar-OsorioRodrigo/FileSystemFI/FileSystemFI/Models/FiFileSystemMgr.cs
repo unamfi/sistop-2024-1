@@ -58,7 +58,7 @@ public class FiFileSystemMgr : IDisposable
             var file = new FiFile
             {
                 Type = type,
-                FileName = filename,
+                FileName = filename.Trim(),
                 Size = fileSize,
                 FirstCluster = initCluster,
                 CreatedDate = DateTime.ParseExact(createDate, "yyyyMMddHHmmss", CultureInfo.InvariantCulture),
