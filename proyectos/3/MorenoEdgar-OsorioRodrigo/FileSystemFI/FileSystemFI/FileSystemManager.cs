@@ -11,7 +11,7 @@ public class FileSystemManager : IDisposable
     private BinaryReader? _br;
     private BinaryWriter? _bw;
 
-    public async Task OpenFileSystem(string filePath)
+    public void OpenFileSystem(string filePath)
     {
         _fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
         _br = new BinaryReader(_fs);

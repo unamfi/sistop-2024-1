@@ -1,14 +1,18 @@
 using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using FileSystemFI.ViewModels;
 
 namespace FileSystemFI.Views;
 
 public partial class MainWindow : Window
 {
+    private MainWindowViewModel context = new MainWindowViewModel();
     public MainWindow()
     {
+        DataContext = context;
         InitializeComponent();
     }
 
@@ -19,4 +23,10 @@ public partial class MainWindow : Window
     }
 
     private void OnCloseClick(object? sender, RoutedEventArgs e) => Close();
+
+    protected override void OnClosing(WindowClosingEventArgs e)
+    {
+        context.CloseFile();
+        base.OnClosing(e);
+    }
 }

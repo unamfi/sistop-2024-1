@@ -20,39 +20,39 @@
 
     <Grid ColumnDefinitions="Auto,*,Auto"
           RowDefinitions="Auto,*,Auto">
-        <Menu Grid.Row="0" Grid.Column="0"
-              Grid.ColumnSpan="2">
-            <MenuItem Header="File">
-                <MenuItem Header="Open"
-                          Command="{ Binding OpenFileCommand }">
+        <StackPanel Grid.Row="0" Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+            <Menu>
+                <MenuItem Header="File">
+                    <MenuItem Header="Open"
+                              Command="{ Binding OpenFileCommand }">
+                    </MenuItem>
+                    <MenuItem Header="Close"
+                              Command="{Binding CloseFileCommand}">
+                    </MenuItem>
+                    <MenuItem Header="Exit"
+                              Click="OnCloseClick">
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Close"></MenuItem>
-                <MenuItem Header="Exit"
-                          Click="OnCloseClick">
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Defragment"></MenuItem>
                 </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Defragment"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="About"
-                          Click="OnAboutClick">
+                <MenuItem Header="Help">
+                    <MenuItem Header="About"
+                              Click="OnAboutClick">
+                    </MenuItem>
                 </MenuItem>
-            </MenuItem>
-        </Menu>
-        <!-- <StackPanel Grid.Column="1" Grid.Row="1" -->
-        <!--             x:Name="MainPanel" -->
-        <!--             VerticalAlignment="Center" -->
-        <!--             HorizontalAlignment="Center"> -->
-        <!--     <Label -->
-        <!--         HorizontalAlignment="Center" -->
-        <!--         Foreground="Silver"> -->
-        <!--         ¡No hay un archivo abierto! -->
-        <!--     </Label> -->
-        <!--     <Label HorizontalAlignment="Center" -->
-        <!--            Content="{Binding FileName}"> -->
-        <!--     </Label> -->
-        <!-- </StackPanel> -->
+            </Menu>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1"
+                    x:Name="MainPanel"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <Label HorizontalAlignment="Center"
+                   Content="{Binding FileName}">
+            </Label>
+        </StackPanel>
         <Grid Grid.Row="1" Grid.Column="1"
               ColumnDefinitions="Auto, *"
               RowDefinitions="*, Auto,Auto">

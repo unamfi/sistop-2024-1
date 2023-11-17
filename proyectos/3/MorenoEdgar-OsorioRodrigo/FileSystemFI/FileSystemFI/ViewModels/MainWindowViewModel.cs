@@ -12,7 +12,7 @@ namespace FileSystemFI.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    [ObservableProperty] private string? _fileName;
+    [ObservableProperty] private string? _fileName = "No hay ningún archivo abierto";
     [ObservableProperty] private string? _infoString = "No hay un sistema de archivos montado.";
     [ObservableProperty] private bool _enabledManagementButtons = false;
     [ObservableProperty] private FileSystemManager? _fsm = null;
@@ -20,6 +20,9 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task OpenFile()
     {
+        if (Fsm is not null && Fsm.IsInitialized)
+            Fsm.Dispose();
+
         var filesService = App.Current?.Services?.GetService<IFileService>();
         if (filesService is null)
             throw new NullReferenceException("File Service does not exists.");
@@ -27,16 +30,27 @@ public partial class MainWindowViewModel : ObservableObject
         var file = await filesService.OpenFileAsync();
         if (file is null) return;
         FileName = file.Path.AbsolutePath;
-        await ReadFile();
+        ReadFile();
     }
 
-    private async Task ReadFile()
+    [RelayCommand]
+    public void CloseFile()
+    {
+        if (Fsm is null || !Fsm.IsInitialized) return;
+        Fsm.Dispose();
+        FileName = "No hay ningún archivo abierto";
+        InfoString = "No hay un sistema de archivos montado.";
+        EnabledManagementButtons = false;
+    }
+
+    private void ReadFile()
     {
         if (FileName is null) return;
         Fsm = new FileSystemManager();
-        await Fsm.OpenFileSystem(FileName);
+        Fsm.OpenFileSystem(FileName);
         if (!Fsm.IsInitialized) return;
-        InfoString = $"Sistema de archivos: {Fsm.Identifier} " +
-                     $"Versión {Fsm.Version} | Tamaño de cluster: {Fsm.ClusterSize} bytes.";
+        InfoString = $"Sistema de archivos: {Fsm.Identifier} {Fsm.Version} " +
+                     $"| Tamaño de cluster: {Fsm.ClusterSize} bytes.";
+        EnabledManagementButtons = true;
     }
 }
