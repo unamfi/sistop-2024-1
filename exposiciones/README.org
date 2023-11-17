@@ -23,7 +23,8 @@
   |           | Sistemas Operativos de Tiempo Real en Sistemas Autónomos o RTOS     | Samuel Hernández                                            |                |                         |                   |                   |
   |           | Ambulancias con Paralelismo                                         | Carolina Mota                                               |                |                         |                   |                   |
   |           | Sistemas de archivos Flash                                          | Juan Pablo Gómez y Abdiel Puente                            |                |                         |                   |                   |
-  |           | (por decidir de entre 3)                                         | Paola Pérez y Jonathan (?)                                  |                |                         |                   |                   |
+  |           | (por decidir de entre 3)                                            | Paola Pérez y Jonathan (?)                                  |                |                         |                   |                   |
+  |           | Sistemas de archivos distribuidos                                   | Lissett Zúñiga y Hannia Matías                              |                |                         |                   |                   |
   |-----------+---------------------------------------------------------------------+-------------------------------------------------------------+----------------+-------------------------+-------------------+-------------------|
   #+TBLFM: 
 
