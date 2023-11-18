@@ -3,6 +3,12 @@ import codecs
 
 
 sector = 256
+#variables a copiar
+clusterCop = 0
+tamCop = 0
+
+#Variable para llevar la cuenta de los directorios activos
+listaDir = []
 
 def superbloque():
     #variables globales
@@ -11,7 +17,6 @@ def superbloque():
     global numClusterT
     with open('fiunamfs.img','rb') as f:
         entrada = 0
-        lista = []
         #unpack requiere un buffer de 4 bytes
         while entrada < 64:
             if (entrada == 0):
@@ -89,7 +94,168 @@ def superbloque():
     
     print("Fin")
 
-def directorio(entrada):
+def directorio(entrada,listaDir):
+    #global listaDir
+    #Lee el contenido de un directorio
+    contador = 0
+    #Abrimos disco
+    with open('fiunamfs.img','rb') as f:
+        #Sabemos que el directorio esta en los clusters 1-4
+        #Por lo tanto empieza en 256 * 4 = cada cluster * 1
+        #  y se le suma 64 por cada entrada
+        #inicio = cadaCluster*1 + 64*entrada
+        inicio = (2048 * 1) + (64 * entrada)
+        f_contents = f.read(inicio)
+        while contador < 64:
+            if(contador == 0):
+                #Leemos el byte correspondiente a
+                #el tipo de archivo
+                f_contents = f.read(1)
+                tipoArchivo = int.from_bytes(f_contents,byteorder='little')
+                #Validación
+                if (tipoArchivo == 45):
+                    #print("entrada normal")                   
+                    #print(tipoArchivo)
+                    listaDir.append(entrada)
+                elif(tipoArchivo == 47):
+                    pass
+                    #print("entrada vacía")                   
+                    #print(tipoArchivo)
+                else:
+                    pass
+                    #print("Tipo de archivo desconocido")                  
+                #print(f_contents)
+                #print(tipoArchivo)
+                contador += 1
+            if(contador == 1):
+                #Leemos los 15 bytes correspondientes a
+                #el nombre del archivo
+                f_contents = f.read(15)
+                #print(f_contents)
+                contador += 15
+            if(contador == 16):
+                #Leemos los 3 bytes correspondiente a
+                #el tamaño del archivo en bytes
+                f_contents = f.read(3)
+                #Ajustamos la entrada para calcular
+                #print(f_contents)
+                #print(int.from_bytes(f_contents,byteorder='little'))
+                #print(tipoArchivo)
+                contador += 3
+            if(contador == 20):
+                #Leemos los 3 bytes correspondiente a
+                #el cluster inicial
+                f_contents = f.read(3)
+                #print(f_contents)
+                #print(int.from_bytes(f_contents,byteorder='little'))
+                #print(tipoArchivo)
+                contador += 3
+            if(contador == 24):
+                #Leemos los 14 bytes correspondiente a
+                #la hora y fecha de creación del archivo
+                f_contents = f.read(14)
+                #print(f_contents)
+                contador += 14
+            if(contador == 38):
+                #Leemos los 14 bytes correspondiente a
+                #la hora y fecha de la última modificación del archivo
+                f_contents = f.read(14)
+                #print(f_contents)
+                contador += 14
+            if(contador == 52):
+                #Leemos los 12 bytes correspondiente a
+                #el espacio no utilizado
+                f_contents = f.read(12)
+                #print(f_contents)
+                contador += 12
+            else:
+                f_contents = f.read(1)
+                contador += 1
+
+#Nos da los datos que queremos copiar 
+def directorioCopiar(entrada):
+    global clusterCop
+    global tamCop
+    #Lee el contenido de un directorio
+    contador = 0
+    #Abrimos disco
+    with open('fiunamfs.img','rb') as f:
+        #Sabemos que el directorio esta en los clusters 1-4
+        #Por lo tanto empieza en 2048 = cada cluster * 1
+        #  y se le suma 64 por cada entrada
+        #inicio = cadaCluster*1 + 64*entrada
+        inicio = (2048 * 1) + (64 * entrada)
+        f_contents = f.read(inicio)
+        while contador < 64:
+            if(contador == 0):
+                #Leemos el byte correspondiente a
+                #el tipo de archivo
+                f_contents = f.read(1)
+                tipoArchivo = int.from_bytes(f_contents,byteorder='little')
+                #Validación
+                if (tipoArchivo == 45):
+                    #print("entrada normal")                   
+                    #print(tipoArchivo)
+                    pass
+                elif(tipoArchivo == 47):
+                    pass
+                    #print("entrada vacía")                   
+                    #print(tipoArchivo)
+                else:
+                    pass
+                    #print("Tipo de archivo desconocido")                  
+                #print(f_contents)
+                #print(tipoArchivo)
+                contador += 1
+            if(contador == 1):
+                #Leemos los 15 bytes correspondientes a
+                #el nombre del archivo
+                f_contents = f.read(15)
+                #print(f_contents)
+                contador += 15
+            if(contador == 16):
+                #Leemos los 3 bytes correspondiente a
+                #el tamaño del archivo en bytes
+                f_contents = f.read(3)
+                #Ajustamos la entrada para calcular
+                #print(f_contents)
+                tamCop= int.from_bytes(f_contents,byteorder='little')
+                #print(int.from_bytes(f_contents,byteorder='little'))
+                #print(tipoArchivo)
+                contador += 3
+            if(contador == 20):
+                #Leemos los 3 bytes correspondiente a
+                #el cluster inicial
+                f_contents = f.read(3)
+                #print(f_contents)
+                clusterCop = int.from_bytes(f_contents,byteorder='little')
+                #print(int.from_bytes(f_contents,byteorder='little'))
+                #print(tipoArchivo)
+                contador += 3
+            if(contador == 24):
+                #Leemos los 14 bytes correspondiente a
+                #la hora y fecha de creación del archivo
+                f_contents = f.read(14)
+                #print(f_contents)
+                contador += 14
+            if(contador == 38):
+                #Leemos los 14 bytes correspondiente a
+                #la hora y fecha de la última modificación del archivo
+                f_contents = f.read(14)
+                #print(f_contents)
+                contador += 14
+            if(contador == 52):
+                #Leemos los 12 bytes correspondiente a
+                #el espacio no utilizado
+                f_contents = f.read(12)
+                #print(f_contents)
+                contador += 12
+            else:
+                f_contents = f.read(1)
+                contador += 1
+
+def printDirectorio(entrada):
+    global listaDir
     #Lee el contenido de un directorio
     contador = 0
     #Abrimos disco
@@ -109,14 +275,14 @@ def directorio(entrada):
                 #Validación
                 if (tipoArchivo == 45):
                     print("entrada normal")                   
+                    print(tipoArchivo)                  
+                elif(tipoArchivo == 47):                   
+                    print("entrada vacía")                   
                     print(tipoArchivo)
-                    if(tipoArchivo == 47):
-                        print("entrada vacía")                   
-                        print(tipoArchivo)
-                else:
+                else:                   
                     print("Tipo de archivo desconocido")                  
                 print(f_contents)
-                #print(tipoArchivo)
+                print(tipoArchivo)
                 contador += 1
             if(contador == 1):
                 #Leemos los 15 bytes correspondientes a
@@ -131,7 +297,7 @@ def directorio(entrada):
                 #Ajustamos la entrada para calcular
                 print(f_contents)
                 print(int.from_bytes(f_contents,byteorder='little'))
-                #print(tipoArchivo)
+                print(tipoArchivo)
                 contador += 3
             if(contador == 20):
                 #Leemos los 3 bytes correspondiente a
@@ -139,7 +305,7 @@ def directorio(entrada):
                 f_contents = f.read(3)
                 print(f_contents)
                 print(int.from_bytes(f_contents,byteorder='little'))
-                #print(tipoArchivo)
+                print(tipoArchivo)
                 contador += 3
             if(contador == 24):
                 #Leemos los 14 bytes correspondiente a
@@ -161,17 +327,99 @@ def directorio(entrada):
                 contador += 12
             else:
                 f_contents = f.read(1)
+                contador += 1           
+
+#Lista los dorectorios activos
+def listadoDir():
+    global listaDir
+    #Ubicamos al directorio
+    #cadaCluster = sector * 4
+    #Checamos el contenido del directorio
+    #Gracias al superbloque sabemos cuantos clusters mide el directorio
+    #Si mide 4 y cada uno mide 1024, el directorio mide 4096.
+    #Si le agregamos el espacio que ocupa el superbloque 4096 + 2048 = 6114.
+    #Si luego dividimos 6114 / 64 = 96 obtenemos el número de espacios de directorios
+    
+    #Obtenemos todos los directorios ocupados
+    for i in range (96):
+        directorio(i,listaDir)
+    #Recorremos la lista generado con los números de los directorios ocupados
+    for j in (listaDir):
+        printDirectorio(j)
+
+def copiar(dir,archivo):
+    #Inicializamos las varibales globales
+    #  con los datos del directorio ingresado
+    directorioCopiar(dir)
+    print(clusterCop)
+    print(tamCop)
+    resultado = ''
+    #El contador va a empezar en el cluster indicado por clusterCop
+    #multiplicado por sector * 4. A eso le sumamos el superbloque
+    contador = (clusterCop * (2048)) 
+    print(contador)
+    contadorFinal = contador + tamCop
+    #Metemos todo el contenido del archivo en una variable 
+    with open('fiunamfs.img','rb') as f:
+        f.read(contador)
+        while contador < contadorFinal:
+            if(contador + 10000 < contadorFinal):
+                f_contents = f.read(10000)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 10000
+            elif(contador + 5000 < contadorFinal ):
+                f_contents = f.read(5000)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 5000
+            elif(contador + 2000 < contadorFinal ):
+                f_contents = f.read(2000)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 2000
+            elif(contador + 1000 < contadorFinal ):
+                f_contents = f.read(1000)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 1000
+            elif(contador + 500 < contadorFinal ):
+                f_contents = f.read(500)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 500
+            elif(contador + 50 < contadorFinal ):
+                f_contents = f.read(50)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 50
+            elif(contador + 15 < contadorFinal ):
+                f_contents = f.read(15)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 15
+            elif(contador + 5 < contadorFinal ):
+                f_contents = f.read(5)
+                temp = str(f_contents)
+                resultado = resultado + temp
+                contador += 5
+            else:
+                f_contents = f.read(1)
+                temp = str(f_contents)
+                resultado = resultado + temp
                 contador += 1
+    with open(archivo,"a") as file:
+        file.write(resultado)
+    #print(resultado)
 
-            
-    print("Fin2")
-
+    #El cluster inicial 
 
 #Obtenemos super bloque
 #superbloque()
-#Ubicamos al directorio
-cadaCluster = sector * 4
-#Checamos el contenido del directorio 0
-directorio(2)
+#El superbloque ocupa 2 clusters
+#listadoDir()
+
+#printDirectorio(0)
+copiar(0,'archivo.txt')
 
 
