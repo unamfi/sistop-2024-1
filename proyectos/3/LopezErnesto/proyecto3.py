@@ -23,7 +23,7 @@ def mostrar_menu():
     print("\t\t\t* 2. Copiar archivo de FiUnamFs a sistema  *")
     print("\t\t\t* 3. Copiar archivo de sistema a FiUnamFs  *")
     print("\t\t\t* 4. Eliminar archivo de FiUnamFs          *")
-    print("\t\t\t* 5. Defragmentar                          *")
+    print("\t\t\t* 5. Desfragmentar                         *")
     print("\t\t\t* 6. Información del sistema               *")
     print("\t\t\t* 7. Salir                                 *")
     print("\t\t\t********************************************")
@@ -87,6 +87,11 @@ archivos = {}
 entradasLibres = []
 
 # Revisar que está pasando 
+def rescribirDirectorio(clusterDirectorio,clusterInicial):
+    global ruta_imagen
+    global numEntradas
+    escribirEnteros(clusterDirectorio + 20, clusterInicial)
+
 def escribirDirectorio(nombre,tam,cabezal,fechaModificacion,fechaCreacion):
     global ruta_imagen
     global numEntradas
@@ -281,6 +286,31 @@ def eliminarArchivoFiUnamFs():
     print("\tArchivo eliminado exitosamente")
     guardarInformacionArchivos()
 
+def desfragmentar():
+    # Se tiene mucha fragmentación externa en los archivos, por lo que lo mejor será desfragmentar el almacenamiento
+    # Vamos a ordener los archivos por su cluster inicial, comenzando por el primer cluster posterior al directorio
+    """
+        Como se irán moviendo los archivos, habrá que modificar su respectivo directorio cambiando el cluster inicial
+        Primero se necesita la información de todos los archivos de forma ordenada
+
+        OJO: El método de desfragmentación que estoy realizando deja basura, sin embargo, se sobreescribirá sobre dicha basura
+    """
+    print(archivos)
+    informacionArchivos = []
+    for archivo in archivos.items():
+        informacionArchivos.append([archivo[1]['clusterInicial'],archivo[1]])
+    informacionArchivos.sort()
+    cluster = 5 # Primer cluster posterior al directorio
+    for archivo in informacionArchivos:
+        # Se mueve toda la información del archivo a la primera posición
+        rescribirDirectorio(archivo[1]['clusterDirectorio'],cluster)
+        with open(ruta_imagen,'rb') as FiUnamFs:
+            FiUnamFs.seek(archivo[1]['clusterInicial'] * tamCluster)
+            contenido = FiUnamFs.read(archivo[1]['tam'])
+        escribirInfo(cluster * tamCluster,contenido)
+        cluster += ceil(archivo[1]['tam'] / tamCluster)
+        print(cluster)
+    print(archivos)
 
 # INICIO
 sesionActiva = True
@@ -292,15 +322,12 @@ while(sesionActiva):
         listarContenidos()
     elif opcion == '2':
         copiarArchivoASistema()
-        pass
     elif opcion == '3':
         copiarArchivoAFiUnamFs()
-        pass
     elif opcion == '4':
         eliminarArchivoFiUnamFs()
-        pass
     elif opcion == '5':
-        pass
+        desfragmentar()
     elif opcion == '6':
         mostrarInformacionSistema()
     elif opcion == '7':
@@ -309,7 +336,6 @@ while(sesionActiva):
         break
     elif opcion == 'cls':
         clear()
-        pass
     else:
         print("\tERROR. Favor de seleccionar una opción válida")
         sleep(1)
