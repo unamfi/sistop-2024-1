@@ -29,4 +29,13 @@ public class FileService : IFileService
 
         return files.Count >= 1 ? files[0] : null;
     }
+
+    public async Task<IStorageFile?> SaveFileAsync()
+    {
+        var file = await _target.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
+        {
+            Title = "Exportar archivo"
+        });
+        return file;
+    }
 }

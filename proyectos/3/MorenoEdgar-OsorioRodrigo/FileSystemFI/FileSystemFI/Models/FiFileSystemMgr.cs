@@ -49,15 +49,7 @@ public class FiFileSystemMgr : IDisposable
         if (start >= _br.BaseStream.Length)
             throw new Exception("Posición de lectura inválida");
         _br.BaseStream.Position = start;
-
-        var sb = new List<byte>();
-        while (_br.ReadByte() is var c)
-        {
-            if (c == 0x00) break;
-            sb.Add(c);
-        }
-
-        return sb;
+        return _br.ReadBytes(file.Size);
     }
 
     public List<FiFile> GetAllDirectories()
@@ -71,15 +63,7 @@ public class FiFileSystemMgr : IDisposable
             var filename = _br.ReadString(14);
             var fileSize = _br.ReadInt32LitEnd();
             _br.ReadChars(1);
-            // Mide 3 bytes, no 4
             var initCluster = _br.ReadInt32();
-            // var initClusterTemp = _br.ReadBytes(3);
-            // var initClusterBytes = new byte[initClusterTemp.Length + 1];
-            // initClusterBytes[0] = 0x00;
-            // Array.Copy(initClusterTemp, 0, initClusterBytes, 1, initClusterTemp.Length);
-            // var initCluster = BitConverter.ToInt32(initClusterBytes); 
-
-            // _br.ReadChar();
             var createDate = _br.ReadString(14);
             var modDate = _br.ReadString(14);
             _br.ReadChars(12);

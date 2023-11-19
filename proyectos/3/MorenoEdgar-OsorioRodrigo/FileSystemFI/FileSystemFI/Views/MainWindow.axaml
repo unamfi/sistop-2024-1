@@ -59,12 +59,19 @@
                 </TreeView.ItemTemplate>
             </TreeView>
             <ScrollViewer Grid.Row="0" Grid.Column="1"
-                          Margin="5">
-                <TextBlock Text="{Binding FileContent}"></TextBlock>
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          Margin="5"
+                          IsVisible="{Binding TextMode }">
+
+                <TextBlock Text="{Binding FileContent}">
+                </TextBlock>
             </ScrollViewer>
-            <!-- <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="False" -->
-            <!--          Text="{Binding FileContent}"> -->
-            <!-- </TextBox> -->
+            <Image Grid.Row="0"
+                   Grid.Column="1"
+                   IsVisible="{Binding ImageMode}"
+                   Source="{Binding ImageSource}">
+            </Image>
             <StackPanel Grid.Row="0" Grid.Column="2"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
@@ -90,11 +97,12 @@
                         Orientation="Horizontal">
                 <Button Margin="0,0,5,0"
                         IsEnabled="{Binding EnabledManagementButtons}">
-                    Crear nuevo archivo
+                    Importar Archivo
                 </Button>
                 <Button Margin="0,0,5,0"
+                        Command="{Binding SaveFileCommand}"
                         IsEnabled="{Binding EnabledManagementButtons}">
-                    Copiar archivo del sistema
+                    Exportar Selección
                 </Button>
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"

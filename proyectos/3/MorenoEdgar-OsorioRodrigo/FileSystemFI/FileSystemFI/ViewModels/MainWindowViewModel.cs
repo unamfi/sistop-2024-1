@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileSystemFI.Services;
@@ -19,6 +20,12 @@ namespace FileSystemFI.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
+    public enum PreviewViewMode
+    {
+        PlainText,
+        Image
+    }
+
     [ObservableProperty] private string? _fileName = "No hay ningún archivo abierto";
     [ObservableProperty] private string? _infoString = "No hay un sistema de archivos montado.";
     [ObservableProperty] private bool _enabledManagementButtons = false;
@@ -28,7 +35,10 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty] private string? _fileInfo = string.Empty;
     [ObservableProperty] private bool _infoPanelEnabled = false;
     [ObservableProperty] private string _fileContent = string.Empty;
-    public HierarchicalTreeDataGridSource<FiFile>? Source { get; set; }
+    [ObservableProperty] private Image _selectedImage = new Image();
+    [ObservableProperty] private Bitmap? _imageSource;
+    [ObservableProperty] private bool _imageMode = false;
+    [ObservableProperty] private bool _textMode = true;
 
     public MainWindowViewModel()
     {
@@ -37,24 +47,36 @@ public partial class MainWindowViewModel : ObservableObject
             {
                 if (Fsm is null || !Fsm.IsInitialized) return;
                 if (SelectedFile is null) return;
-                FileContent = Encoding.ASCII.GetString(Fsm.ReadFile(SelectedFile).ToArray());
+                if (SelectedFile.FileName!.EndsWith("png") || SelectedFile.FileName!.EndsWith("jpg"))
+                {
+                    ImageSource = ReadImage();
+                    ImageMode = true;
+                    TextMode = false;
+                }
+                else
+                {
+                    FileContent = ReadFile();
+                    ImageMode = false;
+                    TextMode = true;
+                }
             });
-        // this.WhenAnyValue(f => f.Files)
-        //     .Subscribe(x =>
-        //     {
-        //         Source = new HierarchicalTreeDataGridSource<FiFile>(Files)
-        //         {
-        //             Columns =
-        //             {
-        //                 new HierarchicalExpanderColumn<FiFile>(
-        //                     new TextColumn<FiFile, string>("Nombre del archivo", x => x.FileName),
-        //                     x => x.Children
-        //                 ),
-        //                 new TextColumn<FiFile,string>("File Size", x => $"{x.MbSize:0.00} MB"),
-        //                 // new TextColumn<FiFile,string>("Creation", x => x.CreatedDate.ToString("MM/dd/yyyy hh:mm:ss"))
-        //             }
-        //         };
-        //     });
+    }
+
+    [RelayCommand]
+    private async Task SaveFile()
+    {
+        if (Fsm is null || !Fsm.IsInitialized) return;
+        if (SelectedFile is null) return;
+
+        var filesService = App.Current?.Services?.GetService<IFileService>();
+        if (filesService is null)
+            throw new NullReferenceException("File Service does not exists.");
+
+        var file = await filesService.SaveFileAsync();
+        if (file is null) return;
+        await using var fs = new FileStream(file.Path.AbsolutePath, FileMode.CreateNew, FileAccess.Write);
+        await using var sw = new BinaryWriter(fs);
+        sw.Write(Fsm.ReadFile(SelectedFile).ToArray());
     }
 
     [RelayCommand]
@@ -91,12 +113,20 @@ public partial class MainWindowViewModel : ObservableObject
         InfoPanelEnabled = false;
     }
 
-    [RelayCommand]
-    public void ReadFile()
+    public string ReadFile()
     {
-        if (Fsm is null || !Fsm.IsInitialized) return;
-        if (SelectedFile is null) return;
-        FileContent = Encoding.ASCII.GetString(Fsm.ReadFile(SelectedFile).ToArray());
+        if (Fsm is null || !Fsm.IsInitialized) return string.Empty;
+        if (SelectedFile is null) return string.Empty;
+        return Encoding.ASCII.GetString(Fsm.ReadFile(SelectedFile).ToArray());
+    }
+
+    private Bitmap? ReadImage()
+    {
+        if (Fsm is null || !Fsm.IsInitialized) return null;
+        if (SelectedFile is null) return null;
+        var imageBytes = Fsm.ReadFile(SelectedFile).ToArray();
+        using var ms = new MemoryStream(imageBytes);
+        return new Bitmap(ms);
     }
 
     private bool ReadFileSystem()
