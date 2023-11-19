@@ -13,5 +13,6 @@
     <Application.Styles>
         <themes:MaterialTheme BaseTheme="Dark" PrimaryColor="Teal" SecondaryColor="Lime" />
         <!-- <FluentTheme /> -->
+        <!-- <StyleInclude Source="avares://Avalonia.Controls.TreeDataGrid/Themes/Fluent.axaml"/> -->
     </Application.Styles>
 </Application>

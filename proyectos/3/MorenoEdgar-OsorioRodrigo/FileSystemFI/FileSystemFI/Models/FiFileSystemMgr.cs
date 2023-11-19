@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
 using FileSystemFI.Extensions;
 
 namespace FileSystemFI.Models;
 
 public class FiFileSystemMgr : IDisposable
 {
-    private FileStream? _fs;
-    private BinaryReader? _br;
-    private BinaryWriter? _bw;
+    private FileStream _fs = null!;
+    private BinaryReader _br = null!;
+    private BinaryWriter _bw = null!;
 
+    /// <summary>
+    /// TODO: Esto debe quedar en el constructor de la clase.
+    /// </summary>
+    /// <param name="filePath"></param>
     public void OpenFileSystem(string filePath)
     {
         _fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
@@ -37,6 +43,23 @@ public class FiFileSystemMgr : IDisposable
         }
     }
 
+    public IEnumerable<byte> ReadFile(FiFile file)
+    {
+        var start = file.FirstCluster * ClusterSize;
+        if (start >= _br.BaseStream.Length)
+            throw new Exception("Posición de lectura inválida");
+        _br.BaseStream.Position = start;
+
+        var sb = new List<byte>();
+        while (_br.ReadByte() is var c)
+        {
+            if (c == 0x00) break;
+            sb.Add(c);
+        }
+
+        return sb;
+    }
+
     public List<FiFile> GetAllDirectories()
     {
         _br.BaseStream.Position = ClusterSize;
@@ -48,7 +71,15 @@ public class FiFileSystemMgr : IDisposable
             var filename = _br.ReadString(14);
             var fileSize = _br.ReadInt32LitEnd();
             _br.ReadChars(1);
-            var initCluster = _br.ReadInt32LitEnd();
+            // Mide 3 bytes, no 4
+            var initCluster = _br.ReadInt32();
+            // var initClusterTemp = _br.ReadBytes(3);
+            // var initClusterBytes = new byte[initClusterTemp.Length + 1];
+            // initClusterBytes[0] = 0x00;
+            // Array.Copy(initClusterTemp, 0, initClusterBytes, 1, initClusterTemp.Length);
+            // var initCluster = BitConverter.ToInt32(initClusterBytes); 
+
+            // _br.ReadChar();
             var createDate = _br.ReadString(14);
             var modDate = _br.ReadString(14);
             _br.ReadChars(12);

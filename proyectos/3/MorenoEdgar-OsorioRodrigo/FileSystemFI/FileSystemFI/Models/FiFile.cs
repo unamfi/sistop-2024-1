@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 
 namespace FileSystemFI.Models;
 
@@ -18,4 +19,5 @@ public class FiFile
     public DateTime CreatedDate { get; set; }
     public DateTime LastModifiedDate { get; set; }
     public int UnusedSpace { get; set; }
+    public ObservableCollection<FiFile> Children { get; } = new();
 }

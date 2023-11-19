@@ -1,9 +1,11 @@
+using System.Runtime.InteropServices;
+using System.Text;
 using FileSystemFI.Extensions;
 using FileSystemFI.Models;
 
 namespace FileSystemFI.Tests;
 
-public class ReadBinTests
+public class ReadFileSystemTests
 {
     private const string FileName = "./fiunamfs.img";
 
@@ -27,9 +29,24 @@ public class ReadBinTests
 
         var files = fsm.GetAllDirectories();
         files.ForEach(f => Console.WriteLine($"File: {f.FileName} | Created: {f.CreatedDate} | Size: {f.Size}"));
-        Assert.True(files.Count > 0);
+        Assert.That(files, Is.Not.Empty);
         
         fsm.Dispose();
+    }
+
+    [Test]
+    public void ReadFile()
+    {
+        var fsm = new FiFileSystemMgr();
+        fsm.OpenFileSystem(FileName);
+        Assert.That(fsm.IsInitialized, Is.True);
+        var files = fsm.GetAllDirectories();
+        Assert.That(files, Is.Not.Empty);
+
+        var fileBytes = fsm.ReadFile(files[0]).ToArray();
+        var file = Encoding.ASCII.GetString(fileBytes);
+        Assert.That(file, Is.Not.EqualTo(string.Empty));
+        Console.WriteLine(file);
     }
     
     [Test]
