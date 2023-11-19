@@ -108,6 +108,25 @@ def escribirInfo(cabezal,contenido):
         FiUnamFs.write(contenido)
     guardarInformacionArchivos()
 
+def eliminarDirectorio(cabezal):
+    global numEntradas
+    global entradasLibres
+    entradasLibres.append(cabezal)
+    entradasLibres.sort()
+    numEntradas -= 1
+    escribirAscii(cabezal,'/..............')
+    escribirAscii(cabezal + 24,'0000000000000000000000000000')
+    with open(ruta_imagen,'rb+') as FiUnamFs:
+        FiUnamFs.seek(cabezal + 16)
+        FiUnamFs.write(b'\x00' * 9)
+        FiUnamFs.seek(cabezal + 52)
+        FiUnamFs.write(b'\x00' * 12)
+
+def eliminarInfo(cabezal,tam):
+    with open(ruta_imagen,'rb+') as FiUnamFs:
+        FiUnamFs.seek(cabezal)
+        FiUnamFs.write(b'\x00' * tam)
+        
 def mostrarInformacionSistema():
     print(f"\n\n\tINFORMACIÓN DEL SISTEMA: \n\n\t{'-'* (5+14+10+10+19+10)}")
     print(f'\t\tDatos del sistema de archivos: {identificador} {version}')
@@ -140,6 +159,7 @@ def guardarInformacionArchivos():
                 fecha_objeto = datetime.strptime(leerAscii(cabezal + 38, 13), "%Y%m%d%H%M%S")
                 cadena_formateada = fecha_objeto.strftime("%Y-%m-%d %H:%M:%S")
                 archivo['fechaM'] = cadena_formateada # Se lee hora y fecha de creación del archivo
+                archivo['clusterDirectorio'] = cabezal
                 # Se guardar la información de los archivos que tienen información
                 archivos[archivo['nombre'].rstrip()] = archivo
                 cabezal += 64
@@ -216,6 +236,7 @@ def copiarArchivoAFiUnamFs():
                         # Aquí se escribe en el espacio para archivos. También hay que actualizar el directorio
                         escribirDirectorio(nombre,tam,clusterInicial,fecha_modificacion,fecha_creacion)
                         escribirInfo(clusterInicial,contenido)
+                        print("\tArchivo copiado de forma exitosas")
             except:
                 print("\tERROR: No fue posible abrir el archivo (posiblemente no completó la ruta con el archivo)")
                 return
@@ -231,7 +252,6 @@ def asignarEspacio(tam):
         almacenamiento.append((archivo[1]['clusterInicial'],archivo[1]['clusterInicial'] + ceil(archivo[1]['tam'] / tamCluster)))
     almacenamiento.sort()
     while(cluster < 720):
-        print(cluster, almacenamiento)
         if len(almacenamiento) != 0 and cluster == almacenamiento[0][0]: # Si el cabezal se encuentra en un cluster ocupado, se lo salta
             cluster = almacenamiento[0][1] + 1
             almacenamiento.pop(0) # Se quita el cluster
@@ -240,11 +260,9 @@ def asignarEspacio(tam):
                 cluster = almacenamiento[0][1] + 1
                 almacenamiento.pop(0)
             else: # Es posible almacenar el archivo
-                print(cluster, cluster * tamCluster)
                 return cluster * tamCluster
         
         if len(almacenamiento) == 0 and (cluster + clusterNecesarios) < 720: # Es posible almacenar el archivo posterior a todos los demás
-            print(cluster, tamCluster)
             return cluster * tamCluster
             
     return False
@@ -256,9 +274,12 @@ def eliminarArchivoFiUnamFs():
     if nombre in archivos:
         # Se elimina el archivo
         informacion = archivos[nombre]
-        print(informacion)
-    else:
+        eliminarDirectorio(informacion['clusterDirectorio'])
+        eliminarInfo(informacion['clusterInicial'] * tamCluster,informacion['tam'])
+    else: 
         print("\tERROR: No existe un archivo con ese nombre")
+    print("\tArchivo eliminado exitosamente")
+    guardarInformacionArchivos()
 
 
 # INICIO
