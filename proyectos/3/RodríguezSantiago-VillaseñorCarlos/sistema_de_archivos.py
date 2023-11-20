@@ -94,6 +94,8 @@ def superbloque():
     
     print("Fin")
 
+#Checa el contendido del directorio, si es un directorio activo,
+#lo guarda en la lista recibida
 def directorio(entrada,listaDir):
     #global listaDir
     #Lee el contenido de un directorio
@@ -172,7 +174,8 @@ def directorio(entrada,listaDir):
                 f_contents = f.read(1)
                 contador += 1
 
-#Nos da los datos que queremos copiar 
+#Misma función que directorio, pero no guarda datos en una lista, y
+#Nos da los datos que queremos copiar en las variables globales 
 def directorioCopiar(entrada):
     global clusterCop
     global tamCop
@@ -254,6 +257,7 @@ def directorioCopiar(entrada):
                 f_contents = f.read(1)
                 contador += 1
 
+#Función que imprime los datos del registro ingresado
 def printDirectorio(entrada):
     global listaDir
     #Lee el contenido de un directorio
@@ -274,15 +278,15 @@ def printDirectorio(entrada):
                 tipoArchivo = int.from_bytes(f_contents,byteorder='little')
                 #Validación
                 if (tipoArchivo == 45):
-                    print("entrada normal")                   
-                    print(tipoArchivo)                  
+                    print("entrada normal: "+str(tipoArchivo))                   
+                                      
                 elif(tipoArchivo == 47):                   
                     print("entrada vacía")                   
-                    print(tipoArchivo)
+                    
                 else:                   
                     print("Tipo de archivo desconocido")                  
                 print(f_contents)
-                print(tipoArchivo)
+                
                 contador += 1
             if(contador == 1):
                 #Leemos los 15 bytes correspondientes a
@@ -297,7 +301,7 @@ def printDirectorio(entrada):
                 #Ajustamos la entrada para calcular
                 print(f_contents)
                 print(int.from_bytes(f_contents,byteorder='little'))
-                print(tipoArchivo)
+                
                 contador += 3
             if(contador == 20):
                 #Leemos los 3 bytes correspondiente a
@@ -305,7 +309,7 @@ def printDirectorio(entrada):
                 f_contents = f.read(3)
                 print(f_contents)
                 print(int.from_bytes(f_contents,byteorder='little'))
-                print(tipoArchivo)
+                
                 contador += 3
             if(contador == 24):
                 #Leemos los 14 bytes correspondiente a
@@ -351,14 +355,16 @@ def copiar(dir,archivo):
     #Inicializamos las varibales globales
     #  con los datos del directorio ingresado
     directorioCopiar(dir)
+    print("Copiar")
     print(clusterCop)
     print(tamCop)
     resultado = ''
     #El contador va a empezar en el cluster indicado por clusterCop
     #multiplicado por sector * 4. A eso le sumamos el superbloque
     contador = (clusterCop * (2048)) 
-    print(contador)
+    print("empieza en: "+str(contador))
     contadorFinal = contador + tamCop
+    print("termina en :"+str(contadorFinal))
     #Metemos todo el contenido del archivo en una variable 
     with open('fiunamfs.img','rb') as f:
         f.read(contador)
@@ -408,18 +414,70 @@ def copiar(dir,archivo):
                 temp = str(f_contents)
                 resultado = resultado + temp
                 contador += 1
-    with open(archivo,"a") as file:
+    with open(archivo,"w") as file:
         file.write(resultado)
     #print(resultado)
 
     #El cluster inicial 
+
+#Función para eliminar archivos
+def eliminar(registro):
+    #Bastan con cambiar el tipo de archivo a '47'
+    #Primero nos ubicamos en el directorio correcto
+    #Cluster * número de cluster + 64(numero de registro)
+    inicio = (2048 * 1) + (64 * registro)
+    contador = 0
+    #Primero verificamos que sea un archivo activo
+    with open('fiunamfs.img','rb') as rf:
+        f_contents = rf.read(inicio)
+        while contador < 1:
+            print("Entro: "+str(contador))
+            #Leemos el byte correspondiente a
+            #el tipo de archivo
+            f_contents = rf.read(1)
+            tipoArchivo = int.from_bytes(f_contents,byteorder='little')
+            #Validación
+            print("Eliminar")
+            if (tipoArchivo == 45):
+                #Confirmamos que es un registro activo
+                print("registro activo")
+                with open('fiunamfs.img','r+b') as wf:
+                    elim = b'/'
+                    #regresamos el apuntador a donde estaba
+                    wf.seek(inicio)
+                    #Eliminamos
+                    wf.write(elim)
+                    print("Cambiamos valor: ")                                                       
+            elif(tipoArchivo == 47):                   
+                print("entrada vacía")                                  
+            else:                   
+                print("Tipo de archivo desconocido")                  
+            print(f_contents)
+            
+            contador += 1
+            
+def desfragmentar():
+    #Agregamos a una lista todos los archivo activos del directorio
+    listaAct = []
+    for i in range (96):
+        directorio(i,listaAct)
+    print(listaAct)
+            
+            
+        
 
 #Obtenemos super bloque
 #superbloque()
 #El superbloque ocupa 2 clusters
 #listadoDir()
 
-#printDirectorio(0)
-copiar(0,'archivo.txt')
+desfragmentar()
+
+printDirectorio()
+
+#copiar(5,'archivo.txt')
+
+#eliminar(5)
+
 
 
