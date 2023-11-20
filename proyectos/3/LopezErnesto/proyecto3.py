@@ -1,5 +1,4 @@
 import os
-import time
 import struct
 from time import sleep
 from datetime import *
@@ -7,7 +6,8 @@ from math import ceil
 
 
 # Ruta del archivo
-ruta_imagen = "/Users/danjiro01/Downloads/fiunamfs.img"
+# ruta_imagen = "/Users/danjiro01/Downloads/fiunamfs.img"
+ruta_imagen = "fiunamfs.img"
 # Se abre el archivo en modo lectura y escritura
 
 # define our clear function
@@ -118,7 +118,7 @@ def eliminarDirectorio(cabezal):
     global entradasLibres
     entradasLibres.append(cabezal)
     entradasLibres.sort()
-    numEntradas -= 1
+    numEntradas += 1
     escribirAscii(cabezal,'/..............')
     escribirAscii(cabezal + 24,'0000000000000000000000000000')
     with open(ruta_imagen,'rb+') as FiUnamFs:
@@ -224,7 +224,7 @@ def copiarArchivoAFiUnamFs():
                         print("\tERROR: El nombre del archivo es demasiado largo para el sistema.")
                         return
                     tam = os.path.getsize(archivoSistema)
-                    if tam > (clusterTotales - numClusterDir) * tamCluster:
+                    if tam > (clusterTotales - numClusterDir - 1) * tamCluster:
                         print("\tERROR: El tamaño del archivo es demasiado grande para el sistema.")
                         return
                     # Cumple las condiciones
@@ -269,6 +269,8 @@ def asignarEspacio(tam):
         
         if len(almacenamiento) == 0 and (cluster + clusterNecesarios) < 720: # Es posible almacenar el archivo posterior a todos los demás
             return cluster * tamCluster
+        else:
+            return False 
             
     return False
           
@@ -303,13 +305,15 @@ def desfragmentar():
     cluster = 5 # Primer cluster posterior al directorio
     for archivo in informacionArchivos:
         # Se mueve toda la información del archivo a la primera posición
-        rescribirDirectorio(archivo[1]['clusterDirectorio'],cluster)
-        with open(ruta_imagen,'rb') as FiUnamFs:
-            FiUnamFs.seek(archivo[1]['clusterInicial'] * tamCluster)
-            contenido = FiUnamFs.read(archivo[1]['tam'])
-        escribirInfo(cluster * tamCluster,contenido)
-        cluster += ceil(archivo[1]['tam'] / tamCluster)
-        print(cluster)
+        if cluster != archivo[1]['clusterInicial']:
+            rescribirDirectorio(archivo[1]['clusterDirectorio'],cluster)
+            with open(ruta_imagen,'rb') as FiUnamFs:
+                FiUnamFs.seek(archivo[1]['clusterInicial'] * tamCluster)
+                contenido = FiUnamFs.read(archivo[1]['tam'])
+            escribirInfo(cluster * tamCluster,contenido)
+            cluster += ceil(archivo[1]['tam'] / tamCluster)
+        else:
+            cluster += ceil(archivo[1]['tam'] / tamCluster)
     print(archivos)
 
 # INICIO
@@ -339,5 +343,3 @@ while(sesionActiva):
     else:
         print("\tERROR. Favor de seleccionar una opción válida")
         sleep(1)
-
-# listarContenidos()
