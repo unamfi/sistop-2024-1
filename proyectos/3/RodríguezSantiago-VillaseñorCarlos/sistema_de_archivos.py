@@ -1,6 +1,17 @@
 import struct
 import codecs
+import math
 
+class Registros:
+    def __init__(self,tipo,nombre,tamaño,clusterInicial,hfCreacion,hfModif,espLibre,registro):
+        self.tipo = tipo
+        self.nombre = nombre
+        self.tamaño = tamaño
+        self.clusterInicial = clusterInicial
+        self.hfCreacion = hfCreacion
+        self.hfModif = hfModif
+        self.espLibre = espLibre
+        self.registro = registro
 
 sector = 256
 #variables a copiar
@@ -173,6 +184,70 @@ def directorio(entrada,listaDir):
             else:
                 f_contents = f.read(1)
                 contador += 1
+
+#Crea objetos de los registros en la lista que pases
+def directorioLLenar(entrada,listaDir):
+    #Lee el contenido de un directorio
+    contador = 0
+    #Abrimos disco
+    with open('fiunamfs.img','rb') as f:
+        #Sabemos que el directorio esta en los clusters 1-4
+        #Por lo tanto empieza en 256 * 4 = cada cluster * 1
+        #  y se le suma 64 por cada entrada
+        #inicio = cadaCluster*1 + 64*entrada
+        inicio = (2048 * 1) + (64 * entrada)
+        f_contents = f.read(inicio)
+        while contador < 64:
+            if(contador == 0):
+                #Leemos el byte correspondiente a
+                #el tipo de archivo
+                f_contents = f.read(1)
+                tipoArchivo = int.from_bytes(f_contents,byteorder='little')                   
+                contador += 1
+            if(contador == 1):
+                #Leemos los 15 bytes correspondientes a
+                #el nombre del archivo
+                nombreArchivo = f.read(15)
+                #print(f_contents)
+                contador += 15
+            if(contador == 16):
+                #Leemos los 3 bytes correspondiente a
+                #el tamaño del archivo en bytes
+                f_contents = f.read(3)
+                tamañoBytes = int.from_bytes(f_contents,byteorder='little')
+                contador += 3
+            if(contador == 20):
+                #Leemos los 3 bytes correspondiente a
+                #el cluster inicial
+                f_contents = f.read(3)
+                clusterInicial = int.from_bytes(f_contents,byteorder='little')
+                #print(tipoArchivo)
+                contador += 3
+            if(contador == 24):
+                #Leemos los 14 bytes correspondiente a
+                #la hora y fecha de creación del archivo
+                fhCreacion = f.read(14)
+                #print(f_contents)
+                contador += 14
+            if(contador == 38):
+                #Leemos los 14 bytes correspondiente a
+                #la hora y fecha de la última modificación del archivo
+                fhModif = f.read(14)
+                #print(f_contents)
+                contador += 14
+            if(contador == 52):
+                #Leemos los 12 bytes correspondiente a
+                #el espacio no utilizado
+                espLibre = f.read(12)
+                #print(f_contents)
+                contador += 12
+            else:
+                f_contents = f.read(1)
+                contador += 1
+
+        #Creamos objeto con los datos extraidos
+        registro = Registros(tipoArchivo,nombreArchivo,tamañoBytes,clusterInicial,fhCreacion,fhModif,espLibre,entrada)
+        listaDir.append(registro)
 
 #Misma función que directorio, pero no guarda datos en una lista, y
 #Nos da los datos que queremos copiar en las variables globales 
@@ -455,14 +530,91 @@ def eliminar(registro):
             print(f_contents)
             
             contador += 1
-            
+
+
+        
 def desfragmentar():
     #Agregamos a una lista todos los archivo activos del directorio
     listaAct = []
     for i in range (96):
         directorio(i,listaAct)
     print(listaAct)
+    #Obtenemos los objetos
+    listaObj = []
+    for i in listaAct:
+        directorioLLenar(i,listaObj)
+
+    for i in range(len(listaObj)):
+        print(listaObj[i].nombre)
+
+
+
+    #Ordenar los elementos de la lista según el cluster incial
+    listaOrdenada = sorted(listaObj,key=lambda x:x.clusterInicial)
+
+
+    #Para cada registro activo
+    #HAcer la suma de donde empieza y donde termina
+    #validar si el siguiente empieza donde termina el último (cluster siguiente)
+    #Si no, mover sus datos del directorio (objeto mientras)
+    #Y Copiar y pegar el archivo dentro del disco para que cumpla
+
+
+    #para cada elememento de la lista (registros válidos)
+    #los archivos empiezan desde el primer cluster
+    primerCluster = 5
+
+ 
+    for i in listaOrdenada:
+        #Si  no empieza en el primer cluster disponible
+        if(i.clusterInicial > primerCluster):
+            #Modificamos el directorio
+            with open('fiunamfs.img','r+b') as wf:
+                inicioDir = (2048 * 1)+(64 * i.registro)
+                wf.seek(inicioDir)
+                contador = 0
+                while contador < 64:
+                    #Solo cambiamos su cluster inicial
+                    if (20 == contador):
+
+                        bytes = primerCluster.to_bytes(3,'little')
+                        #f_contents = wf.read(3)
+                        wf.write(bytes)
+          
+                        contador += 3
+                    else:
+                        wf.read(1)
+                        contador += 1
+
+                #Copiar archivo en nueva posición
+                contador = 0
+                #Ubicación del archivo, el objeto guarda los datos inciales, aunque ya fueron modificados en el disco
+                inicioArch = (2048 * i.clusterInicial)
+                wf.seek(inicioArch)
+                bytesCopia = wf.read(i.tamaño)
+                #Pegamos la copia en la nueva posición
+                inicioNArch = (2048 * primerCluster)
+                wf.seek(inicioNArch)
+                wf.write(bytesCopia)
+
+        #Calculamos el lugar inicial para el siguiente archivo
+        clustersOcupados = i.tamaño / 2048
+        #Redondeamos hacia arriba el número de clusters ocupados para almacenar el archivo
+        clustersOcupados = math.ceil(clustersOcupados)
+        print("Clusters ocpuados")
+        print(clustersOcupados)
+        #Se calcula lo que ocupó el archivo anterior y le sumamos 1 para que empiece en el siguiente cluster
+        primerCluster = primerCluster + clustersOcupados + 1
+        print(primerCluster)
+                
+                
+    
+        
+         
+
+               
             
+
             
         
 
@@ -471,11 +623,11 @@ def desfragmentar():
 #El superbloque ocupa 2 clusters
 #listadoDir()
 
-desfragmentar()
+#desfragmentar()
 
-printDirectorio()
+printDirectorio(2)
 
-#copiar(5,'archivo.txt')
+#copiar(2,'archivo.txt')
 
 #eliminar(5)
 
