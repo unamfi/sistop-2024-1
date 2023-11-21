@@ -2,12 +2,12 @@ import threading
 import time
 import tkinter as tk
 
-# Clase para representar una fábrica de automóviles
 class FabricaAutomoviles:
     def __init__(self):
         self.motor_listo = threading.Event()
         self.carroceria_listo = threading.Event()
         self.neumaticos_listo = threading.Event()
+        self.mutex = threading.Lock()  # Mutex para proteger el ensamblaje del automóvil
 
     def ensamblar_motor(self):
         self.mostrar_espera(motor_label)
@@ -32,10 +32,24 @@ class FabricaAutomoviles:
         label.update()  # Actualiza la interfaz gráfica
 
     def ensamblar_automovil(self):
-        self.motor_listo.wait()
-        self.carroceria_listo.wait()
-        self.neumaticos_listo.wait()
-        return "Automóvil ensamblado con éxito!"
+        with self.mutex:
+            self.motor_listo.wait()
+            self.carroceria_listo.wait()
+            self.neumaticos_listo.wait()
+            return "Automóvil ensamblado con éxito!"
+    
+    def mostrar_hilos_activos(self):
+        for thread in threading.enumerate():
+            print(f"Hilo activo: {thread.name}")
+
+def mostrar_hilos_activos():
+    fabrica.mostrar_hilos_activos()
+
+# Función para imprimir información sobre los hilos
+def mostrar_hilos_activos():
+    for thread in threading.enumerate():
+        print(f"Hilo activo: {thread.name}")
+    
 
 # Función para iniciar el proceso de ensamblaje
 def ensamblar_automovil():
@@ -93,5 +107,9 @@ salir_button.pack()
 
 resultado_label = tk.Label(root, text="", font=("Helvetica", 14))
 resultado_label.pack()
+
+# Botón para mostrar hilos activos
+mostrar_hilos_button = tk.Button(root, text="Mostrar Hilos Activos", command=mostrar_hilos_activos)
+mostrar_hilos_button.pack()
 
 root.mainloop()

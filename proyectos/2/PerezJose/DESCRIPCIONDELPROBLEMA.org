@@ -1,0 +1,80 @@
+#+title:  El Lanzamiento del Éxito: Una Jornada de Ventas y Emoción en la Tienda de Videojuegos
+
+#+BEGIN_SRC yaml
+Realizado por: Pérez Uribe José Alberto
+#+END_SRC
+
+Se lleva a cabo la gran inauguración de una tienda de videojuegos muy esperada, que lanza una 
+edición exclusiva de un juego muy popular “TETRIS 2”. La tienda tiene tres taquillas, cada una 
+con capacidad para atender a una cantidad limitada de entusiastas clientes que han estado 
+esperando ansiosamente este día. En este evento especial, la tienda ha promocionado que cuando 
+se llegue a la venta de 150 copias del juego se termine de cerrar la venta con aquellos en 
+ventanillas para mantener su exclusividad.
+
+** Descripción del problema
+
+Los clientes comienzan a llegar en grupos de tamaños aleatorios, algunos en pequeñas pandillas 
+de amigos, otros como coleccionistas solitarios, todos ansiosos por obtener su copia antes de 
+que se agoten. Cada grupo se dirige a una de las taquillas disponibles, donde los empleados de 
+la tienda los reciben con entusiasmo. Los trabajadores están bien organizados, tienen un sistema
+en el que solo permiten que cierto número de clientes compren a la vez, asegurando que la 
+experiencia sea ordenada y que cada fanático reciba la atención que merece.
+
+En el fondo, el gerente supervisa la operación, manteniendo un conteo cuidadoso de cada venta 
+para garantizar que no se exceda el límite prometido. Con cada venta exitosa, los clientes 
+salen con sonrisas, portando su preciada adquisición. Es un día de júbilo y celebración para 
+la comunidad de jugadores, y la tienda se esfuerza por mantenerlo así, manejando la multitud 
+y las ventas con eficiencia y alegría.
+
+** Consecuencias Nocivas de la Concurrencia
+
+- Ventas Sobre comprometidas 
+
+  Si la multitud abruma a los empleados y se pierde el control del número de juegos vendidos, 
+  la tienda podría terminar vendiendo más copias del juego de las que prometió, afectando su 
+  credibilidad y exclusividad.
+
+  - Desorden y Confusión: 
+
+    Sin un sistema para manejar adecuadamente la llegada de clientes, 
+    se podría formar una muchedumbre desordenada, lo que aumenta el riesgo de conflictos 
+    entre los clientes y dificulta la labor de los empleados.
+
+  - Controlar el flujo de clientes:
+
+    garantizar un proceso de venta organizado es crucial para el éxito de este evento. 
+    La tienda debe esforzarse por asegurar que la experiencia sea positiva para cada cliente, 
+    a pesar del entusiasmo y la urgencia que viene con un lanzamiento tan esperado.
+
+** Eventos que Queremos Controlar
+
+- Control de Multitudes:
+
+  Implementar un sistema efectivo para gestionar la multitud que llega, como formar filas ordenadas
+  garantizando que todos serán atendidos en su debido turno.
+
+- Inventario Preciso: 
+
+  Mantener un registro exacto y en tiempo real de las copias del juego vendidas, para no exceder
+  el número prometido y mantener la exclusividad del producto.
+
+- Equidad en el Servicio: 
+
+  Asegurar que cada cliente reciba la misma atención y oportunidad de compra, dependiendo de su 
+  posición en la cola y su llegada.
+
+Al controlar estos eventos, la tienda puede ofrecer una experiencia de lanzamiento emocionante y 
+disfrutable para sus clientes, asegurando al mismo tiempo que se respeten las promesas hechas y se 
+mantenga una reputación positiva.
+
+** Eventos Concurrentes donde el Ordenamiento Relativo no es Importante
+
+- Llegada de Clientes: 
+
+  No es crucial que los clientes lleguen en un orden específico, solo necesitan formarse en la 
+  taquilla. Mientras la tienda maneje adecuadamente la afluencia general, el orden de 
+  llegada de los grupos de clientes es flexible.
+
+En general se intenta imponer un orden donde es necesario para mantener la consistencia y la lógica del 
+proceso de venta, pero permite flexibilidad en eventos que son independientes del estado crítico 
+compartido.
