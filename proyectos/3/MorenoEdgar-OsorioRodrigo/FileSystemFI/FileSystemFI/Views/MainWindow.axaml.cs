@@ -9,7 +9,7 @@ namespace FileSystemFI.Views;
 
 public partial class MainWindow : Window
 {
-    private readonly MainWindowViewModel _context = new MainWindowViewModel();
+    private readonly MainWindowViewModel _context = new();
     public MainWindow()
     {
         DataContext = _context;

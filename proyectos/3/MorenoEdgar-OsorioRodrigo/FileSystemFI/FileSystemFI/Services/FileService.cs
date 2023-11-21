@@ -38,4 +38,14 @@ public class FileService : IFileService
         });
         return file;
     }
+
+    public async Task<IStorageFile?> SaveFileAsync(string fileName)
+    {
+        var file = await _target.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
+        {
+            Title = "Exportar archivo",
+            SuggestedFileName = fileName
+        });
+        return file;
+    }
 }

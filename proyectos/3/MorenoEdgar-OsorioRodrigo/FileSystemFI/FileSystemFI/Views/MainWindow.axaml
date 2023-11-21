@@ -46,6 +46,7 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
+        
         <Grid Grid.Row="1" Grid.Column="0"
               ColumnDefinitions="*, 5*, 2*"
               RowDefinitions="*, Auto,Auto">
@@ -63,7 +64,6 @@
                           VerticalScrollBarVisibility="Auto"
                           Margin="5"
                           IsVisible="{Binding TextMode }">
-
                 <TextBlock Text="{Binding FileContent}">
                 </TextBlock>
             </ScrollViewer>
@@ -83,10 +83,11 @@
                         </Style>
                     </Styles>
                 </StackPanel.Styles>
-                <Label Content="{Binding SelectedFile.FileName, StringFormat='File: {0}'}"></Label>
-                <Label Content="{Binding SelectedFile.MbSize, StringFormat='Size: {0:0.00} MB'}"></Label>
-                <Label Content="{Binding SelectedFile.CreatedDate, StringFormat='Created: {0}'}"></Label>
-                <Label Content="{Binding SelectedFile.CreatedDate, StringFormat='Modified: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.FileName, StringFormat='Archivo: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.MbSize, StringFormat='Tamaño: {0:0.00} MB'}"></Label>
+                <Label Content="{Binding SelectedFile.CreatedDate, StringFormat='Creado: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.LastModifiedDate, StringFormat='Modificado: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.FirstCluster, StringFormat='Cluster Inicial: {0}'}"></Label>
             </StackPanel>
 
             <!-- Parte inferior -->

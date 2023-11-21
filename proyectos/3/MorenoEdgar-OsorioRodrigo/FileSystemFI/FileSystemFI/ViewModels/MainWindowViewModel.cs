@@ -20,12 +20,6 @@ namespace FileSystemFI.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    public enum PreviewViewMode
-    {
-        PlainText,
-        Image
-    }
-
     [ObservableProperty] private string? _fileName = "No hay ningún archivo abierto";
     [ObservableProperty] private string? _infoString = "No hay un sistema de archivos montado.";
     [ObservableProperty] private bool _enabledManagementButtons = false;
@@ -37,6 +31,7 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty] private string _fileContent = string.Empty;
     [ObservableProperty] private Image _selectedImage = new Image();
     [ObservableProperty] private Bitmap? _imageSource;
+    // Para estos hay maneras mucho mejor de hacerlo, pero no queda mucho tiempo :(
     [ObservableProperty] private bool _imageMode = false;
     [ObservableProperty] private bool _textMode = true;
 
@@ -72,7 +67,7 @@ public partial class MainWindowViewModel : ObservableObject
         if (filesService is null)
             throw new NullReferenceException("File Service does not exists.");
 
-        var file = await filesService.SaveFileAsync();
+        var file = await filesService.SaveFileAsync(SelectedFile.FileName!);
         if (file is null) return;
         await using var fs = new FileStream(file.Path.AbsolutePath, FileMode.CreateNew, FileAccess.Write);
         await using var sw = new BinaryWriter(fs);
