@@ -426,74 +426,19 @@ def listadoDir():
     for j in (listaDir):
         printDirectorio(j)
 
-def copiar(dir,archivo):
-    #Inicializamos las varibales globales
-    #  con los datos del directorio ingresado
-    directorioCopiar(dir)
-    print("Copiar")
-    print(clusterCop)
-    print(tamCop)
-    resultado = ''
-    #El contador va a empezar en el cluster indicado por clusterCop
-    #multiplicado por sector * 4. A eso le sumamos el superbloque
-    contador = (clusterCop * (2048)) 
-    print("empieza en: "+str(contador))
-    contadorFinal = contador + tamCop
-    print("termina en :"+str(contadorFinal))
-    #Metemos todo el contenido del archivo en una variable 
-    with open('fiunamfs.img','rb') as f:
-        f.read(contador)
-        while contador < contadorFinal:
-            if(contador + 10000 < contadorFinal):
-                f_contents = f.read(10000)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 10000
-            elif(contador + 5000 < contadorFinal ):
-                f_contents = f.read(5000)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 5000
-            elif(contador + 2000 < contadorFinal ):
-                f_contents = f.read(2000)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 2000
-            elif(contador + 1000 < contadorFinal ):
-                f_contents = f.read(1000)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 1000
-            elif(contador + 500 < contadorFinal ):
-                f_contents = f.read(500)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 500
-            elif(contador + 50 < contadorFinal ):
-                f_contents = f.read(50)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 50
-            elif(contador + 15 < contadorFinal ):
-                f_contents = f.read(15)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 15
-            elif(contador + 5 < contadorFinal ):
-                f_contents = f.read(5)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 5
-            else:
-                f_contents = f.read(1)
-                temp = str(f_contents)
-                resultado = resultado + temp
-                contador += 1
-    with open(archivo,"w") as file:
-        file.write(resultado)
-    #print(resultado)
 
-    #El cluster inicial 
+def copiar(dir,archivo):
+    #Obetenemos los datos del directorio al que camos a copiar
+    listaCopia = []
+    directorioLLenar(dir,listaCopia)
+    #Vamos al archivo del directorio
+    with open('fiunamfs.img','rb') as rf:
+        inicio = (2048 * listaCopia[0].clusterInicial)
+        rf.seek(inicio)
+        bytes = rf.read(listaCopia[0].tamaño)
+    with open(archivo,'wb') as wf:
+        wf.write(bytes)
+
 
 #Función para eliminar archivos
 def eliminar(registro):
@@ -621,15 +566,17 @@ def desfragmentar():
 #Obtenemos super bloque
 #superbloque()
 #El superbloque ocupa 2 clusters
+#1
 #listadoDir()
-
-#desfragmentar()
 
 printDirectorio(2)
 
+#2
 #copiar(2,'archivo.txt')
 
+#4
 #eliminar(5)
 
-
+#5
+#desfragmentar()
 
