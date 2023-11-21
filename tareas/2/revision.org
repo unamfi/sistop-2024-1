@@ -1,0 +1,263 @@
+** Becerril Erick
+- Archivos :: [[./BecerrilErick/Tarea2.py][Tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✗
+  - Multicolas :: ✗
+  - /Global/ :: 7.5
+
+** Ceniceros Mariaca, Ramirez Martinez
+- Archivos :: [[./CenicerosMariaca-RamirezMartinez/TAREA2.py][TAREA2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✗
+  - Multicolas :: ✗
+  - /Global/ :: 7.5
+
+** Cervantes Eduardo
+- Documentación :: [[./CervantesEduardo/Readme.md][Readme.md]]
+- Archivos :: [[./CervantesEduardo/Funciones_de_apoyo.py][Funciones_de_apoyo.py]], [[./CervantesEduardo/Main.py][Main.py]], [[./CervantesEduardo/Planificadores.py][Planificadores.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 9
+
+** Chagoya Gonzalez
+- Documentación :: [[./ChagoyaGonzalez/planificacionProcesos.txt][planificacionProcesos.txt]]
+- Archivos :: [[./ChagoyaGonzalez/planificacionProcesos.py][planificacionProcesos.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✗
+  - Esquema visual :: ½
+  - Multicolas :: ✗
+  - /Global/ :: 7
+- Comentarios :: No te sirve de mucho ☹ Pero creo que la /culpa/ de que no se
+  dejara implementar la ronda es que tienes la costumbre de /abusar/ de
+  variables con significado que varía: Usas varias veces a =i=, y entre las
+  líneas 130 y 137 entras en un ciclo donde tienes una comparación externa entre
+  =i= y =tiempotot=, pero usas una =i= interna asignada sobre un rango...
+
+** Galvan Ricardo
+- Documentación :: [[./GalvanRicardo/GalvanRicardo-Tarea2.txt][GalvanRicardo-Tarea2.txt]], [[./GalvanRicardo/ejecucion.png][ejecucion.png]]
+- Archivos :: [[./GalvanRicardo/Main.java][Main.java]], [[./GalvanRicardo/Proceso.java][Proceso.java]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓ (½)
+  - Esquema visual :: ✓ (½)
+  - Multicolas :: ✗
+  - /Global/ :: 7.5
+- Comentarios :: Es trabajo honesto y bien hecho, no me puedo quejar. Faltaron
+  RR(4) y SPN ☹
+
+  Ojo: A veces inicias la ejecución de un proceso /antes de que llegue/,
+  llevando a la distorsión de tiempos negativos:
+  #+begin_src text
+
+    -----<[FCFS]>-----
+
+
+    A: 0, t = 5  ||  B: 9, t = 1  ||  C: 5, t = 2  ||  D: 7, t = 9  ||  E: 5, t = 1  ||    Total requerido: 18
+
+    Ejecucion:
+    AAAAABCCDDDDDDDDDE
+
+    PROC	T	E	P
+    ----------------------------
+    [A]	5	0	1.0
+    [B]	-3	-4	-3.0
+    [C]	3	1	1.0
+    [D]	10	1	1.0
+    [E]	13	12	13.0
+    -----------------------------
+    PROM : 5.60    2.00    2.60
+  #+end_src
+  La ejecución tendría que haber considerado el orden /real/ de los
+  procesos. Bastaría ejecutar a =E=, que llega en =t=1=, para obtener la cadena
+  correcta: =AAAAACCEDDDDDDDB=. ¡FCFS no significa que se ejecutan en orden
+  ABCDE, sino que en el orden /real/ de llegada!
+
+** Garces Carlos, Jimenez Patricia
+- Documentación :: [[./GarcesCarlos-JimenezPatricia/CapturaT2_1.png][CapturaT2_1.png]], [[./GarcesCarlos-JimenezPatricia/CapturaT2_2.png][CapturaT2_2.png]]
+- Archivos :: [[./GarcesCarlos-JimenezPatricia/Tarea2.py][Tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 9
+
+** Gomez, Juan Pablo
+- Archivos :: [[./Gomez_JuanPablo/tarea2_sistop.py][tarea2_sistop.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓ (⅔)
+  - Esquema visual :: ✗
+  - Multicolas :: ✗
+  - /Global/ :: 7
+- Comentarios :: En =planificacion_rr=, modificas a todos tus =proceso= para
+  irle restando el tiempo pendiente de cada =rafaga= conforme vas avanzando. Si
+  en =planificacion_rr()= hicieras una copia local de la lista de procesos,
+  evitarías el /vaciarla/ por completo, y tu código podría entregar los
+  resultados correctos. (En mi caso, fui comentando los algoritmos llamados,
+  sólo para verificar que estuvieran implementados los siguientes — no verifiqué
+  en realidad que fueran correctos!)
+
+  Te lo marco como /parcialmente funcional/.
+
+** Hernandez Alberto, Vazquez Ivan
+- Documentación :: [[./HernandezAlberto-VazquezIvan/HernandezAlberto_VazquezIvan_Tarea2.txt][HernandezAlberto_VazquezIvan_Tarea2.txt]]
+- Archivos :: [[./HernandezAlberto-VazquezIvan/HernandezAlbertoVazquezIvan_Tarea2.py][HernandezAlbertoVazquezIvan_Tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓ (¾)
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 8.625
+- Comentarios :: Implementan RR(1), pero no RR(4).
+
+  Me parece (no puedo juzgar con certeza porque no imprimen la lista real de
+  procesos con sus características de llegada) que no consideran los /tiempos
+  muertos/ entre que termina un proceso termina e inicia el siguiente (sólo eso
+  me explica por qué SPN tiende a dar resultados negativos, obviamente
+  incorrectos)
+
+** Hernandez Jonathan, Perez Paola
+- Documentación :: [[./HernandezJonathan-PerezPaola/README.md][README.md]]
+- Archivos :: [[./HernandezJonathan-PerezPaola/planificadores.py][planificadores.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✗
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 7.5
+- Comentarios :: ¡Eviten limpiar la pantalla llamando a =system("cls")=! (sólo
+  funciona en Windows. Además, gasta innecesariamente una llamada al sistema de
+  las más pesadas, lanzar un nuevo proceso. ¡Y además, borra la pantalla,
+  limpiando su evidencia de ejecución! Intenten con un simple
+  =print("\033[2J")=.
+
+  Los algoritmos basados en ronda... no hacen ronda (no comparten la ejecución) ☹
+
+  ¡Un proceso no puede ejecutarse antes de haber llegado! Si =C= llega en =t=3=
+  con los datos que vimos en clase (primera ronda), SPN no puede ponerlo en
+  ejecución en =t=0=.
+** Lara Christian
+- Archivos :: [[./LaraChristian/Tarea2.py][Tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✓
+  - /Global/ :: 10
+- Comentarios :: ¡Bien por considerar el tiempo que el CPU permanece inactivo!
+  (=i=)
+
+  ¡Bien por implementar multicolas!
+
+  La implementación de RR tiene un par de errores que, si no lo lleva a quedarse
+  en un ciclo, lo lleva a quejarse por una variable no declarada... pero a
+  /vuelo de ave/ me parece que está /casi perfecto/.
+
+** Lopez Ernesto
+- Archivos :: [[./LopezErnesto/tarea2.py][tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✓
+  - /Global/ :: 10
+
+** Miranda Victor
+- Documentación :: [[./MirandaVictor/MirandaVictorT2.pdf][MirandaVictorT2.pdf]]
+- Archivos :: [[./MirandaVictor/MirandaVictorT2.py][MirandaVictorT2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✗ (½)
+  - Multicolas :: ✗
+  - /Global/ :: 8.25
+- Comentarios :: ¡Muy buen documnto detallando tus observaciones! Pero... El
+  valor =P= que obtienes es la /Proporción de Penalización/ 😉 Te marco medio
+  punto de esquema visual, que no hiciste, por éste.
+
+** Moreno Edgar, Osorio Rodrigo
+- Documentación :: [[./MorenoEdgar-OsorioRodrigo/README.md][README.md]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/README.md][README.md]], [[./MorenoEdgar-OsorioRodrigo/img/01.png][01.png]], [[./MorenoEdgar-OsorioRodrigo/img/02.png][02.png]], [[./MorenoEdgar-OsorioRodrigo/img/03.png][03.png]], [[./MorenoEdgar-OsorioRodrigo/img/04.png][04.png]]
+- Archivos :: [[./MorenoEdgar-OsorioRodrigo/SistopT2/SistopT2.sln][SistopT2.sln]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/AlgoritmosPlanificacion.cs][AlgoritmosPlanificacion.cs]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/ColorUtils.cs][ColorUtils.cs]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/Extensions/EnumerableExtensions.cs][EnumerableExtensions.cs]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/Process.cs][Process.cs]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/Program.cs][Program.cs]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/Tables.cs][Tables.cs]], [[./MorenoEdgar-OsorioRodrigo/SistopT2/Tarea2/Tarea2.csproj][Tarea2.csproj]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✓
+  - /Global/ :: 10
+- Comentarios :: Muy bonito 😃
+
+** Mota Carolina
+- Archivos :: [[./MotaCarolina/Tarea2.html][Tarea2.html]], [[./MotaCarolina/Tarea2.py][Tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 9
+
+** Perez Jose
+- Documentación :: [[./PerezJose/Documentacion.txt][Documentacion.txt]]
+- Archivos :: [[./PerezJose/TAREA2.cpp][TAREA2.cpp]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 9
+
+** Puente Abdiel
+- Documentación :: [[./PuenteAbdiel/INTERACION DE PROGRAMA.pdf][INTERACION DE PROGRAMA.pdf]], [[./PuenteAbdiel/Readme.txt][Readme.txt]], [[./PuenteAbdiel/resultado.txt][resultado.txt]]
+- Archivos :: [[./PuenteAbdiel/planificacion_procesos.py][planificacion_procesos.py]]
+- Evaluación ::
+- Comentarios :: No termino de entender qué es lo que hiciste... pero no
+  implementas ninguno de los algoritmos que mencionamos ☹ =simular_procesos()=
+  podría acercarse a un =RR=, pero...
+
+  Incluyes gráficas en tu documentación, pero tampoco me queda claro de dónde
+  obtuviste los puntos de datos para ellas.
+
+  Si este es código genuinamente escrito por tí, y me puedes describir su
+  funcionamiento, por favor escríbeme y (en primer lugar) me disculpo contigo y
+  (en segundo) le dedico más tiempo a revisarte a detalle. Esto me suena a
+  /alucinación/ de ChatGPT ☹
+
+** Robles Alan
+- Documentación :: [[./RoblesAlan/README.md][README.md]]
+- Archivos :: [[./RoblesAlan/tarea2.py][tarea2.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✗
+  - Multicolas :: ✗
+  - /Global/ :: 7.5
+
+** Rodríguez Santiago, Villaseñor Carlos
+- Documentación :: [[./RodríguezSantiago-VillaseñorCarlos/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./RodríguezSantiago-VillaseñorCarlos/comparacionPlanificadores.py][comparacionPlanificadores.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓
+  - Esquema visual :: ✓
+  - Multicolas :: ✗
+  - /Global/ :: 9
+- Comentarios :: Muy bonita documentación 😉 ¡Gracias!
+
+** Zuniga Lissett
+- Archivos :: [[./ZunigaLissett/TAREA2_SO.py][TAREA2_SO.py]]
+- Evaluación ::
+  - Entrega :: ✓
+  - Funcional :: ✓ (¾)
+  - Esquema visual :: ✓
+  - Multicolas :: x
+  - /Global/ :: 8.625
+- Comentarios :: Faltó RR(4) ☹
+
