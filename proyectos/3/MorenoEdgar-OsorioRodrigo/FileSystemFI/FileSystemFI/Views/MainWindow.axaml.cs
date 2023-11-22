@@ -26,7 +26,7 @@ public partial class MainWindow : Window
 
     protected override void OnClosing(WindowClosingEventArgs e)
     {
-        _context.CloseFile();
+        _context.CloseFileSystem();
         base.OnClosing(e);
     }
 }

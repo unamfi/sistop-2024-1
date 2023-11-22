@@ -16,9 +16,10 @@ public class FiFileSystemMgr : IDisposable
     private BinaryWriter _bw = null!;
 
     /// <summary>
-    /// TODO: Esto debe quedar en el constructor de la clase.
+    /// Abre el sistema de archivos y crea el lector y el escritor binario para
+    /// leer/manipular el archivo.
     /// </summary>
-    /// <param name="filePath"></param>
+    /// <param name="filePath">Ruta al archivo .img</param>
     public void OpenFileSystem(string filePath)
     {
         _fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
@@ -27,6 +28,8 @@ public class FiFileSystemMgr : IDisposable
         try
         {
             Identifier = _br.ReadString(8);
+            if (Identifier != "FiUnamFS")
+                throw new Exception("El sistema de archivos no es válido (Debe ser FiUnamFS)");
             _br.ReadBytes(2);
             Version = _br.ReadString(4);
             _br.ReadBytes(6);
@@ -37,10 +40,11 @@ public class FiFileSystemMgr : IDisposable
 
             IsInitialized = true;
         }
-        catch (Exception)
+        catch (Exception e)
         {
             IsInitialized = false;
             Dispose();
+            throw;
         }
     }
 

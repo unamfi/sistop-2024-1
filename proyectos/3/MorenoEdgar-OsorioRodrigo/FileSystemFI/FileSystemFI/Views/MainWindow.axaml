@@ -26,10 +26,10 @@
             <Menu>
                 <MenuItem Header="File">
                     <MenuItem Header="Abrir"
-                              Command="{ Binding OpenFileCommand }">
+                              Command="{ Binding OpenFileSystemCommand }">
                     </MenuItem>
                     <MenuItem Header="Cerrar"
-                              Command="{Binding CloseFileCommand}">
+                              Command="{Binding CloseFileSystemCommand}">
                     </MenuItem>
                     <MenuItem Header="Salir"
                               Click="OnCloseClick">

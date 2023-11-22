@@ -10,6 +10,7 @@ using Avalonia.Controls.Models.TreeDataGrid;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CustomMessageBox.Avalonia;
 using FileSystemFI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using FileSystemFI.Extensions;
@@ -39,6 +40,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public MainWindowViewModel()
     {
+        // Para actualizar los visualizadores en tiempo de ejecución
         this.WhenAnyValue(f => f.SelectedFile)
             .Subscribe(f =>
             {
@@ -59,6 +61,10 @@ public partial class MainWindowViewModel : ObservableObject
             });
     }
 
+    /// <summary>
+    /// Guarda un archivo del sistema de archivos a la computadora.
+    /// </summary>
+    /// <exception cref="NullReferenceException">Si el servicio para el sistema de archivos no existe</exception>
     [RelayCommand]
     private async Task SaveFile()
     {
@@ -76,8 +82,12 @@ public partial class MainWindowViewModel : ObservableObject
         sw.Write(Fsm.ReadFile(SelectedFile).ToArray());
     }
 
+    /// <summary>
+    /// Abre el sistema de archivos.
+    /// </summary>
+    /// <exception cref="NullReferenceException"></exception>
     [RelayCommand]
-    private async Task OpenFile()
+    private async Task OpenFileSystem()
     {
         if (Fsm is not null && Fsm.IsInitialized)
             Fsm.Dispose();
@@ -89,16 +99,26 @@ public partial class MainWindowViewModel : ObservableObject
         var file = await filesService.OpenFileAsync();
         if (file is null) return;
         FileName = file.Path.AbsolutePath;
-        if (ReadFileSystem())
+        try
         {
+            if (!ReadFileSystem())
+                throw new Exception("Ocurrió un error al abrir el sistema de archivos.");
+
             var files = Fsm?.GetAllDirectories();
             if (files is null) return;
             Files = new ObservableCollection<FiFile>(files);
         }
+        catch (Exception e)
+        {
+            await MessageBox.Show(e.Message, "Error");
+        }
     }
 
+    /// <summary>
+    /// Cierra el sistema de archivos.
+    /// </summary>
     [RelayCommand]
-    public void CloseFile()
+    public void CloseFileSystem()
     {
         if (Fsm is null || !Fsm.IsInitialized) return;
         Fsm.Dispose();
@@ -108,15 +128,25 @@ public partial class MainWindowViewModel : ObservableObject
         SelectedFile = new FiFile();
         EnabledManagementButtons = false;
         InfoPanelEnabled = false;
+        ImageMode = false;
+        ImageSource = null;
+        TextMode = false;
     }
 
-    public string ReadFile()
+    /// <summary>
+    /// Lee un archivo para mostrarlo en el visualizador gráfico.
+    /// </summary>
+    /// <returns></returns>
+    private string ReadFile()
     {
         if (Fsm is null || !Fsm.IsInitialized) return string.Empty;
-        if (SelectedFile is null) return string.Empty;
-        return Encoding.ASCII.GetString(Fsm.ReadFile(SelectedFile).ToArray());
+        return SelectedFile is null ? string.Empty : Encoding.ASCII.GetString(Fsm.ReadFile(SelectedFile).ToArray());
     }
 
+    /// <summary>
+    /// Lee una imagen para mostrarla en el visualizador gráfico.
+    /// </summary>
+    /// <returns>Objeto Bitmap con el contenido de la imagen.</returns>
     private Bitmap? ReadImage()
     {
         if (Fsm is null || !Fsm.IsInitialized) return null;
@@ -126,6 +156,10 @@ public partial class MainWindowViewModel : ObservableObject
         return new Bitmap(ms);
     }
 
+    /// <summary>
+    /// Lee y crea el administrador del sistema de archivos.
+    /// </summary>
+    /// <returns>True si se logró leer (es un sistema válido), false en caso contrario</returns>
     private bool ReadFileSystem()
     {
         if (FileName is null) return false;
