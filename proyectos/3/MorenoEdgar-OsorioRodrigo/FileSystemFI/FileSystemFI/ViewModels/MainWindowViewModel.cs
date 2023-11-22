@@ -30,7 +30,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty] private bool _infoPanelEnabled = false;
     [ObservableProperty] private string _fileContent = string.Empty;
     [ObservableProperty] private Image _selectedImage = new Image();
+
     [ObservableProperty] private Bitmap? _imageSource;
+
     // Para estos hay maneras mucho mejor de hacerlo, pero no queda mucho tiempo :(
     [ObservableProperty] private bool _imageMode = false;
     [ObservableProperty] private bool _textMode = true;
@@ -131,6 +133,7 @@ public partial class MainWindowViewModel : ObservableObject
         Fsm.OpenFileSystem(FileName);
         if (!Fsm.IsInitialized) return false;
         InfoString = $"Sistema de archivos: {Fsm.Identifier} {Fsm.Version} " +
+                     $"| Etiqueta del volumen: {Fsm.Volume}" +
                      $"| Tamaño de cluster: {Fsm.ClusterSize} bytes.";
         EnabledManagementButtons = true;
         InfoPanelEnabled = true;

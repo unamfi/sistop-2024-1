@@ -23,8 +23,7 @@ public class FileService : IFileService
         var files = await _target.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
             Title = "Selecciona el archivo de imagen",
-            AllowMultiple = false,
-            FileTypeFilter = new[] { Img }
+            AllowMultiple = false
         });
 
         return files.Count >= 1 ? files[0] : null;
