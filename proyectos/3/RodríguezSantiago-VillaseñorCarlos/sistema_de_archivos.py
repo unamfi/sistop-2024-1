@@ -1,9 +1,9 @@
 import struct
-import codecs
 import math
 import os
 import time
 
+#Objeto usado para almacenar la información de los registros del directorio
 class Registros:
     def __init__(self,tipo,nombre,tamaño,clusterInicial,hfCreacion,hfModif,espLibre,registro):
         self.tipo = tipo
@@ -16,13 +16,14 @@ class Registros:
         self.registro = registro
 
 sector = 256
-#variables a copiar
+#variables usadas para copiar
 clusterCop = 0
 tamCop = 0
 
 #Variable para llevar la cuenta de los directorios activos
 listaDir = []
 
+#Extrae el superbloque
 def superbloque():
     #variables globales
     global numClusterB
@@ -184,6 +185,7 @@ def directorio(entrada,listaDir):
                 #print(f_contents)
                 contador += 12
             else:
+                #Avanza el contador si y el apuntador si no hay nada que querramos en esa posición
                 f_contents = f.read(1)
                 contador += 1
 
@@ -244,6 +246,7 @@ def directorioLLenar(entrada,listaDir):
                 #print(f_contents)
                 contador += 12
             else:
+                #Avanza el contador si y el apuntador si no hay nada que querramos en esa posición
                 f_contents = f.read(1)
                 contador += 1
 
@@ -254,9 +257,9 @@ def directorioLLenar(entrada,listaDir):
 
 #Función que imprime los datos del registro ingresado
 def printDirectorio(entrada):
-    global listaDir
     #Lee el contenido de un directorio
     contador = 0
+    print("---------------------------------------------Información del registro---------------------------------------------")
     #Abrimos disco
     with open('fiunamfs.img','rb') as f:
         #Sabemos que el directorio esta en los clusters 1-4
@@ -269,19 +272,8 @@ def printDirectorio(entrada):
             if(contador == 0):
                 #Leemos el byte correspondiente a
                 #el tipo de archivo
-                f_contents = f.read(1)
-                tipoArchivo = int.from_bytes(f_contents,byteorder='little')
-                #Validación
-                if (tipoArchivo == 45):
-                    print("entrada normal: "+str(tipoArchivo))                   
-                                      
-                elif(tipoArchivo == 47):                   
-                    print("entrada vacía")                   
-                    
-                else:                   
-                    print("Tipo de archivo desconocido")                  
+                f_contents = f.read(1)                  
                 print(f_contents)
-                
                 contador += 1
             if(contador == 1):
                 #Leemos los 15 bytes correspondientes a
@@ -294,6 +286,7 @@ def printDirectorio(entrada):
                 #el tamaño del archivo en bytes
                 f_contents = f.read(3)
                 #Ajustamos la entrada para calcular
+                print("Tamaño del archivo:")
                 print(f_contents)
                 print(int.from_bytes(f_contents,byteorder='little'))
                 
@@ -302,6 +295,7 @@ def printDirectorio(entrada):
                 #Leemos los 3 bytes correspondiente a
                 #el cluster inicial
                 f_contents = f.read(3)
+                print("Cluster inicial:")
                 print(f_contents)
                 print(int.from_bytes(f_contents,byteorder='little'))
                 
@@ -310,27 +304,30 @@ def printDirectorio(entrada):
                 #Leemos los 14 bytes correspondiente a
                 #la hora y fecha de creación del archivo
                 f_contents = f.read(14)
+                print("Fecha y hora de creación:")
                 print(f_contents)
                 contador += 14
             if(contador == 38):
                 #Leemos los 14 bytes correspondiente a
                 #la hora y fecha de la última modificación del archivo
                 f_contents = f.read(14)
+                print("Fecha y hora de última modificación:")
                 print(f_contents)
                 contador += 14
             if(contador == 52):
                 #Leemos los 12 bytes correspondiente a
                 #el espacio no utilizado
                 f_contents = f.read(12)
+                print("Espacio no utilizado:")
                 print(f_contents)
                 contador += 12
             else:
                 f_contents = f.read(1)
                 contador += 1           
-
-#Lista los dorectorios activos
-def listadoDir():
-    global listaDir
+        print("-------------------------------------------------------FIN-------------------------------------------------------")
+        
+#Lista los directorios activos
+def listadoDir(listaDir):
     #Ubicamos al directorio
     #cadaCluster = sector * 4
     #Checamos el contenido del directorio
@@ -341,12 +338,13 @@ def listadoDir():
     #Obtenemos todos los directorios ocupados
     for i in range (128):
         directorio(i,listaDir)
+    print("Registros activos: ")
     print(listaDir)
     #Recorremos la lista generado con los números de los directorios ocupados
     for j in (listaDir):
         printDirectorio(j)
 
-
+#Copia la información de un archivo del disco hacia un archivo externo
 def copiar(dir,archivo):
     #Obetenemos los datos del directorio al que camos a copiar
     listaCopia = []
@@ -361,7 +359,7 @@ def copiar(dir,archivo):
         wf.write(bytes)
 
 
-#Función para eliminar archivos
+#Función para eliminar registros del directorio
 def eliminar(registro):
     #Bastan con cambiar el tipo de archivo a '47'
     #Primero nos ubicamos en el directorio correcto
@@ -372,44 +370,45 @@ def eliminar(registro):
     with open('fiunamfs.img','rb') as rf:
         f_contents = rf.read(inicio)
         while contador < 1:
-            print("Entro: "+str(contador))
+            
             #Leemos el byte correspondiente a
             #el tipo de archivo
             f_contents = rf.read(1)
             tipoArchivo = int.from_bytes(f_contents,byteorder='little')
             #Validación
-            print("Eliminar")
+            
             if (tipoArchivo == 45):
                 #Confirmamos que es un registro activo
-                print("registro activo")
+                print("registro válido")
                 with open('fiunamfs.img','r+b') as wf:
                     elim = b'/'
                     #regresamos el apuntador a donde estaba
                     wf.seek(inicio)
                     #Eliminamos
                     wf.write(elim)
-                    print("Cambiamos valor: ")                                                       
+                                                                           
             elif(tipoArchivo == 47):                   
                 print("entrada vacía")                                  
             else:                   
                 print("Tipo de archivo desconocido")                  
-            print(f_contents)
+            
             
             contador += 1
 
 
-        
+#Reacomoda los archivos para quitar espacios
 def desfragmentar():
     #Agregamos a una lista todos los archivo activos del directorio
     listaAct = []
     for i in range (128):
         directorio(i,listaAct)
-    print(listaAct)
+    
     #Obtenemos los objetos
     listaObj = []
     for i in listaAct:
         directorioLLenar(i,listaObj)
 
+    print(listaAct)
     for i in range(len(listaObj)):
         print(listaObj[i].nombre)
 
@@ -433,6 +432,7 @@ def desfragmentar():
  
     for i in listaOrdenada:
         #Si  no empieza en el primer cluster disponible
+        print("Verificación, archivo siguiente empieza en: "+str(i.clusterInicial))
         if(i.clusterInicial > primerCluster):
             #Modificamos el directorio
             with open('fiunamfs.img','r+b') as wf:
@@ -442,11 +442,9 @@ def desfragmentar():
                 while contador < 64:
                     #Solo cambiamos su cluster inicial
                     if (20 == contador):
-
-                        bytes = primerCluster.to_bytes(3,'little')
-                        #f_contents = wf.read(3)
+                        bytes = primerCluster.to_bytes(3,'little')                       
                         wf.write(bytes)
-          
+                        print("Pasando de posición: "+str(i.clusterInicial)+" a "+str(primerCluster))
                         contador += 3
                     else:
                         wf.read(1)
@@ -467,16 +465,17 @@ def desfragmentar():
         clustersOcupados = i.tamaño / 2048
         #Redondeamos hacia arriba el número de clusters ocupados para almacenar el archivo
         clustersOcupados = math.ceil(clustersOcupados)
-        print("Clusters ocpuados")
-        print(clustersOcupados)
+        print("---------------------------------------------Información de modificaciones---------------------------------------------")
+        print("Clusters ocupados por: "+str(i.nombre))
+        print("Su cluster inicial es: "+str(primerCluster))
+        print("Su archivo ocupa esta cantidad de clusters: "+str(clustersOcupados))
         #Se calcula lo que ocupó el archivo anterior y le sumamos 1 para que empiece en el siguiente cluster
         primerCluster = primerCluster + clustersOcupados + 1
-        print(primerCluster)
+        print("siguiente cluster disponible: "+str(primerCluster))
                 
                 
     
-        
-         
+#Copia un archivo externo hacia el disco, agregandolo a al directorio, y copiando su contenido de forma contigua.
 def obteniendoArchivoAgregarDirectorio(archivoAgregar):
 
 
@@ -484,10 +483,6 @@ def obteniendoArchivoAgregarDirectorio(archivoAgregar):
         #Obteniendo el archivo para agregar al final del directorio
         with open(archivoAgregar, 'rb') as archivo:
             #Almacenando el contenido del archivo
-            #contenido = archivo.read()
-            #print(contenido)
-            #contenidoEnBytes = contenido.encode('utf-8')
-            #print(contenidoEnBytes)
             nombreDeArchivoCompleto = archivo.name
             if '.' in nombreDeArchivoCompleto:
             #Almacenando nombre de archivo y extensión en dos varaiables diferentes
@@ -507,47 +502,37 @@ def obteniendoArchivoAgregarDirectorio(archivoAgregar):
                 listaAct = []
                 for i in range (128):
                     directorio(i,listaAct)
-                #print(listaAct)
+
                 #Obtenemos los objetos de esos archivos activos
                 listaObj = []
                 for i in listaAct:
                     directorioLLenar(i,listaObj)
 
-                #for i in range(len(listaObj)):
-                    #print(listaObj[i].clusterInicial)
                 
                 #Ordenar los elementos de la lista según la magnitud de su cluster incial
                 listaOrdenada = sorted(listaObj,key=lambda x:x.clusterInicial)
 
-                print("----------------contenido ordenado por clusters---------------------")
-                for i in range(len(listaOrdenada)):
-                    print(listaOrdenada[i].clusterInicial)
-                print("-------------------------------fin----------------------------------")
                 #Colocamos la nueva información en el directorio
                 for i in range(128):
                     # Buscamos el primer lugar disponible del directorio 
                     if i not in listaAct:
                         #Convertimos datos a binario
                         nombreBin = nombreDeArchivo.encode('us-ascii')
-                        print(nombreBin)
+                        
                         fechaModBin = fechaUlitmaModificacion.encode('us-ascii')
-                        print(fechaModBin)                      
+                                              
                         fechaCreaBin = fecha.encode('us-ascii')
-                        print(fechaCreaBin)
+                        
                         #Cluster inicial
                         #Sumamos el cluster incial y el tamaño del cluster inicial del directorio que tiene el cluster inicial más grande
                         longitudUltimoArchivo = ((listaOrdenada[-1].clusterInicial)*2048)+(listaOrdenada[-1].tamaño)
                         clusterSiguiente = math.ceil(longitudUltimoArchivo / 2048) + 1                  
                         clusterInicial = clusterSiguiente.to_bytes(3,byteorder = 'little')
-                        print("Clusters:")
-                        print(clusterSiguiente)
-                        print(clusterInicial)
+                        
                         #Obtenemos tamaño archivo
                         tamArch = os.path.getsize(archivoAgregar)
                         tamArchBin = tamArch.to_bytes(3,byteorder = 'little')
-                        print("Tamaños:")
-                        print(tamArch)
-                        print(tamArchBin)
+                        
                         #Valor maximo de entero que se puede representar en 14 bytes
                         maxValor = (256 ** 3) - 1
                         #Verificamos si es un tamaño válido
@@ -555,9 +540,7 @@ def obteniendoArchivoAgregarDirectorio(archivoAgregar):
                             #Copiamos toda la información del archivo 
                             archivo.seek(0)
                             contenido = archivo.read()
-                            print("Contenido del archivo")
-                            print(contenido)
-                            #print(contenido)
+                            
                             
                             with open('fiunamfs.img','r+b') as wf:
                                 inicial = (2048)+(64 * i)
@@ -608,16 +591,6 @@ def obteniendoArchivoAgregarDirectorio(archivoAgregar):
                             print("Tamaño inválido")
                         break
 
-                #print('Nombre de archivo: ' +nombreDeArchivo)
-                #print('Fecha de creación con formato AAAMMDDHHMMSS: ' +fecha)
-                #print('Fecha de modificación con formato AAAMMDDHHMMSS: ' +fechaUlitmaModificacion)
-                #print('Extensión: ' +extension)
-                #print('Contenido: ' + contenido)
-                
-                #infoArchivo = os.stat(archivoAgregar)
-                #creacion = infoArchivo.st_ctime
-                #aver = datetime.datetime.utcfromtimestamp(creacion)
-                #print('Probando: '  +aver)
             else:
                 print("Nombre demsasiado largo")
             
@@ -645,37 +618,40 @@ def decisionException():
         print('Input inválido')
         decisionException()
 
+#Función que implementa un menú de selección de funciones
+def menu():
+    x = 0
+    while(True):
 
+        print("1) Listar directorios activos")
+        print("2) Copiar un archivo del disco")
+        print("3) Meter un archivo al disco")
+        print("4) Eliminar un archivo del disco")
+        print("5) Desfragmentar el disco")
+        print("6) Mostrar contenido de un directorio")
+        print("7) Mostrar el contenido del super bloque")
+        print("8) Salir")
+        x = int(input("Seleccione una opción"))
+        if(x == 1):
+            lista = []         
+            listadoDir(lista)
+        if(x == 2):
+            archivo2 = input("Ingresa el nombre del archivo completo donde quieres copiar la información: ")
+            directorio2 = int(input("Ingresa el número del directorio que deseas copiar: "))
+            copiar(directorio2,archivo2)
+        if(x == 3):
+            usuarioIngresaArchivo()
+        if(x == 4):
+            directorio4 = int(input("Ingresa el número del directorio que desea eliminar: "))
+            eliminar(directorio4)
+        if(x == 5):
+            desfragmentar()
+        if(x == 6):
+            directorio6 = int(input("Ingresa el número del directorio"))
+            printDirectorio(directorio6)
+        if(x == 7):
+            superbloque()
+        if(x == 8):
+            break
 
-
-
-
-
-
-               
-            
-
-            
-        
-
-#Obtenemos super bloque
-#superbloque()
-#El superbloque ocupa 2 clusters
-#1
-#listadoDir()
-
-#printDirectorio(4)
-
-#2
-#copiar(4,'archivo.txt')
-
-#3
-#usuarioIngresaArchivo()
-#listadoDir()
-
-#4
-#eliminar(5)
-
-#5
-#desfragmentar()
-
+menu()
