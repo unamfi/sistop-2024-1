@@ -19,7 +19,7 @@
   | 16–23/nov | Estandarización de Linux                                                     | Carlos Ceniceros                                            | [[https://www.youtube.com/watch?v=iDtbK0UDHYg][Liga a Youtube]] | [[./CenicerosCarlos/Documento.pdf][Documento]], [[./CenicerosCarlos/Exposición.pdf][Presentación]] | [[https://questionpro.com/t/ARiwuZ0jvr][Cuestionario]]      |
   | 21–25/nov | Los problemas de sincronización y consenso en sistemas distribuidos          | Erick Becerril y Ricardo Galván                             | [[https://youtu.be/7QQva7PcYIg][Liga a Youtube]] | [[./BecerrilErick-GalvanRicardo/Documento.pdf][Documento]], [[./BecerrilErick-GalvanRicardo/Presentación.pdf][Presentación]] | [[https://questionpro.com/t/ARiwuZ0nei][Cuestionario]]      |
   | 23–27/nov | Sistemas operativos en ambulancias                                           | Carolina Mota                                               | [[https://youtu.be/L1_EPg8sfWg][Liga a Youtube]] | [[./MotaCarolina/SO_en_ambulancias.pdf][Documento]], [[./MotaCarolina/Presentacion_SO_en_ambulancias.pdf][Presentación]] | [[https://questionpro.com/t/ARiwuZ0pQe][Cuestionario]]      |
-  |           | GNU HURD                                                                     | Giovanni Garciliano                                         |                |                         |                   |
+  |           | GNU HURD                                                                     | Emilio Cruz y Giovanni Garciliano                           |                |                         |                   |
   |           | Systemd                                                                      | Edgar Chalico y Rodrigo Osorio                              |                |                         |                   |
   |           | Android and RISC-V: What you need to be ready                                | Christian Lara y Pedro Villegas                             |                |                         |                   |
   |           | Sistemas Operativos de Tiempo Real en Sistemas Autónomos o RTOS              | Samuel Hernández                                            |                |                         |                   |
@@ -28,6 +28,7 @@
   |           | Sistemas de archivos distribuidos                                            | Lissett Zúñiga y Hannia Matías                              |                |                         |                   |
   |           | Desduplicación en los sistemas operativos de última generación               | Alejandra Jiménez y José Alberto Pérez                      |                |                         |                   |
   |-----------+------------------------------------------------------------------------------+-------------------------------------------------------------+----------------+-------------------------+-------------------|
+
   #+TBLFM: 
 
 * Rúbrica de evaluación
