@@ -94,6 +94,27 @@ def copy_to_FiUnamFS(file_name):
         print(f"Ocurrió un error al copiar el archivo a FiUnamFS: {e}")
 
 # Función para encontrar un cluster libre en el sistema de archivos
+def find_free_cluster():
+    with open('FiUnamFS', 'r+b') as file_fs:
+        # Supongamos que el superbloque indica información sobre clústeres libres
+        # y tiene un mapa de bits que indica qué clústeres están ocupados o libres
+        # Aquí se lee ese mapa de bits y se busca un clúster libre
+        
+        # Suponiendo que el mapa de bits empieza después del superbloque
+        file_fs.seek(64)  # Suponiendo un superbloque de 64 bytes
+        bit_map = file_fs.read(cluster_size)  # Leer el mapa de bits
+        
+        for i, byte in enumerate(bit_map):
+            for j in range(8):
+                bit = (byte >> j) & 1
+                if bit == 0:
+                    # Encontramos un bit (cluster) libre
+                    return i * 8 + j  # Devolvemos el número del cluster libre
+
+        # Si no se encuentra ningún clúster libre
+        return None
+
+# Función para encontrar un cluster libre en el sistema de archivos
 def find_empty_directory_entry():
     with open('FiUnamFS', 'r+b') as file_fs:
         file_fs.seek(cluster_size * directory_start)
@@ -128,15 +149,87 @@ def update_directory_entry(file_name, cluster, file_size):
             new_entry = file_type + file_name_encoded + file_size_packed + file_cluster + creation_time + modification_time
             file_fs.write(new_entry)
 
-# Función para eliminar un archivo de FiUnamFS
+# Función para eliminar un archivo del directorio y liberar sus clusters
 def delete_from_FiUnamFS(file_name):
-    # Eliminar el archivo del directorio y liberar sus clusters
-    # ...
+    with open('FiUnamFS', 'r+b') as file_fs:
+        file_fs.seek(cluster_size * directory_start)
+        data = file_fs.read(directory_cluster_size * cluster_size)
+
+        # Buscar el archivo en el directorio
+        found = False
+        for i in range(0, len(data), 64):
+            entry = struct.unpack("<c15sI", data[i:i+20])
+            file_type = entry[0].decode('utf-8')
+            file_name_fs = entry[1].decode('utf-8').rstrip('\x00')
+
+            if file_type != '/' and file_name_fs == file_name:
+                found = True
+                # Marcar la entrada como vacía en el directorio
+                file_fs.seek(cluster_size * directory_start + i)
+                file_fs.write(b'/---------------')
+
+                # Liberar los clusters asociados al archivo
+                cluster_to_free = entry[2]
+                free_clusters(cluster_to_free)
+                print(f"Archivo {file_name} eliminado exitosamente del directorio")
+                break
+        
+        if not found:
+            print(f"El archivo {file_name} no fue encontrado en el directorio")
+# Función para liberar los clusters asociados a un archivo eliminado
+def free_clusters(start_cluster):
+    with open('FiUnamFS', 'r+b') as file_fs:
+        file_fs.seek(cluster_size * directory_start + 64)  # Supongamos que el mapa de bits comienza después del directorio
+        byte_offset = start_cluster // 8
+        bit_offset = start_cluster % 8
+        
+        file_fs.seek(byte_offset, 1)  # Ir a la posición del byte en el mapa de bits
+        byte = ord(file_fs.read(1))
+        
+        # Marcar el cluster inicial como libre
+        byte &= ~(1 << bit_offset)  # Se borra el bit correspondiente para marcarlo como libre
+        
+        file_fs.seek(byte_offset)
+        file_fs.write(bytes([byte]))
 
 # Función para desfragmentar FiUnamFS
+# Función para desfragmentar FiUnamFS
 def defragment_FiUnamFS():
-    # Implementar la lógica para desfragmentar el sistema de archivos
-    # ...
+    with open('FiUnamFS', 'r+b') as file_fs:
+        # Leer el directorio para obtener los archivos activos
+        file_fs.seek(cluster_size * directory_start)
+        directory_data = file_fs.read(directory_cluster_size * cluster_size)
+        
+        # Crear una lista para mantener un seguimiento de los clústeres ocupados por archivos
+        occupied_clusters = set()
+        for i in range(0, len(directory_data), 64):
+            entry = struct.unpack("<c15sI", directory_data[i:i+20])
+            file_type = entry[0].decode('utf-8')
+            file_cluster = entry[2]
+            if file_type != '/':
+                occupied_clusters.add(file_cluster)
+        
+        # Crear un nuevo archivo FiUnamFS_temp para realizar la desfragmentación
+        with open('FiUnamFS_temp', 'wb') as temp_fs:
+            # Escribir el superbloque en FiUnamFS_temp
+            file_fs.seek(0)
+            superbloque = file_fs.read(64)
+            temp_fs.write(superbloque)
+            
+            # Escribir el directorio en FiUnamFS_temp
+            temp_fs.seek(cluster_size * directory_start)
+            temp_fs.write(directory_data)
+            
+            # Copiar los archivos activos a FiUnamFS_temp (compactando)
+            for cluster in sorted(occupied_clusters):
+                file_fs.seek(cluster_size * cluster)
+                data = file_fs.read(cluster_size)
+                temp_fs.seek(cluster_size * cluster)
+                temp_fs.write(data)
+    
+    # Reemplazar FiUnamFS con FiUnamFS_temp
+    os.remove('FiUnamFS')
+    os.rename('FiUnamFS_temp', 'FiUnamFS')
 
 # Ejemplo de uso
 if __name__ == "__main__":
