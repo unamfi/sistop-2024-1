@@ -7,15 +7,21 @@ nombre_archivo_img = r"/Users/PC/Desktop/SO/Proyecto3/fiunamfs.img"
 def validar_superbloque(nombre_archivo):
     with open(nombre_archivo, "rb") as f:
         data = f.read(54)
-        magic, version = struct.unpack("<8s5s", data[:13])
+        magic, versionk = struct.unpack("<8s6s", data[:14])
+        version = struct.unpack("<4s", data[10:14])
+        version = versionk[2:6]
 
         if magic.decode("ascii") != "FiUnamFS":
             print("¡Error! No es un sistema de archivos FiUnamFS.")
             return False
+        else:
+            print("El sistema es correcto.")
 
         if version.decode("ascii") != "24.1":
             print("¡Error! Versión no compatible.")
             return False
+        else:
+            print("La versión es compatible.")
 
         return True
       
