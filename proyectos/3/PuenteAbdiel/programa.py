@@ -1,19 +1,37 @@
 import struct
 import os
 import datetime
+# Definir constantes y variables globales
+cluster_size = 1024
+directory_start = 1
+directory_cluster_size = 4
 
-# Función para leer el superbloque
-def read_superblock():
-    with open('FiUnamFS', 'rb') as file:
-        file.seek(0)
-        data = file.read(64)  # Tamaño del superbloque
-        # Leer y desempaquetar los datos del superbloque
-        superblock = struct.unpack("<9s5s20sI3I", data)
-        return superblock
+# Función para leer el superbloque y validar el sistema de archivos
+def list_directory():
+    try:
+        with open('FiUnamFS', 'rb') as file:
+            file.seek(cluster_size * directory_start)
+            data = file.read(directory_cluster_size * cluster_size)
+
+            for i in range(0, len(data), 64):
+                entry = struct.unpack("<c15sI14s14s14s", data[i:i+64])
+
+                file_type = entry[0].decode('utf-8')
+                file_name = entry[1].decode('utf-8').rstrip('\x00')
+                file_size = entry[2]
+                creation_time = datetime.datetime.strptime(entry[3].decode('utf-8'), '%Y%m%d%H%M%S')
+                modification_time = datetime.datetime.strptime(entry[4].decode('utf-8'), '%Y%m%d%H%M%S')
+
+                if file_type != '/':
+                    print(f"Tipo: {file_type}, Nombre: {file_name}, Tamaño: {file_size} bytes")
+                    print(f"Fecha de creación: {creation_time}, Fecha de modificación: {modification_time}")
+                    print("--------------------")
+    except FileNotFoundError:
+        print("El archivo 'FiUnamFS' no se encuentra en la ruta especificada.")
 
 # Función para listar los contenidos del directorio
 def list_directory():
-     with open('FiUnamFS', 'rb') as file:
+    with open('FiUnamFS', 'rb') as file:
         file.seek(cluster_size * directory_start)
         data = file.read(directory_cluster_size * cluster_size)
 
@@ -33,7 +51,7 @@ def list_directory():
                 print(f"Tipo: {file_type}, Nombre: {file_name}, Tamaño: {file_size} bytes")
                 print(f"Fecha de creación: {creation_time}, Fecha de modificación: {modification_time}")
                 print("--------------------")
-
+        
 # Función para copiar un archivo desde FiUnamFS a tu sistema
 def copy_from_FiUnamFS(file_name):
     with open('FiUnamFS', 'rb') as file_fs:
@@ -93,7 +111,7 @@ def copy_to_FiUnamFS(file_name):
     except Exception as e:
         print(f"Ocurrió un error al copiar el archivo a FiUnamFS: {e}")
 
-# Función para encontrar un cluster libre en el sistema de archivos
+    # Función para encontrar un cluster libre en el sistema de archivos
 def find_free_cluster():
     with open('FiUnamFS', 'r+b') as file_fs:
         # Supongamos que el superbloque indica información sobre clústeres libres
@@ -114,7 +132,7 @@ def find_free_cluster():
         # Si no se encuentra ningún clúster libre
         return None
 
-# Función para encontrar un cluster libre en el sistema de archivos
+# Función para actualizar la entrada del directorio con la información del nuevo archivo
 def find_empty_directory_entry():
     with open('FiUnamFS', 'r+b') as file_fs:
         file_fs.seek(cluster_size * directory_start)
@@ -149,6 +167,7 @@ def update_directory_entry(file_name, cluster, file_size):
             new_entry = file_type + file_name_encoded + file_size_packed + file_cluster + creation_time + modification_time
             file_fs.write(new_entry)
 
+# Función para eliminar un archivo de FiUnamFS
 # Función para eliminar un archivo del directorio y liberar sus clusters
 def delete_from_FiUnamFS(file_name):
     with open('FiUnamFS', 'r+b') as file_fs:
@@ -176,6 +195,7 @@ def delete_from_FiUnamFS(file_name):
         
         if not found:
             print(f"El archivo {file_name} no fue encontrado en el directorio")
+
 # Función para liberar los clusters asociados a un archivo eliminado
 def free_clusters(start_cluster):
     with open('FiUnamFS', 'r+b') as file_fs:
@@ -192,7 +212,6 @@ def free_clusters(start_cluster):
         file_fs.seek(byte_offset)
         file_fs.write(bytes([byte]))
 
-# Función para desfragmentar FiUnamFS
 # Función para desfragmentar FiUnamFS
 def defragment_FiUnamFS():
     with open('FiUnamFS', 'r+b') as file_fs:
@@ -230,15 +249,53 @@ def defragment_FiUnamFS():
     # Reemplazar FiUnamFS con FiUnamFS_temp
     os.remove('FiUnamFS')
     os.rename('FiUnamFS_temp', 'FiUnamFS')
+def read_superblock():
+    try:
+        with open('FiUnamFS', 'rb') as file:
+            data = file.read(64)  # Tamaño del superbloque
+            superblock = struct.unpack("<9s5s20sI3I", data)
+            # Validar sistema de archivos
+            if superblock[0].decode('utf-8') != 'FiUnamFS':
+                raise ValueError("El sistema de archivos no es FiUnamFS")
+            if superblock[1].decode('utf-8') != '24.1  ':
+                raise ValueError("Versión incorrecta del sistema de archivos")
+            return superblock
+    except FileNotFoundError:
+        print("El archivo 'FiUnamFS' no se encuentra en la ruta especificada.")
+        # Realiza alguna acción o manejo de error apropiado aquí
 
-# Ejemplo de uso
+# ... (Otras funciones)
+
+def list_directory():
+    try:
+        with open('FiUnamFS', 'rb') as file:
+            file.seek(cluster_size * directory_start)
+            data = file.read(directory_cluster_size * cluster_size)
+
+            # Resto de la lógica de la función...
+    except FileNotFoundError:
+        print("El archivo 'FiUnamFS' no se encuentra en la ruta especificada.")
+        # Realiza alguna acción o manejo de error apropiado aquí
+
+# ... (Otras funciones)
+
+def main():
+    print("Seleccione una acción:")
+    print("1. Listar directorio")
+    print("2. Copiar archivo desde FiUnamFS al sistema")
+    print("3. Salir")
+
+    choice = input("Ingrese el número de la acción que desea realizar: ")
+
+    if choice == '1':
+        list_directory()
+    elif choice == '2':
+        file_name = input("Ingrese el nombre del archivo que desea copiar desde FiUnamFS al sistema: ")
+        copy_from_FiUnamFS(file_name)
+    elif choice == '3':
+        print("Saliendo...")
+    else:
+        print("Selección no válida")
+
 if __name__ == "__main__":
-    # Definir tamaños y posiciones según la especificación
-    cluster_size = 1024
-    directory_start = 1
-    directory_cluster_size = 4
-    
-    # Leer el superbloque para validar el sistema de archivos
-    superblock = read_superblock()
-    # Realizar las operaciones requeridas utilizando las funciones definidas
-    # ...
+    main()
