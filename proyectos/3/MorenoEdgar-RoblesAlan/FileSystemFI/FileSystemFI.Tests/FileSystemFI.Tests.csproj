@@ -24,8 +24,14 @@
     <ItemGroup>
       <Content Include="..\..\..\fiunamfs.img">
         <Link>fiunamfs.img</Link>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="arch_logo.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

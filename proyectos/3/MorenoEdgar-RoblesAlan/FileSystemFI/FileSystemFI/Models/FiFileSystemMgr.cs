@@ -40,7 +40,7 @@ public class FiFileSystemMgr : IDisposable
 
             IsInitialized = true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             IsInitialized = false;
             Dispose();
@@ -91,7 +91,7 @@ public class FiFileSystemMgr : IDisposable
     }
 
 
-    public async Task<FiFile?> CreateNewFile(string path)
+    public async Task<FiFile?> CopyFromComputer(string path)
     {
         if (Files.Any(c => c.FileName == path))
             throw new Exception("El archivo ya existe");
@@ -107,12 +107,38 @@ public class FiFileSystemMgr : IDisposable
         var dataLocation = GetNextAvaiableDataSpace(fileSize);
         if (dataLocation == -1)
             throw new Exception("No hay espacio para almacenar el archivo.");
-        dataLocation /= ClusterSize;
 
-        _br.BaseStream.Position = dataLocation * ClusterSize;
-        Console.WriteLine(_br.ReadString(50000));
+        var file = new FiFile
+        {
+            FileName = Path.GetFileName(fs.Name).PadRight(14),
+            FirstCluster = (int)dataLocation,
+            Size = (int)fileSize,
+            Type = '-',
+            CreatedDate = File.GetCreationTime(path),
+            LastModifiedDate = DateTime.Now
+        };
+        WriteFileData(file, infoLocation);
 
-        return null;
+        var files = GetAllDirectories();
+
+        _bw.BaseStream.Position = dataLocation;
+
+        while (br.ReadByte() is var dat)
+            _bw.Write(dat);
+
+        return file;
+    }
+
+    private void WriteFileData(FiFile file, long infoSpace)
+    {
+        _bw.BaseStream.Position = infoSpace;
+        _bw.Write(file.Type);
+        _bw.Write(file.FileName!);
+        _bw.WriteInt32LitEnd(file.Size);
+        _bw.Write(0x00);
+        _bw.Write(file.FirstCluster);
+        _bw.Write(file.CreatedDate.ToString("yyyyMMddHHmmss"));
+        _bw.Write(file.LastModifiedDate.ToString("yyyyMMddHHmmss"));
     }
 
     private long GetNextAvaiableFileInfo()

@@ -15,21 +15,26 @@ namespace FileSystemFI.Tests
         }
 
         [Test]
-        public void CopyFileToFileSystemTest()
+        public async Task CopyFileToFileSystemTest()
         {
             var fsm = new FiFileSystemMgr();
-            
-            fsm.OpenFileSystem(DestinationFileName);
+            try
+            {
+                fsm.OpenFileSystem(DestinationFileName);
+                Assert.That(fsm.IsInitialized, Is.True);
 
-            Assert.That(fsm.IsInitialized, Is.True);
+                var file = await fsm.CopyFromComputer("./arch_logo.png");
 
-            File.WriteAllText(SourceFileName, "Contenido de prueba.");
-
-            var success = fsm.CopyFileToFileSystem(SourceFileName, "/copied_file.txt");
-
-            Assert.That(success, Is.True);
-
-            fsm.Dispose();
+                var files = fsm.GetAllDirectories();
+                Assert.That(files, Is.Not.Empty);
+                Assert.That(files.Where(f => f.FileName == "arch_logo.png"), Is.Not.EqualTo(null));
+            }
+            catch (Exception e)
+            {
+                fsm.Dispose();
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

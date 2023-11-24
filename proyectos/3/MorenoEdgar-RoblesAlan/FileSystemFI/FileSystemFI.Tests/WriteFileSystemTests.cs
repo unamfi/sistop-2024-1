@@ -20,7 +20,7 @@ public class WriteFileSystemTests
         var files = fsm.GetAllDirectories();
         Assert.That(files, Is.Not.Empty);
 
-        var file = fsm.CreateNewFile("/home/ayame/Desktop/arch_logo.png");
+        var file = fsm.CopyFromComputer("/home/ayame/Desktop/arch_logo.png");
         Assert.That(file, Is.Not.Null);
     }
 }

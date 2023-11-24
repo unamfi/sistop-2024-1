@@ -47,7 +47,6 @@ public class ReadFileSystemTests
         var file = Encoding.ASCII.GetString(fileBytes);
         Assert.That(file, Is.Not.EqualTo(string.Empty));
         Console.WriteLine($"Archivo: {files[0].FileName} | Size: {files[0].MbSize} MB ({files[0].Size})");
-        Console.WriteLine(file);
     }
     
     [Test]
