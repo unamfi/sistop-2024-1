@@ -1,0 +1,7 @@
+#+TITLE: GNU Hurd
+
+De Cruz Vargas Emilio y Garciliano Díaz Giovanni Alfredo
+
+- Video :: https://drive.google.com/file/d/1NsNDswCGS2ZcGCTtATyYJBitCQNFjiRe/view?usp=sharing
+- Presentación :: https://www.canva.com/design/DAF0kq-yCF4/RzJb1CAwX7TkTU8bbN1pYA/view?utm_content=DAF0kq-yCF4&utm_campaign=designshare&utm_medium=link&utm_source=editor
+- Documento :: https://github.com/unamfi/sistop-2024-1/blob/main/exposiciones/CruzVargas-GarcilianoGiovanni/Investigacion.org
