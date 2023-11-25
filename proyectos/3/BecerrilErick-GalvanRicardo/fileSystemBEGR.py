@@ -30,7 +30,16 @@ def leer_superbloque(nombre_archivo):
     if validar_superbloque(nombre_archivo):
         with open(nombre_archivo, "rb") as f:
             data = f.read(54)
-            magic, version, label, cluster_size, dir_clusters, total_clusters = struct.unpack("<8s5s20sIQQ", data)
+            #magic, version, label, cluster_size, dir_clusters, total_clusters = struct.unpack("<8s5s20sIQQ", data)
+            dump, label, dumpy = struct.unpack("<20s19s15s", data) #label bien 9b de 20 a 29
+            print(label.decode("ascii"))
+            dump, cluster_size, dumpy = struct.unpack("<40sI10s", data)
+            # print(cluster_size.decode("ascii"))
+            print("Tamanio de clusters: %d bytes." % cluster_size)
+            dump, dir_clusters, dumpy = struct.unpack("<45sI5s", data)
+            print("Clusters del directorio: %d." % cluster_size)
+            dump, total_clusters = struct.unpack("<50sI", data)
+            print("Clusters de la unidad completa: %d." % total_clusters)
 
             return {
                 "label": label.decode("ascii").rstrip('\x00'),
@@ -49,7 +58,8 @@ def listar_contenidos(nombre_archivo):
             f.seek(superbloque["cluster_size"])
             for _ in range(superbloque["dir_clusters"]):
                 entrada = f.read(64)
-                tipo, nombre, tamaño, cluster_inicial, _, _ = struct.unpack("<s15sIQ14s14s14s", entrada)
+                #tipo, nombre, tamaño, cluster_inicial, _, _ = struct.unpack("<c15sI3s", entrada)
+                tipo, nombre, tamaño, cluster_inicial, creacion, modificacion, dump = struct.unpack("<c15sI3s14s14s13s", entrada)
 
                 if nombre.decode("ascii").rstrip('\x00') != "---------------":
                     print("Nombre: {}, Tamaño: {}, Cluster Inicial: {}".format(
