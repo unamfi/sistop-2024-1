@@ -1,0 +1,95 @@
+#+TITLE: GNU Hurd
+#+SUBTITLE: Sistemas Operativos, grupo 6, semestre 2024-1
+#+AUTHOR: Emilio Cruz Vargas, Giovanni Alfredo Garciliano Díaz
+#+LANGUAGE: es
+
+* Introducción
+El protagonista de este trabajo es GNU Hurd, uno de los subproyectos del proyecto GNU que aún no ha concebido una versión estable, y cuyo desarrollo tiene largos periodos de inactividad alternados con períodos más cortos de interés renovado. La culpa es, en parte, de la oportuna aparición del kernel Linux, que probó ser una solución más inmediata al problema que tenía el proyecto GNU de no tener un kernel disponible, por tener Linux un diseño de arquitectura mucho más común y simple que Hurd (a pesar de lo que Tanembaun argumentó[fn:1]). Pero, a pesar de que muchos consideran este proyecto una pérdida de tiempo, lo cierto es que Hurd tiene mucho qué ofrecer.
+
+El sistema operativo Hurd se concibió como una colección de microservidores que proveen cada uno un servicio en particular (muy en línea con la filosofía Unix de tener herramientas simples que realicen una sola tarea) que corren sobre un microkernel para comunicarse con el hardware. La intención de los desarrolladores de Hurd eran la de crear un kernel que funcionara como el kernel Unix, que fuera aceptable para ser integrado en proyecto GNU: esto es, listo para ser usado en entornos productivos generales, y que otorgara las 4 libertades al usuario.[fn:0]. 
+
+* Antecedentes: Proyecto GNU
+#+CAPTION: Insignia del proyecto GNU
+#+ATTR_LATEX: :height 90px :float wrap :placement {r}
+[[https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Heckert_GNU_white.svg/100px-Heckert_GNU_white.svg.png]]
+No tiene mucho sentido hablar de Hurd sin hablar también de GNU, por algo lo mencionamos antes. El /Proyecto GNU/ es un proyecto iniciado por Richard Stallman el 27 de septiembre de 1983. Su propósito es crear un sistema completamente libre, de modo que exista una opción para que los usuarios tengan el control al utilizar sus computadoras y dispositivos de cómputo, sin necesidad de algún software privativo. Esto se logra mediante el uso extensivo de la licencia GNU GPL. Cuando se habla de un "sistema completamente libre", en verdad se refiere a todos los componentes, incluyendo al sistema operativo.
+
+Al momento de Stallman anunciar su proyecto en un mensaje de Usenet, el proyecto ya tenía un editor de texto con un intérprete de Lisp (¡proyecto con más de 30 años de antiguedad y contando!), un depuradorr, un generador de analizadores sintácticos compatible con yacc, y un enlazador, y más tarde, al proyecto se sumó el compilador gcc, un ensamblador, y muchas utilidades propias de Unix, así como un kernel primitivo. Pero una vez que estuvo terminado el kernel y el compilador, GNU pudo ser utilizado para el desarrollo, y Stallman publicó el manifiesto GNU para conseguir apoyo y voluntarios para el proyecto[fn:7].
+
+Las motivaciones de Stallman se remontan durante su trabajo en el Laboratorio de inteligencia artificial en el MIT. Había una impresora Xerox, a la que se le había modificado el software para que avisara a las terminales de todos los trabajadores para que estuvieran al tanto. Más tarde, substituyeron la impresora por una Dover, más rápida, pero cuando en el laboratorio quisieron replicar lo que hicieron con la Xerox, se encontraron con que el software de la impresora estaba protegido por un NDA. Stallman razonó que este hecho era contrario a la filosofía que compartían los programadores en el MIT, y más aún, que era contrario a la ética: los usuarios merecen tener libertad. Éste es el origen de las 4 libertades que darían forma al proyecto GNU, y al movimiento del software libre[fn:8].
+
+Sobre la elección de usar como base el diseño de Unix, en vez de otro sistema contemporáneo, como DOS o CP/M, se debe simplemente a que Unix era ya un sistema conocido por correr en computadores potentes, comparado con DOS o CP/M. Stallman comentaría más tarde que él mismo consideraba a MS-DOS un juguete, comparado con Unix[fn:8].
+
+* Microkernel Mach
+Ya de vuelta con Hurd, para hablar de su arquitectura, debemos hablar primero sobre GNU Mach. Los servicios más elementales del sistema que deben ser provistos por el sistema, como la administración y planeación de los procesos, la administración de la memoria, y el manejo de la entrada/salida, en Hurd son responsabilidad del microkernel GNU Mach, una implementación libre del microkernel Mach mantenida actualmente por el proyecto GNU.
+
+Mach es un kernel desarrollado en la Universidad Carnegie Mellon por dos investigadores, Richard Rashid y Avie Tevanian desde 1985, para que sirivera como plataforma de desarrollo en materia de sistemas operativos, especialmente en el cómputo paralelo y distribuido. A menudo es reconocido como uno de los primeros kernels que pueden ser clasificados como microkernels.
+
+Mach empezó como una implementación más de una clase de kernel experimentales que estudiaban la forma de mejorar una de las características clave e innovación de los sistemas Unix desde su nacimiento: las tuberías y la comunicación de procesos a través de ellas. Conforme el tiempo iba pasando, los mensajes a enviar se hacían cada vez mayores, y la memoria utilizada, también, por lo que en grandes cantidades de datos, el tiempo de respuesta era, en ocasiones, demasiado. Un desarrollo notable en esta dirección, llevado a cabo en la Universidad de Rochester, fue el kernel Aleph. En la Carnegie Mellon, adaptaron el kernel para trabajar en las estaciones PERQ (pues Aleph fue diseñado para las minicomputadoras Eclipse), y el resultado fue bautizado como Accent, aunque no tuvo éxito, al no poder ejecutar software existente.
+
+Aquí es donde entra Mach, que fue, en esencia, una reimplementación del kernel 4.2BSD, pero a la manera de Aleph/Accent. Los conceptos a tener en cuenta son los siguientes:
+
+- Tareas (/tasks/) :: agrupaciones lógicas que contiene hilos de ejecución, y recursos asociados.
+- Hilos (/threads/) :: unidad que puede ejecutarse.
+- Puertos (/ports/) :: /cola/ que permite a una tarea recibir y enviar mensajes a otras tareas.
+- Mensajes (/messages/) :: objetos estructurados que pueden enviarse a, y recibirse desde, un puerto específico.
+
+El resultado fue un sistema muy parecido a Unix (herencia de BSD), pero bastante más compacto, pues al entenderse todo en términos de tareas y mensajes, en vez de utilidades y archivos, mucha de la funcionalidad del sistema operativo se pudo mover al espacio de usuario, haciendo que el kernel solo se preocupara por controlar el acceso al hardware. Por ejemplo, en los sistemas Unix tradicionales del momento, las famosas /llamadas al sistema/ consisten en la generación de interrupciones, que colocan datos en una ubicación de memoria ya conocida y provista por alguna biblioteca, y luego, el sistema se encarga de atendera. En Mach, por otro lado, todo se reduce a enviar un /mensaje/ al /puerto/ correcto, y esperar la respuesta, y todo lo que el kernel hace es gestionar la transmisión del mensaje, posibilitando que cualquier proceso pueda ser parte, como destinatario o remitente.
+
+* Creación de Hurd
+En 1991, Thomas Bushnell, que en ese tiempo formaba parte de la FSF, anunció que la organización estaba trabajando en un nuevo sistema operativo para el proyecto, y que éste tomaría como base el microkernel Mach 3[fn:3]. Se tenía tres requerimientos: uno, compatibilidad binaria con el kernel 4.4BSD, y a ser posible, con otros sistemas Unix que tuvieran un diseño similar; dos, cumplir con la especificación POSIX, cosa en la que gcc y gclib iban ya a ayudar bastante; y tres, que no fuera demasiado complicado de utilizar, y permitiera ser extendido en características y funcionalidad. Como anécdota curiosa, Stallman quería llamar a este nuevo kernel como su novia de ese entonces, Alix, por dos razones: por coincidencia, el nombre de /Alix/ sigue la tradición de los programadores de Unix de nombrar los kernels y sistemas operativos con una x al final, en referencia al propio Unix, y la otra, es que Alix había sugerido, probablemente como broma, que alguien debería nombrar un kernel como ella, y Stallman quiso darle ese detalle tomándole la palabra[fn:4]. Sin embargo, Bushnell quien era el desarrollador en jefe, nombró finalmente al sistema /Hurd/, pero conservó el nombre de /Alix/ para un componente del kernel, hasta que dicho componente fue retirado.
+
+* Retraso y adopción de Linux
+El desarrollo empezó con grandes expectativas en el mundo del software libre, y aunque se suponía que el kernel sería una de las últimas cosas a tener listas para llegar a la meta de completar al sistema GNU, para 1993, el kernel aún no estaba listo, y hubo muchas críticas, especialmente de Eric Raymond, otra personalidad en esta área. Stallman mencionó por lo menos dos razones por las que Hurd no estuvo listo: Bushnell decidió reescribir muchas veces partes del código del kernel conforme iba aprendiendo cosas, en vez de ceñirse a un diseño desde el principio (Stallman diría que, aunque es una buena práctica de diseño, chocó de lleno con la expectativa de tener un kernel funcional "tan pronto como fuera posible")[fn:5]; y porque creyó que, al escoger Mach como base, el desarrollo sería más ágil[fn:2]. Al final, en parte gracias a la comunicación con Ian Murdock, creador de la distribución Debian, el proyecto GNU terminó por escoger el kernel Linux como componente del sistema GNU. Bushnell fue al final retirado del proyecto en noviembre de 2003.
+
+Se hicieron varios esfuerzos por intentar cambiar de microkernel, pero todos han resultado poco exitosos: L4 fue de las primeras opciones en ser consideradas, en 2005, se empezó a investigar al kernel Coyotos, pero después se decidió que el kernel no era adecuado para Hurd; y en 2008, lo mismo con el kernel Viengoos, aunque el desarrollo se detuvo un año después por falta de tiempo.
+
+Stallman dice que ya no tiene muchas expectativas sobre el kernel, pues aún existen muchos problemas, y terminarlo ya no es prioritario, pues ya existe un kernel libre (Linux). Actualmente, el desarrollo es lento, pero aún con señales de vida: Debian todavía produce distribuciones del sistema con el kernel Hurd (la última versión es de este año), y en 2015, se portó el administrador de paquetes GNU Guix al sistema Hurd.
+
+* Particularidades de Hurd
+Ya sabemos que el proyecto GNU pretende brindar un sistema Unix completo y libre, por lo que el kernel Hurd debe ajustarse a este sistema. Sin embargo, Hurd innovó en varios aspectos, listamos algunos:
+
+- Identidad de proceso :: En un sistema Unix, cada proceso tiene asociado un identificador de usuario, y uno de grupo, de modo que el proceso tendrá los privilegios de este usuario y grupo; y éstos son inamovibles durante la vida de este proceso. Por otro lado, en Hurd esto se extendió, y cada tarea tiene asociado un conjunto de ids, que puede estar vacío, y además, un proceso con mayores privilegios puede cambiar los identificadores de un proceso menor. El servidor auth aprovecha esto para otorgar y retirar privilegios a otras tareas.
+- Sistemas de archivos :: En Unix, los sistemas de archivos son implementados tradicionalmente en el espacio del kernel, o más comúnmente, como aplicaciones en espacio de usuario, aprovechando bibliotecas como FUSE. En cambio, en Hurd, la implementación de un sistema de archivos también se hace a través de un servidor, los que se conocen como /traductores/. El acto de /montar/ un directorio en Hurd se realiza estableciendo un traductor para el sistema de archivos, con el comando settrans. Los traductores también pueden ser usados para sistemas de archivos especiales, como procfs.
+
+En conjunto, para implementar la especificación de Unix, Hurd se basa en los servidores para implementar partes de la especificación.
+
+* Servidores
+Los servidores que actualmente Hurd implementa son los siguientes[fn:6]:
+
+- auth :: Suministra credenciales cuando dos servidores que no se tienen confianza se comunican. auth entonces crea un espacio de confianza para que ambas partes puedan comunicarse.
+- crash :: Se activa cuando una tarea recibe una señal de 'error fatal'. Este servidor entonces decide qué hacer con el proceso faltante, si matarlo, suspenderlo, o hacer un volcado de memoria.
+- exec :: Crea un proceso nuevo a partir de una imagen de archivo, que puede estar en formatos como a.out o ELF.
+- ext2fs :: Permite administrar sistemas de archivos ext2.
+- fifo :: Implementa los inodos FIFO, una especie de tuberías con nombre, con una entrada en el sistema de archivos.
+- firmlink :: Implementa los firmlinks: una especie de mezcla entre los enlaces simbólicos y duros, consisten en enlaces que hacen referencia a otro archivo a la manera de un enlace simbólico (apuntando y no modificando una entrada en el sistema de archivos), pero que es visto como un enlace duro.
+- ftpfs :: Expone un sistema de archivos para servidores FTP.
+- fwd :: Sirve de proxy para redirigir mensajes de un servidor a otro. Otros servidores lo usan de base, por ejemplo, fifo y symlink.
+- hostmux :: Al parecer, provee un listado de hostnames, y servidores asociados a esos hostnames.
+- ifsock :: Implementa inodos S_IFSOCK en sistemas de archivos sin soporte nativo para estos sockets.
+- init :: Servidor que es invocado durante el arranque para realizar acciones de configuración temprana y procedimientos de inicialización.
+- isofs :: Implementa el sistema de archivos CDFS, el usado en los discos compactos.
+- new-fifo :: Una alternativa al servidor fifo.
+- nfs :: Implementa el sistema de archivos NFS.
+- null :: Implementa los archivos especiales /dev/null y /dev/zero. 
+- pfinet :: Implementa la pila de protocolos TCP/IP, y los sockets asociados.
+- pflocal :: Implementa los sockets Unix.
+- proc :: Provee funciones relacionadas a procesos, como la asignación de ids de usuario y grupo, y la biblioteca estándar de C.
+- storeio :: Provee una interfaz para dispositivos de almacenamiento.
+- symlink :: Implementa los enlaces simbólicos en sistemas de archivos sin soporte nativo.
+- term :: Provee una terminal compatible con POSIX.
+- ufs :: Implementa el sistema de archivos UFS.
+- usermux :: Como hostmux, pero con nombres de usuario locales.
+
+* Licencias
+- Imagen 1: Bajo licencia GFDLv1.3: https://www.gnu.org/graphics/heckert_gnu.html
+
+[fn:0] Our mission explained. GNU. 5 jun 2009. https://www.gnu.org/software/hurd/community/weblogs/antrik/hurd-mission-statement.html
+[fn:7] Richard Stallman: El manifiesto de GNU. GNU: https://www.gnu.org/gnu/manifesto.es.html
+[fn:8] Richard Stallman: Freedom. Radio New Zealand. 9 ago 2008: https://www.rnz.co.nz/national/programmes/saturday/audio/1699424/richard-stallman-freedom
+[fn:1] Linux is obsolete. 29 ene 1992: https://groups.google.com/g/comp.os.minix/c/wlhw16QWltI?pli=1
+[fn:2] Richard Stallman. In Defense of Red Hat. Linux Today. 12 oct 2000: https://www.linuxtoday.com/infrastructure/richard-stallman-in-defense-of-red-hat/
+[fn:3] Thomas Bushnell. FSF work on a GNU OS. GNUs Not Usenet, newsgroup gnu.announce. 6 may 1991. https://www.gnu.org/software/hurd/history/hurd-announce
+[fn:4] Sam Williams, Richard Stallman. Free as in Freedom 2.0. 2010. GNU Press. pp. 67-68. ISBN: 978-0-9831592-1-6.
+[fn:5] íbidem, p. 149.
+[fn:6] Preliminary GNU/Hurd User Interface Description. Debian. 10 oct 1996: http://www.debian.org/ports/hurd/hurd-doc-server
