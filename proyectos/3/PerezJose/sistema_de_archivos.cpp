@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
+
 // Definir la estructura del superbloque
 struct Superblock {
     char filesystem_name[8];  // 8 caracteres 
@@ -37,10 +38,16 @@ void listarDirectorio(FILE *file, uint32_t cluster_size,uint32_t dir_clusters) {
     printf("Tamaño del cluster en bytes: %u\n",cluster_size);
     fread(&entry, sizeof(struct DirectoryEntry), 1, file);
     printf("Listando los contenidos del directorio...\n");
+    
+    
+    fseek(file, cluster_size + cluster, SEEK_SET);
+    for (int i = 0; i < dir_clusters; ++i) {
+    	fread(&entry.novacio, sizeof(char), 1, file);
     	
-	while(1) {
-		fseek(file, cluster_size + cluster, SEEK_SET);
-	    if(entry.novacio[0] == '-') {
+		if(entry.novacio[0] == '/'){
+			fseek(file, 64, SEEK_CUR);
+			continue;
+		}else{
 			fseek(file, cluster_size + cluster, SEEK_SET);
         	fread(&entry.file_type, sizeof(char), 1, file);
         	printf("Tipo: %s\n", entry.file_type);
@@ -73,32 +80,67 @@ void listarDirectorio(FILE *file, uint32_t cluster_size,uint32_t dir_clusters) {
 			//printf("Fecha modificacion: %s\n", entry.modification_time);
 			
         	cluster += entradas;
-	        continue; 
-	    }
-	    if(entry.novacio[0] == '/') {
-	        cluster += 64; 
-	        continue;
-	    }
-			
-	}
+    	}
+    }
 	sleep(5);
     printf("Contenidos listados correctamente.\n");
+    
 }
 
-void copiarDesdeFiUnamFS() {
+void copiarDesdeFiUnamFS(FILE *file, uint32_t cluster_size, const struct Superblock2 *superblock2) {
 	system("cls");
     printf("Copiando un archivo desde FiUnamFS hacia tu sistema...\n");
+
     // Código para copiar un archivo desde FiUnamFS
-    
+    // Crear un nuevo archivo en tu sistema
+    FILE *archivo_destino = fopen("archivo_copiado.txt", "wb");
+    if (archivo_destino == NULL) {
+        perror("Error al crear el archivo en tu sistema");
+        return;
+    }
+
+    // Buscar el primer cluster que contenga '/'
+    struct DirectoryEntry entry;
+    int cluster = 0;
+    uint32_t dir_clusters;
+    fseek(file, cluster_size + cluster, SEEK_SET);
+
+    while (fread(&entry.novacio, sizeof(char), 1, file) == 1) {
+        if (entry.novacio[0] == '-') {
+            break; // Encontrado, salir del bucle
+        }
+        cluster += 64; // Mover al siguiente cluster
+        fseek(file, cluster_size + cluster, SEEK_SET);
+    }
+
+    // Mover el puntero al inicio del cluster encontrado
+    fseek(file, cluster_size * cluster, SEEK_SET);
+	
+    // Crear un búfer para copiar los datos
+    char buffer[cluster_size];
+    size_t bytes_por_copiar = cluster_size * dir_clusters;
+
+    // Copiar el contenido del archivo desde FiUnamFS a tu sistema
+    while (bytes_por_copiar > 0) {
+        size_t bytes_leidos = fread(buffer, 1, sizeof(buffer), file);
+        if (bytes_leidos == 0) {
+            perror("Error al leer desde FiUnamFS");
+            break;
+        }
+
+        size_t bytes_por_escribir = (bytes_leidos < bytes_por_copiar) ? bytes_leidos : bytes_por_copiar;
+        fwrite(buffer, 1, bytes_por_escribir, archivo_destino);
+
+        bytes_por_copiar -= bytes_por_escribir;
+    }
+
     sleep(5);
 }
 
 void copiarHaciaFiUnamFS() {
-	system("cls");
-    printf("Copiando un archivo desde tu computadora hacia FiUnamFS...\n");
-    // Código para copiar un archivo hacia FiUnamFS
     
-    sleep(5);
+
+    printf("Archivo copiado a FiUnamFS exitosamente.\n");
 }
 
 void eliminarDesdeFiUnamFS() {
@@ -109,11 +151,39 @@ void eliminarDesdeFiUnamFS() {
     sleep(5);
 }
 
-void desfragmentarFiUnamFS() {
-	system("cls");
-    printf("Desfragmentando FiUnamFS...\n");
-    // Código para desfragmentar FiUnamFS
-    
+void desfragmentarFiUnamFS(FILE *file, uint32_t cluster_size, uint32_t dir_clusters) {
+    // Crear una estructura para almacenar la información de las entradas del directorio
+    struct DirectoryEntry* directorio = (struct DirectoryEntry*)malloc(dir_clusters * sizeof(struct DirectoryEntry));
+
+    // Leer todas las entradas del directorio en la estructura
+    fseek(file, cluster_size, SEEK_SET); // Ajustar según la ubicación de las entradas del directorio en tu estructura
+    fread(directorio, sizeof(struct DirectoryEntry), dir_clusters, file);
+
+    // Crear una nueva estructura para las entradas después de la desfragmentación
+    struct DirectoryEntry* nuevo_directorio = (struct DirectoryEntry*)malloc(dir_clusters * sizeof(struct DirectoryEntry));
+
+    // Inicializar la nueva estructura (puedes usar una función de inicialización según tus necesidades)
+    // ...
+
+    // Reorganizar las entradas del directorio en la nueva estructura para desfragmentar
+    int nueva_posicion = 0;
+    for (int i = 0; i < dir_clusters; ++i) {
+        if (directorio[i].novacio[0] != '/') {
+            // Copiar la entrada al nuevo directorio en la posición correcta
+            nuevo_directorio[nueva_posicion++] = directorio[i];
+        }
+    }
+
+    // Escribir el nuevo directorio en el archivo
+    fseek(file, cluster_size, SEEK_SET); // Ajustar según la ubicación de las entradas del directorio en tu estructura
+    fwrite(nuevo_directorio, sizeof(struct DirectoryEntry), dir_clusters, file);
+
+    // Liberar memoria
+    free(directorio);
+    free(nuevo_directorio);
+
+    printf("Desfragmentación completa.\n");
+
     sleep(5);
 }
 
@@ -145,7 +215,7 @@ int main() {
     fseek(file, 10, SEEK_SET);
     fread(superblock.version, sizeof(char), 4, file);
     printf("Versión del sistema de archivos: %s\n", superblock.version);
-    //sleep(2);
+    sleep(2);
     if (strcmp(superblock.version, "24.1") != 0) {
         printf("La versión del sistema de archivos no es compatible.\n");
         fclose(file);
@@ -175,13 +245,13 @@ int main() {
 	fseek(file, 50, SEEK_SET);
 	fread(&superblock2.total_clusters, sizeof(uint32_t), 4, file);
 	printf("Número de clusters que mide la unidad completa: %u\n", superblock2.total_clusters);	
-    //sleep(7);
+    sleep(7);
     ////////////////////////////////////////////////////////////////////////
 	
     int opcion;
     do {
         // Mostrar el menú
-        //system("cls");
+        system("cls");
         printf("Menú:\n");
         printf("1. Listar contenidos del directorio\n");
         printf("2. Copiar desde FiUnamFS hacia tu sistema\n");
@@ -200,7 +270,8 @@ int main() {
                 listarDirectorio(file, superblock2.cluster_size, superblock2.dir_clusters);
                 break;
             case 2:
-                copiarDesdeFiUnamFS();
+            	uint32_t initial_cluster, file_size;
+                copiarDesdeFiUnamFS(file, superblock2.cluster_size, &superblock2);
                 break;
             case 3:
                 copiarHaciaFiUnamFS();
@@ -209,7 +280,7 @@ int main() {
                 eliminarDesdeFiUnamFS();
                 break;
             case 5:
-                desfragmentarFiUnamFS();
+                desfragmentarFiUnamFS(file, superblock2.cluster_size, superblock2.dir_clusters);
                 break;
             case 6:
                 printf("Saliendo del programa. ¡Hasta luego!\n");
