@@ -98,7 +98,7 @@ def copiar_a_fiunamfs_desde_sistema(nombre_archivo, nombre_archivo_img):
                 f.seek(superbloque["cluster_size"])
                 for _ in range(superbloque["dir_clusters"]):
                     entrada = f.read(64)
-                    tipo, nombre, _, _, _, _ = struct.unpack("<s15sIQ14s14s14s", entrada)
+                    tipo, nombre, tamaño, cluster_inicial, creacion, modificacion, dump = struct.unpack("<c15sI3s14s14s13s", entrada)
 
                     if nombre.decode("ascii").rstrip('\x00') == nombre_archivo or nombre.decode("ascii").rstrip('\x00') == "---------------":
                         f.seek(f.tell() - 64)
@@ -126,9 +126,12 @@ def eliminar_archivo(nombre_archivo, nombre_archivo_img):
             f.seek(superbloque["cluster_size"])
             for _ in range(superbloque["dir_clusters"]):
                 entrada = f.read(64)
-                tipo, nombre, _, _, _, _ = struct.unpack("<s15sIQ14s14s14s", entrada)
+                tipo, nombre, tamaño, cluster_inicial, creacion, modificacion, dump = struct.unpack("<c15sI3s14s14s13s", entrada)
 
-                if nombre.decode("ascii").rstrip('\x00') == nombre_archivo and tipo == b'-':
+                longitud = len(nombre_archivo)
+                nombred = nombre.decode("ascii")
+                nombre = nombred[0:longitud]
+                if nombre == nombre_archivo and tipo == b'-':
                     f.seek(f.tell() - 64)
                     f.write(struct.pack("<s15sIQ14s14s14s", b'/', "---------------".encode('ascii'), 0, 0, b'', b'', b''))
                     print(f"Archivo {nombre_archivo} eliminado exitosamente.")
