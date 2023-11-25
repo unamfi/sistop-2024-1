@@ -5,7 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using FileSystemFI.Extensions;
+
+// ReSharper disable PossibleLossOfFraction
 
 namespace FileSystemFI.Models;
 
@@ -39,6 +42,7 @@ public class FiFileSystemMgr : IDisposable
             FullClusterSize = _br.ReadInt32LitEnd();
 
             IsInitialized = true;
+            Files = GetAllFiles();
         }
         catch (Exception)
         {
@@ -171,6 +175,43 @@ public class FiFileSystemMgr : IDisposable
         }
 
         Files = GetAllFiles();
+    }
+
+    public void Defrag()
+    {
+        Files = Files.OrderBy(f => f.FirstCluster).ToList(); // Ordenar los archivos por número de cluster
+        var lastCluster = 0;
+        for (var i = 0; i < Files.Count - 1; i++)
+        {
+            var file = Files[i];
+            var usedClusters = (int)Math.Ceiling((double)(file.Size / ClusterSize)) - 1;
+
+            if (i == 0)
+            {
+                lastCluster = usedClusters + 1;
+                continue;
+            }
+            
+            if (file.FirstCluster * ClusterSize == lastCluster) continue;
+
+            var readPosition = (long) file.FirstCluster * ClusterSize;
+            var writePosition = (long) ClusterSize * 4 + lastCluster;
+            while (usedClusters > 0)
+            {
+                _br.BaseStream.Position = readPosition;
+                var data = _br.ReadBytes(ClusterSize);
+                readPosition = _br.BaseStream.Position;
+
+                _bw.BaseStream.Position = writePosition;
+                _bw.Write(data);
+                writePosition = _bw.BaseStream.Position;
+                
+                usedClusters--;
+            }
+
+            Files[i].FirstCluster = lastCluster;
+            lastCluster = usedClusters + 1;
+        }
     }
 
     private void WriteFileData(FiFile file, long infoSpace)

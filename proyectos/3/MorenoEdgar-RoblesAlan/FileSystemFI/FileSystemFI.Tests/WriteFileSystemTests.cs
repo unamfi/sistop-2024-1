@@ -12,6 +12,15 @@ public class WriteFileSystemTests
     }
 
     [Test]
+    public void DefragFileSystem()
+    {
+        var fsm = new FiFileSystemMgr();
+        fsm.OpenFileSystem(FileName);
+        Assert.That(fsm.IsInitialized, Is.True);
+        fsm.Defrag();
+    }
+    
+    [Test]
     public void SaveNewFileTest()
     {
         var fsm = new FiFileSystemMgr();
