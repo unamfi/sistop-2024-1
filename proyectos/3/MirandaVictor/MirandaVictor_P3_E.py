@@ -102,4 +102,47 @@ def eliminar_archivo(fiunamfs_img, nombre_archivo):
                 return
     raise FileNotFoundError("Archivo no encontrado en FiUnamFS")
 
+def desfragmentar(fiunamfs_img):
+    
+    # Leer todo el directorio
+    entradas = []
+    with open(fiunamfs_img, 'r+b') as f:
+        f.seek(DIRECTORIO_INICIO)
+        for _ in range(DIRECTORIO_TAMANO // TAMANO_ENTRADA):
+            entrada = f.read(TAMANO_ENTRADA)
+            if entrada[0:1] != b'/' and entrada[1:16].strip(b' ') != b'':
+                entradas.append(entrada)
+
+    # Ordenar las entradas por cluster inicial
+    entradas.sort(key=lambda e: struct.unpack('<I', e[20:24])[0])
+
+    # Reescribir los archivos de forma contigua
+    cluster_actual = 5  # Comenzar después del directorio
+    for entrada in entradas:
+        nombre, tam, cluster_ini = (
+            entrada[1:16].decode('ascii').rstrip(),
+            struct.unpack('<I', entrada[16:20])[0],
+            struct.unpack('<I', entrada[20:24])[0]
+        )
+
+        # Leer datos del archivo original
+        f.seek(cluster_ini * TAMANO_CLUSTER)
+        datos = f.read(tam)
+
+        # Escribir datos en la nueva ubicación
+        f.seek(cluster_actual * TAMANO_CLUSTER)
+        f.write(datos)
+
+        # Actualizar entrada del directorio
+        nueva_entrada = (
+            entrada[0:20] + struct.pack('<I', cluster_actual) + entrada[24:]
+        )
+        f.seek(DIRECTORIO_INICIO + TAMANO_ENTRADA * entradas.index(entrada))
+        f.write(nueva_entrada)
+
+        # Actualizar el siguiente cluster libre
+        cluster_actual += (tam + TAMANO_CLUSTER - 1) // TAMANO_CLUSTER  # Redondear hacia arriba
+
+    print("Desfragmentación completada.")
+
 
