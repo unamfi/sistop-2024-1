@@ -14,3 +14,9 @@ Para agilizar el desarrollo con este patrón, se utilizó además la biblioteca 
 Adicionalmente, se agregaron pruebas unitarias con [NUnit](https://nunit.org/), estas se utilizaron para ir probando los cambios en el programa de una manera más rápida sin depender de la GUI, así como para comprobar que todo se mantenga funcionando correctamente.
 
 ## Uso del programa
+
+## Capturas del programa
+
+![Visualizador imagen](./docs/img_prev.png)
+
+![Visualizador texto](./docs/txt_prev.png)
