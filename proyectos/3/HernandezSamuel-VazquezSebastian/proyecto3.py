@@ -155,6 +155,8 @@ def moverhacia(): #Funcion para mover un archivo a fiUNAMFS
             nom.pack()
             break
     nombre = "-"+ nombre2 + extension_archivo + " " * (14 - len(nombre))
+    fecha_modificacion = os.path.getmtime(archmover)
+    fecha_creacion = os.path.getctime(archmover)
 
 # Función para identificar archivos fragmentados en el sistema de archivos, recorre todo el directorio para averiguarlo
 def identificar_fragmentados():
@@ -183,15 +185,11 @@ def desfragmentar():
         for cluster_inicial, tamano_archivo in fragmentados:
             espacio_libre = encontrar_espacio_libre(disco, tamano_archivo)
             nuevo_cluster_inicial = espacio_libre // cluster
-            
             registrar_bitacora(f"Moviendo archivo fragmentado desde el cluster {cluster_inicial} al cluster {nuevo_cluster_inicial}")
-            
             cambios[cluster_inicial] = nuevo_cluster_inicial
-            
             contenido_archivo = leercont(cluster * cluster_inicial, tamano_archivo)
             disco.seek(espacio_libre)
             disco.write(contenido_archivo)
-    
     # Aplicar todos los cambios en el disco en una sola pasada
     for cluster_inicial, nuevo_cluster in cambios.items():
         disco.seek(1 * cluster + cluster_inicial * cluster)
@@ -204,10 +202,19 @@ def desfragmentar():
 
 # Función para encontrar espacio libre en el disco
 def encontrar_espacio_libre(disco, tamano_archivo):
+    # Verificar el tamaño del archivo antes de buscar espacio
+    disco.seek(0, 2)  # Ir al final del archivo
+    tamano_disco = disco.tell()  # Obtener el tamaño total del disco
+    disco.seek(0)  # Volver al inicio del archivo
+    espacio_total = disco.read().count(b'\x00')  # Contar el número total de espacios libres
+    if tamano_archivo > espacio_total:
+        print(f"Tamaño total del disco: {espacio_total}")
+        print(f"El archivo es demasiado grande para el espacio libre disponible. Tamaño del archivo: {tamano_archivo}, Espacio libre: {espacio_total}")
+        raise ValueError("No se encontró espacio suficiente para el archivo.")
+    # Buscar espacio en el disco
     disco.seek(1 * cluster)  # Inicio del espacio de datos
     espacio_libre = b'\x00' * tamano_archivo  # Espacio libre requerido
     datos = disco.read()  # Leer todos los datos
-
     indice = datos.find(espacio_libre)  # Buscar la primera aparición del espacio libre
     while indice != -1:
         pos = disco.tell()
@@ -215,8 +222,11 @@ def encontrar_espacio_libre(disco, tamano_archivo):
         if datos[indice:indice + tamano_archivo] == espacio_libre:
             return pos + indice
         indice = datos.find(espacio_libre, indice + 1)  # Buscar el siguiente espacio libre
-    raise ValueError("No se encontró espacio suficiente para el archivo.")
-
+    # Manejar archivos grandes de manera diferente
+    if tamano_archivo > espacio_total:
+        print(f"El archivo es demasiado grande para cualquier espacio libre individual. Considera dividir el archivo en partes más pequeñas. Tamaño del archivo: {tamano_archivo}")
+        raise ValueError("No se encontró espacio suficiente para el archivo.")
+    
 #Esta funcion se encarga de registrar las acciones realizadas en la bitacora con su hora de entrada
 def registrar_bitacora(accion):
     with open("bitacora.txt", "a") as bitacora:
