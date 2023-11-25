@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
-
+//Elaborado por Perez Uribe Jose Alberto
 // Definir la estructura del superbloque
 struct Superblock {
     char filesystem_name[8];  // 8 caracteres 
@@ -31,23 +31,27 @@ struct DirectoryEntry {
 
 
 void listarDirectorio(FILE *file, uint32_t cluster_size,uint32_t dir_clusters) {
+	// Definición de variables locales
 	int entradas = 64;
-	int cluster=0;
+	int cluster=0;// Inicialización del índice de cluster
 	system("cls");	
     struct DirectoryEntry entry;
-    printf("Tamaño del cluster en bytes: %u\n",cluster_size);
+       // Lee la primera entrada del directorio
     fread(&entry, sizeof(struct DirectoryEntry), 1, file);
     printf("Listando los contenidos del directorio...\n");
     
-    
+    // Itera a través de los clusters del directorio
     fseek(file, cluster_size + cluster, SEEK_SET);
     for (int i = 0; i < dir_clusters; ++i) {
     	fread(&entry.novacio, sizeof(char), 1, file);
-    	
+    	// Verifica si la entrada está vacía (indicado por '/')
 		if(entry.novacio[0] == '/'){
+			// Si está vacía, se salta a la siguiente entrada
 			fseek(file, 64, SEEK_CUR);
 			continue;
 		}else{
+			//falto implementar bien, se atora en la primer iteracion y cierra el programa
+			// Si no está vacía, lee y muestra la información de la entrada
 			fseek(file, cluster_size + cluster, SEEK_SET);
         	fread(&entry.file_type, sizeof(char), 1, file);
         	printf("Tipo: %s\n", entry.file_type);
@@ -64,20 +68,13 @@ void listarDirectorio(FILE *file, uint32_t cluster_size,uint32_t dir_clusters) {
 			fseek(file, cluster_size + cluster + 20, SEEK_SET);
 			fread(&entry.file_name, sizeof(uint32_t), 3, file);
 			printf("Cluster inicial: %u\n", entry.initial_cluster);
-			
+			// Convierte las marcas de tiempo a cadenas legibles y las muestra
+			//falto implementar bien :(
 			char creation_time_str[15], modification_time_str[15];
 			strftime(creation_time_str, sizeof(creation_time_str), "%Y%m%d%H%M%S", localtime(&entry.creation_time));
     		strftime(modification_time_str, sizeof(modification_time_str), "%Y%m%d%H%M%S", localtime(&entry.modification_time));
 			printf("Fecha y hora de creación: %s\n", creation_time_str);
     		printf("Fecha y hora de modificación: %s\n", modification_time_str);
-			
-			//fseek(file, cluster_size + cluster + 24, SEEK_SET);
-			//fread(&entry.creation_time, sizeof(char), 14, file);
-			//printf("Fecha creacion: %s\n", entry.creation_time);
-			
-			//fseek(file, cluster_size + cluster + 38, SEEK_SET);
-			//fread(&entry.modification_time, sizeof(char), 14, file);
-			//printf("Fecha modificacion: %s\n", entry.modification_time);
 			
         	cluster += entradas;
     	}
@@ -152,6 +149,7 @@ void eliminarDesdeFiUnamFS() {
 }
 
 void desfragmentarFiUnamFS(FILE *file, uint32_t cluster_size, uint32_t dir_clusters) {
+	//Esta parte falto pulir, solo eran ideas de como realizar pero no pude
     // Crear una estructura para almacenar la información de las entradas del directorio
     struct DirectoryEntry* directorio = (struct DirectoryEntry*)malloc(dir_clusters * sizeof(struct DirectoryEntry));
 
@@ -161,9 +159,6 @@ void desfragmentarFiUnamFS(FILE *file, uint32_t cluster_size, uint32_t dir_clust
 
     // Crear una nueva estructura para las entradas después de la desfragmentación
     struct DirectoryEntry* nuevo_directorio = (struct DirectoryEntry*)malloc(dir_clusters * sizeof(struct DirectoryEntry));
-
-    // Inicializar la nueva estructura (puedes usar una función de inicialización según tus necesidades)
-    // ...
 
     // Reorganizar las entradas del directorio en la nueva estructura para desfragmentar
     int nueva_posicion = 0;
