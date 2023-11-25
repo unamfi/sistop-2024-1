@@ -110,6 +110,7 @@
                     Background="Crimson"
                     Foreground="White"
                     Margin="0,0,5,0"
+                    Command="{Binding DeleteFileCommand}"
                     IsEnabled="True">
                     Eliminar Archivo
                 </Button>

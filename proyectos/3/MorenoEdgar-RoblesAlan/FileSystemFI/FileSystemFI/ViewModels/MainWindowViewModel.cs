@@ -11,6 +11,7 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CustomMessageBox.Avalonia;
+using DynamicData.Binding;
 using FileSystemFI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using FileSystemFI.Extensions;
@@ -48,9 +49,16 @@ public partial class MainWindowViewModel : ObservableObject
                 if (SelectedFile is null) return;
                 if (SelectedFile.FileName!.EndsWith("png") || SelectedFile.FileName!.EndsWith("jpg"))
                 {
-                    ImageSource = ReadImage();
-                    ImageMode = true;
-                    TextMode = false;
+                    try
+                    {
+                        ImageSource = ReadImage();
+                        ImageMode = true;
+                        TextMode = false;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
                 else
                 {
@@ -85,20 +93,45 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task ImportFile()
     {
-        if (Fsm is null || !Fsm.IsInitialized) return;
-        if (SelectedFile is null) return;
+        try
+        {
+            if (Fsm is null || !Fsm.IsInitialized) return;
+            if (SelectedFile is null) return;
 
-        var filesService = App.Current?.Services?.GetService<IFileService>();
-        if (filesService is null)
-            throw new NullReferenceException("File Service does not exists.");
+            var filesService = App.Current?.Services?.GetService<IFileService>();
+            if (filesService is null)
+                throw new NullReferenceException("File Service does not exists.");
 
-        var file = await filesService.OpenFileAsync();
-        if (file is null) return;
-        var result = await Fsm.CopyFromComputer(file.Path.AbsolutePath);
-        Files.Clear();
-        var files = Fsm?.GetAllDirectories();
-        if (files is null) return;
-        Files = new ObservableCollection<FiFile>(files);
+            var file = await filesService.OpenFileAsync();
+            if (file is null) return;
+            var result = await Fsm.CopyFromComputer(file.Path.AbsolutePath);
+            Files.Clear();
+            var files = Fsm?.GetAllFiles();
+            if (files is null) return;
+            Files = new ObservableCollection<FiFile>(files);
+        }
+        catch (Exception e)
+        {
+            await MessageBox.Show(e.Message, "Error");
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteFile()
+    {
+        try
+        {
+            if (Fsm is null || !Fsm.IsInitialized) return;
+            if (SelectedFile is null) throw new Exception("No hay unn archivo seleccionado");
+
+            Fsm.DeleteFile(SelectedFile);
+            Files.Clear();
+            Files = new ObservableCollectionExtended<FiFile>(Fsm.GetAllFiles());
+        }
+        catch (Exception e)
+        {
+            await MessageBox.Show(e.Message, "Error");
+        }
     }
 
     /// <summary>
@@ -123,7 +156,7 @@ public partial class MainWindowViewModel : ObservableObject
             if (!ReadFileSystem())
                 throw new Exception("Ocurrió un error al abrir el sistema de archivos.");
 
-            var files = Fsm?.GetAllDirectories();
+            var files = Fsm?.GetAllFiles();
             if (files is null) return;
             Files = new ObservableCollection<FiFile>(files);
         }
@@ -172,7 +205,8 @@ public partial class MainWindowViewModel : ObservableObject
         if (SelectedFile is null) return null;
         var imageBytes = Fsm.ReadFile(SelectedFile).ToArray();
         using var ms = new MemoryStream(imageBytes);
-        return new Bitmap(ms);
+        var bitmap = new Bitmap(ms);
+        return bitmap;
     }
 
     /// <summary>

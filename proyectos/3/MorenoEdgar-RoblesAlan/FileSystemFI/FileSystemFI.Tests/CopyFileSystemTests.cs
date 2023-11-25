@@ -25,7 +25,7 @@ namespace FileSystemFI.Tests
 
                 var file = await fsm.CopyFromComputer("./arch_logo.png");
 
-                var files = fsm.GetAllDirectories();
+                var files = fsm.GetAllFiles();
                 Assert.That(files, Is.Not.Empty);
                 Assert.That(files.Where(f => f.FileName == "arch_logo.png"), Is.Not.EqualTo(null));
             }

@@ -36,7 +36,7 @@ public class ReadFileSystemTests
         Console.WriteLine($"Número de clusters que mide el directorio: {fsm.DirClusterSize} bytes.");
         Console.WriteLine($"Número de clusters que mide la unidad completa: {fsm.FullClusterSize}");
 
-        var files = fsm.GetAllDirectories();
+        var files = fsm.GetAllFiles();
         files.ForEach(f => Console.WriteLine($"File: {f.FileName} | Created: {f.CreatedDate} | Size: {f.Size}"));
         Assert.That(files, Is.Not.Empty);
         
@@ -49,7 +49,7 @@ public class ReadFileSystemTests
         var fsm = new FiFileSystemMgr();
         fsm.OpenFileSystem(FileName);
         Assert.That(fsm.IsInitialized, Is.True);
-        var files = fsm.GetAllDirectories();
+        var files = fsm.GetAllFiles();
         Assert.That(files, Is.Not.Empty);
 
         var fileBytes = fsm.ReadFile(files[0]).ToArray();

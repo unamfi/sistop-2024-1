@@ -57,7 +57,7 @@ public class FiFileSystemMgr : IDisposable
         return _br.ReadBytes(file.Size);
     }
 
-    public List<FiFile> GetAllDirectories()
+    public List<FiFile> GetAllFiles()
     {
         _br.BaseStream.Position = ClusterSize;
         Files.Clear();
@@ -72,7 +72,8 @@ public class FiFileSystemMgr : IDisposable
             var modDate = _br.ReadString(14);
             _br.ReadChars(12);
 
-            if (filename == "..............") continue;
+            // if (filename == "..............") continue;
+            if (type == '/') continue;
 
             var file = new FiFile
             {
@@ -93,9 +94,6 @@ public class FiFileSystemMgr : IDisposable
 
     public async Task<FiFile?> CopyFromComputer(string path)
     {
-        if (Files.Any(c => c.FileName == path))
-            throw new Exception("El archivo ya existe");
-
         await using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
         using var br = new BinaryReader(fs);
 
@@ -116,6 +114,9 @@ public class FiFileSystemMgr : IDisposable
             fileName = fileName[..^fileExt.Length] + fileExt;
         if (fileName.Length != 14)
             throw new Exception("Nombre del archivo inválido");
+        if (Files.Any(c => c.FileName == path))
+            throw new Exception("El archivo ya existe");
+
         var file = new FiFile
         {
             FileName = fileName,
@@ -133,6 +134,43 @@ public class FiFileSystemMgr : IDisposable
             _bw.Write(br.ReadByte());
 
         return file;
+    }
+
+    public void DeleteFile(FiFile file)
+    {
+        // Eliminar los metadatos
+        _br.BaseStream.Position = ClusterSize;
+        var found = false;
+        while (_br.BaseStream.Position < ClusterSize * 4)
+        {
+            var mdata = _br.ReadBytes(64);
+            if (Encoding.ASCII.GetString(mdata[1..15]).Trim() != file.FileName) continue;
+            found = true;
+            break;
+        }
+
+        if (!found) throw new Exception("No se puede encontrar el archivo.");
+
+        _bw.BaseStream.Position = _br.BaseStream.Position - 64;
+        _bw.Write('/');
+        _bw.Write(string.Join(string.Empty, Enumerable.Repeat('.', 14)));
+        _bw.Write(Enumerable.Repeat((byte)0x0, 7).ToArray());
+        _bw.Write(string.Join(string.Empty, Enumerable.Repeat(0, 28))); // Fechas en cero
+        _bw.Write(Enumerable.Repeat((byte)0x0, 12).ToArray());
+
+        // Eliminar los datos
+        // ReSharper disable once PossibleLossOfFraction
+        var usedClusters = (int)Math.Ceiling((double)(file.Size / ClusterSize)) - 1;
+        _bw.BaseStream.Position = file.FirstCluster * ClusterSize;
+        while (usedClusters > 0)
+        {
+            var prev = _bw.BaseStream.Position;
+            _bw.Write(0x00);
+            _bw.BaseStream.Position = prev + ClusterSize;
+            usedClusters--;
+        }
+
+        Files = GetAllFiles();
     }
 
     private void WriteFileData(FiFile file, long infoSpace)
@@ -190,23 +228,26 @@ public class FiFileSystemMgr : IDisposable
         // ReSharper disable once PossibleLossOfFraction
         var requiredClusters = (int)Math.Ceiling((double)(fileSize / ClusterSize));
         if (requiredClusters == 0) requiredClusters = 1;
+        if (requiredClusters > 720) return -1;
+        var fileClusterCount = 0;
         var clusterCount = 0;
         long startPos = -1;
         _br.BaseStream.Position = ClusterSize * 4;
-        while (_br.BaseStream.Position < _br.BaseStream.Length && clusterCount < requiredClusters)
+        while (_br.BaseStream.Position < _br.BaseStream.Length && fileClusterCount < requiredClusters && clusterCount < 720)
         {
+            clusterCount++;
             if (startPos == -1)
                 startPos = _br.BaseStream.Position;
 
             var cluster = _br.ReadBytes(ClusterSize);
             if (cluster[0] == 0x00)
             {
-                clusterCount++;
+                fileClusterCount++;
             }
             else
             {
                 startPos = -1;
-                clusterCount = 0;
+                fileClusterCount = 0;
             }
         }
 

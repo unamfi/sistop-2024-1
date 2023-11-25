@@ -17,7 +17,7 @@ public class WriteFileSystemTests
         var fsm = new FiFileSystemMgr();
         fsm.OpenFileSystem(FileName);
         Assert.That(fsm.IsInitialized, Is.True);
-        var files = fsm.GetAllDirectories();
+        var files = fsm.GetAllFiles();
         Assert.That(files, Is.Not.Empty);
 
         var file = fsm.CopyFromComputer("/home/ayame/Desktop/arch_logo.png");
