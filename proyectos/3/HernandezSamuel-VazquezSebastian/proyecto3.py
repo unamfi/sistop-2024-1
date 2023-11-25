@@ -2,6 +2,7 @@
 #Alumnos: Hernandez Hernandez Samuel y Vazquez Reyes Sebastian
 
 import struct
+import unicodedata
 from tkinter import *
 from tkinter import ttk
 from pathlib import Path
@@ -28,7 +29,7 @@ def leerstring(pocision, numero):
     with open("fiunamfs.img", "rb") as diskito: 
         diskito.seek(pocision)
         cadena = diskito.read(numero)
-        string = cadena.decode('ascii')
+        string = cadena.decode("ascii")
         return string
 
 #Funcion que recopila la informacion del server ubicada en el primer cluster
@@ -72,27 +73,50 @@ def leercont (ini, tamaño):
         contenido = diskito.read(tamaño)
         return contenido
 
-#La siguiente funcion mueve un objeto desde el disco hasta nuestro computador. La copia se hace directamente en el directorio del programa
-def moverdesde(var):
-    global cluster, directorioact
-    nombre=var.get()
+def limpiar_cadena(cadena):#Con esta funcion limpiamos una cadena dentro del directorio para compararla facilmente
+    return cadena.strip('\0').rstrip()
+
+def buscar(var):#Esta funcion se encarga de buscar un archivo en especifico del directorio y devolver sus datos mas importantes para trabajarlos
+    nombre = var.get()
     for item in tabla.get_children():
         l = tabla.item(item, "text")
         if l == nombre:
             cadena2 = tabla.set(item, "Tamaño")
             cadena3 = tabla.set(item, "Cluster")
             break
-
     tamaño = int(cadena2)
-    cl_ini = int (cadena3)  
+    cluster = int(cadena3)
+    cadenafull = limpiar_cadena(nombre)
+    return tamaño, cluster, cadenafull
+
+def eliminar(var): #Esta funcion se encarga de eliminar el archivo del directorio
+    global cluster, directorioact
+    tamaño, cl_ini, cadenafull = buscar(var) 
+    for i in range(0, (cluster*4), 64):
+        r = limpiar_cadena(leerstring(cluster+i, 16))
+        if r == cadenafull:
+            with open("fiunamfs.img", "rb+") as diskito: 
+                diskito.seek(cluster*cl_ini)
+                diskito.write(b'/..............\x00'*tamaño)
+            nom = Label(frame2, text="El archivo: " + cadenafull + " se ha eliminado exitosamente", bg="gray71", fg="gray1", font=fonttext, wraplength=700)
+            nom.pack()
+            registrar_bitacora(f"Eliminación del archivo: {cadenafull}")  # Registro en la bitácora
+            break
+    else:
+        nom = Label(frame2, text="El archivo: " + cadenafull + " ya ha sido eliminado", bg="gray71", fg="gray1", font=fonttext, wraplength=700)
+        nom.pack()
+
+#La siguiente funcion mueve un objeto desde el disco hasta nuestro computador. La copia se hace directamente en el directorio del programa
+def moverdesde(var):
+    global cluster, directorioact
+    tamaño, cl_ini, cadenafull = buscar(var)
     datos = leercont(cluster*cl_ini, tamaño) 
-    cadenasn = nombre.replace("\0", "")
-    cadenasg = " ".join(cadenasn.split())
-    cadenafull = cadenasg[1:]
+
     for r,_, archivos in os.walk(directorioact):
         if cadenafull in archivos:
             nom=Label(frame2, text = "El archivo: "+cadenafull +" ya se encuentra en el direcotorio del programa", bg="gray71",fg="gray1",font=fonttext, wraplength=700)
             nom.pack()
+            registrar_bitacora("Intento de mover el archivo " + cadenafull + ", pero ya existe en el directorio")
             break
         else:
             archcopy = open(cadenafull,"wb")
@@ -100,15 +124,122 @@ def moverdesde(var):
             archcopy.close()
             nom=Label(frame2, text = "El archivo: "+cadenafull +" se ha copiado exitosamente en el direcotorio del programa", bg="gray71",fg="gray1",font=fonttext, wraplength=700)
             nom.pack()
+            registrar_bitacora("Archivo " + cadenafull + " copiado exitosamente al directorio del programa")
             break
+
+# Función para identificar archivos fragmentados en el sistema de archivos
+def identificar_fragmentados():
+    fragmentados = []
+    with open("fiunamfs.img", "rb") as disco:
+        # Recorre el directorio para encontrar archivos fragmentados
+        disco.seek(1 * cluster)  # Inicio del directorio
+        entrada_tamano = 64  # Tamaño de cada entrada en el directorio
+        while True:
+            entrada = disco.read(entrada_tamano)
+            if not entrada or len(entrada) < 24:  # Asegurarse de que la entrada sea lo suficientemente larga
+                break
+            tipo_archivo = entrada[0]  # Tipo de archivo
+            cluster_inicial = struct.unpack("<I", entrada[20:24])[0]  # Cluster inicial
+            tamano_archivo = struct.unpack("<I", entrada[16:20])[0]  # Tamaño del archivo
+
+            # Verificar si el archivo ocupa más de un cluster (fragmentado)
+            if tipo_archivo != 47 and tamano_archivo > cluster * 4:
+                fragmentados.append((cluster_inicial, tamano_archivo))
+    return fragmentados
+
+# Función para desfragmentar el sistema de archivos
+def desfragmentar():
+    fragmentados = identificar_fragmentados()
+    cambios = {}
+    with open("fiunamfs.img", "r+b") as disco:
+        for cluster_inicial, tamano_archivo in fragmentados:
+            espacio_libre = encontrar_espacio_libre(disco, tamano_archivo)
+            nuevo_cluster_inicial = espacio_libre // cluster
+            
+            registrar_bitacora(f"Moviendo archivo fragmentado desde el cluster {cluster_inicial} al cluster {nuevo_cluster_inicial}")
+            
+            cambios[cluster_inicial] = nuevo_cluster_inicial
+            
+            contenido_archivo = leercont(cluster * cluster_inicial, tamano_archivo)
+            disco.seek(espacio_libre)
+            disco.write(contenido_archivo)
+    
+    # Aplicar todos los cambios en el disco en una sola pasada
+    for cluster_inicial, nuevo_cluster in cambios.items():
+        disco.seek(1 * cluster + cluster_inicial * cluster)
+        disco.write(struct.pack("<I", nuevo_cluster))
+        disco.seek(cluster * cluster_inicial)
+        disco.write(b'\x00' * tamano_archivo)
+    
+    print("Desfragmentación completa.")
+    registrar_bitacora("Sistema de archivos desfragmentado exitosamente")
+
+# Función para encontrar espacio libre en el disco
+def encontrar_espacio_libre(disco, tamano_archivo):
+    disco.seek(1 * cluster)  # Inicio del espacio de datos
+    espacio_libre = b'\x00' * tamano_archivo  # Espacio libre requerido
+    datos = disco.read()  # Leer todos los datos
+
+    indice = datos.find(espacio_libre)  # Buscar la primera aparición del espacio libre
+    while indice != -1:
+        pos = disco.tell()
+        disco.seek(pos + indice)
+        # Verificar si el espacio es lo suficientemente grande para el archivo
+        if datos[indice:indice + tamano_archivo] == espacio_libre:
+            return pos + indice
+        indice = datos.find(espacio_libre, indice + 1)  # Buscar el siguiente espacio libre
+    
+    # Si no se encuentra espacio suficiente, se podría manejar devolviendo una excepción o un valor específico.
+    raise ValueError("No se encontró espacio suficiente para el archivo.")
+
+def registrar_bitacora(accion):
+    with open("bitacora.txt", "a") as bitacora:
+        from datetime import datetime
+        fecha_hora_actual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        bitacora.write(f"{accion}, {fecha_hora_actual}\n")
+    
+def ver_bitacora():
+    with open("bitacora.txt", "r") as bitacora:
+        bitacora_content = bitacora.readlines()
+        # Crear ventana para mostrar la bitácora
+        ventana_bitacora = Toplevel(root)
+        ventana_bitacora.title("Bitácora de operaciones")
+        ventana_bitacora.geometry("500x300")
+        bitacora_texto = Text(ventana_bitacora)
+        bitacora_texto.pack(fill="both", expand=True)
+        # Mostrar contenido de la bitácora en la ventana
+        for linea in bitacora_content:
+            bitacora_texto.insert(END, linea)
 
 """-------------------------------------------------------------
 A partir de aqui empieza el desarrollo de mi interfaz grafica
 -------------------------------------------------------------"""
 
+#Menu de seleccion para las funciones de los archivos archivos
+def actualizarmove(bot):
+    var=StringVar()
+    neims = tabla.get_children()
+    archivos = [tabla.item(item, "text") for item in neims]
+    var.set(archivos[0])
+    listado()
+    move=OptionMenu(frame2, var, *archivos)
+    bot11=Button (frame2, text="Escoger", bg="gray71",fg="gray1",font=fonttext, command=lambda: moverdesde(var))
+    bot12=Button (frame2, text="Escoger", bg="gray71",fg="gray1",font=fonttext, command=lambda: eliminar(var))   
+    bot13=Button (frame2, text="Aceptar", bg="gray71",fg="gray1",font=fonttext, command=lambda: desfragmentar())    
+    if (bot==bot6):
+        return move, bot12
+    elif (bot==bot4):
+        return move, bot11
+    elif (bot==bot7):
+        return move, bot13
+    else: 
+        bot11.place_forget()
+        bot12.place_forget()
+        bot13.place_forget()
+    
 #Esta funcion da la apariencia a un boton de ser seleccionado cuando fue presionado. De esta forma no puede presionarse varias veces seguidas
 def presionado(boton):
-    bot11.place_forget()
+    listado()
     frame2.pack(fill="both",side=LEFT)
     global estadoboton, botonrep, ejecucion
     if estadoboton==1:
@@ -123,20 +254,33 @@ def presionado(boton):
     botonrep=boton
     boton.config(state=DISABLED)
     boton.config(relief=SUNKEN)
+    ejecucion=1
     if (boton==bot1): #Segun el boton que presionemos, se ejecuta la tarea que el usuario pidio
-        listado()
-        tabla.pack(fill="both", side=LEFT, expand=True)    
-        ejecucion=1
-    if (boton==bot2):
+        tabla.pack(fill="both", side=LEFT, expand=True)  
+        actualizarmove(bot1)  
+    if (boton==bot2): #Conocer el server
         validarserver()
-        ejecucion=1
-    if (boton==bot4):
-        listado()
+        actualizarmove(bot2)
+    if (boton==bot4): #Copiar desde
         nom=Label(frame2, text = "¿Que archivo deseas copiar?", bg="gray71",fg="gray1",font=fonttext)
         nom.pack()
+        move, bot11 =actualizarmove(bot4)
         move.pack()
         bot11.place(x=75, y= 500)
-        ejecucion=1
+    if (boton==bot6):
+        nom=Label(frame2, text = "¿Que archivo deseas eliminar?", bg="gray71",fg="gray1",font=fonttext)
+        nom.pack()
+        move, bot12 =actualizarmove(bot6)
+        move.pack()
+        bot12.place(x=75, y= 500)
+    if boton == bot7:  #Para desfragmentar
+        nom=Label(frame2, text = "¿Que archivo deseas desfragmentar?", bg="gray71",fg="gray1",font=fonttext)
+        nom.pack()
+        move, bot13 =actualizarmove(bot7)
+        move.pack()
+        bot13.place(x=75, y= 500)
+    if boton == bot8: #Para mostrar la bitacora
+        ver_bitacora()
 
 #Parametros basicos de la ventana y las cadenas
 root = Tk()
@@ -157,19 +301,29 @@ tit1.pack()
 frame1=Frame(root, bg="MediumPurple1")
 frame1.pack(fill="y",side=LEFT)
 frame1.configure(width=200, height=700)
+
 #Botones del frame de seleccion
 bot1=Button (frame1, text="Listar los elementos\ndel directorio", font=fonttext, fg="white", bg="MediumPurple1", command=lambda: presionado(bot1))
 bot1.place(x=20, y= 80)
+
 bot2=Button (frame1, text="Conocer al server", font=fonttext, fg="white", bg="MediumPurple1", command=lambda: presionado(bot2))
 bot2.place(x=27, y= 10)
+
 bot4=Button (frame1, text="Copiar DESDE\nEL directorio", font=fonttext, fg="white", bg="MediumPurple1",  command=lambda: presionado(bot4))
 bot4.place(x=40, y= 180)
+
 bot5=Button (frame1, text="Copiar HACIA\nEL directorio", font=fonttext, fg="white", bg="MediumPurple1",  command=lambda: presionado(bot5))
 bot5.place(x=40, y= 270)
+
 bot6=Button (frame1, text="Eliminar un archivo", font=fonttext, fg="white", bg="MediumPurple1",  command=lambda: presionado(bot6))
 bot6.place(x=22, y= 360)
+
 bot7=Button (frame1, text="Desfragmentar\nel sistema", font=fonttext, fg="white", bg="MediumPurple1",  command=lambda: presionado(bot7))
 bot7.place(x=35, y= 430)
+
+bot8=Button (frame1, text="Bitacora", font=fonttext, fg="white", bg="MediumPurple1", command=lambda: presionado(bot8))
+bot8.place(x=60, y= 510)
+
 bot3=Button (frame1, text="Salir del sistema", font=fonttext, fg="white", bg="MediumPurple1", command=root.quit)
 bot3.place(x=33, y= 530)
 
@@ -189,14 +343,5 @@ tabla.heading("Tamaño", text="Tamaño", anchor=CENTER)
 tabla.heading("Cluster", text="Cluster inicial", anchor=CENTER)
 tabla.heading("Fecha de creación",text="Fecha de creación", anchor=CENTER)
 tabla.heading("Ultima modificación", text="Ultima modificación", anchor=CENTER)
-
-listado()
-#Menu de seleccion para las funciones de mover y eliminar archivos
-var=StringVar()
-neims = tabla.get_children()
-archivos = [tabla.item(item, "text") for item in neims]
-var.set(archivos[0])
-move=OptionMenu(frame2, var, *archivos)
-bot11=Button (frame2, text="Escoger", bg="gray71",fg="gray1",font=fonttext, command=lambda: moverdesde(var))
 
 root.mainloop() 
