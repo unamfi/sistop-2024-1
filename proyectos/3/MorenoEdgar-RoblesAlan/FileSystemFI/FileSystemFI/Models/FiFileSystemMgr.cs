@@ -60,8 +60,8 @@ public class FiFileSystemMgr : IDisposable
     public List<FiFile> GetAllDirectories()
     {
         _br.BaseStream.Position = ClusterSize;
-
-        while (_br.BaseStream.Position <= ClusterSize * 4)
+        Files.Clear();
+        while (_br.BaseStream.Position < ClusterSize * 4)
         {
             var type = _br.ReadChar();
             var filename = _br.ReadString(14);
@@ -108,10 +108,18 @@ public class FiFileSystemMgr : IDisposable
         if (dataLocation == -1)
             throw new Exception("No hay espacio para almacenar el archivo.");
 
+        var fileExt = Path.GetExtension(fs.Name);
+        var fileName = Path.GetFileName(fs.Name).PadRight(14);
+        if (fileName.Length > 14)
+            fileName = fileName[..14];
+        if (!fileName.Trim().EndsWith(fileExt))
+            fileName = fileName[..^fileExt.Length] + fileExt;
+        if (fileName.Length != 14)
+            throw new Exception("Nombre del archivo inválido");
         var file = new FiFile
         {
-            FileName = Path.GetFileName(fs.Name).PadRight(14),
-            FirstCluster = (int)dataLocation,
+            FileName = fileName,
+            FirstCluster = (int)dataLocation / ClusterSize,
             Size = (int)fileSize,
             Type = '-',
             CreatedDate = File.GetCreationTime(path),
@@ -119,12 +127,10 @@ public class FiFileSystemMgr : IDisposable
         };
         WriteFileData(file, infoLocation);
 
-        var files = GetAllDirectories();
+        _bw.BaseStream.Position = file.FirstCluster * ClusterSize;
 
-        _bw.BaseStream.Position = dataLocation;
-
-        while (br.ReadByte() is var dat)
-            _bw.Write(dat);
+        while (br.BaseStream.Position < br.BaseStream.Length)
+            _bw.Write(br.ReadByte());
 
         return file;
     }
@@ -132,25 +138,48 @@ public class FiFileSystemMgr : IDisposable
     private void WriteFileData(FiFile file, long infoSpace)
     {
         _bw.BaseStream.Position = infoSpace;
-        _bw.Write(file.Type);
-        _bw.Write(file.FileName!);
-        _bw.WriteInt32LitEnd(file.Size);
-        _bw.Write(0x00);
-        _bw.Write(file.FirstCluster);
-        _bw.Write(file.CreatedDate.ToString("yyyyMMddHHmmss"));
-        _bw.Write(file.LastModifiedDate.ToString("yyyyMMddHHmmss"));
+        var buffer = new byte[64];
+        var bufferIndex = 0;
+
+        BitConverter.GetBytes(file.Type).CopyTo(buffer, bufferIndex);
+        bufferIndex += 1;
+
+        var fileNameBytes = Encoding.ASCII.GetBytes(file.FileName!);
+        fileNameBytes.CopyTo(buffer, bufferIndex);
+        bufferIndex += fileNameBytes.Length;
+
+        BitConverter.GetBytes(file.Size).Reverse().ToArray().CopyTo(buffer, bufferIndex);
+        bufferIndex += sizeof(int);
+
+        // BitConverter.GetBytes((char)0).CopyTo(buffer, bufferIndex);
+        buffer[bufferIndex] = 0x0;
+        bufferIndex += 1;
+
+        BitConverter.GetBytes(file.FirstCluster).CopyTo(buffer, bufferIndex);
+        bufferIndex += sizeof(int);
+
+        var createdDateBytes = file.CreatedDate.ToString("yyyyMMddHHmmss").ToCharArray().Select(c => (byte)c).ToArray();
+        createdDateBytes.CopyTo(buffer, bufferIndex);
+        bufferIndex += createdDateBytes.Length;
+
+        var modDateBytes = file.LastModifiedDate.ToString("yyyyMMddHHmmss").ToCharArray().Select(c => (byte)c).ToArray();
+        modDateBytes.CopyTo(buffer, bufferIndex);
+        bufferIndex += modDateBytes.Length;
+
+        if (bufferIndex > 0)
+        {
+            _bw.Write(buffer, 0, bufferIndex);
+        }
     }
 
     private long GetNextAvaiableFileInfo()
     {
         _br.BaseStream.Position = ClusterSize;
-        while (true)
+        while (_br.BaseStream.Position < ClusterSize * 4)
         {
             var buffer = _br.ReadBytes(64);
             if (Encoding.ASCII.GetString(buffer[1..15]) == "..............")
-                return _br.BaseStream.Position;
-            if (_br.BaseStream.Position >= ClusterSize * 4)
-                break;
+                return _br.BaseStream.Position - 64;
         }
 
         return -1;
@@ -158,20 +187,37 @@ public class FiFileSystemMgr : IDisposable
 
     private long GetNextAvaiableDataSpace(long fileSize)
     {
-        var remaining = fileSize;
+        // ReSharper disable once PossibleLossOfFraction
+        var requiredClusters = (int)Math.Ceiling((double)(fileSize / ClusterSize));
+        if (requiredClusters == 0) requiredClusters = 1;
+        var clusterCount = 0;
+        long startPos = -1;
         _br.BaseStream.Position = ClusterSize * 4;
-        while (_br.ReadByte() is var c)
+        while (_br.BaseStream.Position < _br.BaseStream.Length && clusterCount < requiredClusters)
         {
-            if (c == 0x00)
-                remaining--;
-            else
-                remaining = fileSize;
+            if (startPos == -1)
+                startPos = _br.BaseStream.Position;
 
-            if (remaining == 0)
-                return _br.BaseStream.Position - fileSize;
+            var cluster = _br.ReadBytes(ClusterSize);
+            if (cluster[0] == 0x00)
+            {
+                clusterCount++;
+            }
+            else
+            {
+                startPos = -1;
+                clusterCount = 0;
+            }
         }
 
-        return -1;
+        return startPos;
+    }
+
+    public void ShowInitClustersContent()
+    {
+        _br.BaseStream.Position = ClusterSize * 4;
+        while (_br.BaseStream.Position < _br.BaseStream.Length)
+            Console.WriteLine((char)_br.ReadBytes(ClusterSize).First());
     }
 
     public string? Identifier { get; private set; }

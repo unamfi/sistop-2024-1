@@ -15,6 +15,15 @@ public class ReadFileSystemTests
     }
 
     [Test]
+    public void ShowClusterInit()
+    {
+        var fsm = new FiFileSystemMgr();
+        fsm.OpenFileSystem(FileName);
+        Assert.That(fsm.IsInitialized, Is.True);
+        fsm.ShowInitClustersContent();
+    }
+
+    [Test]
     public void FileManagerTest()
     {
         var fsm = new FiFileSystemMgr();

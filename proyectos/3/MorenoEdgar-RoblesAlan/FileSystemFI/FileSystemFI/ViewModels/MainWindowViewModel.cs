@@ -82,6 +82,25 @@ public partial class MainWindowViewModel : ObservableObject
         sw.Write(Fsm.ReadFile(SelectedFile).ToArray());
     }
 
+    [RelayCommand]
+    private async Task ImportFile()
+    {
+        if (Fsm is null || !Fsm.IsInitialized) return;
+        if (SelectedFile is null) return;
+
+        var filesService = App.Current?.Services?.GetService<IFileService>();
+        if (filesService is null)
+            throw new NullReferenceException("File Service does not exists.");
+
+        var file = await filesService.OpenFileAsync();
+        if (file is null) return;
+        var result = await Fsm.CopyFromComputer(file.Path.AbsolutePath);
+        Files.Clear();
+        var files = Fsm?.GetAllDirectories();
+        if (files is null) return;
+        Files = new ObservableCollection<FiFile>(files);
+    }
+
     /// <summary>
     /// Abre el sistema de archivos.
     /// </summary>

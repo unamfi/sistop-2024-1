@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace FileSystemFI.Models;
 
@@ -12,6 +13,7 @@ internal enum FileType
 public class FiFile
 {
     public char Type { get; set; }
+    [StringLength(16)]
     public string? FileName { get; set; }
     public int Size { get; set; }
     public double MbSize => (Size / 1024.0) / 1024.0;
