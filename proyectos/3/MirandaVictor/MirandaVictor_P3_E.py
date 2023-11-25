@@ -145,4 +145,50 @@ def desfragmentar(fiunamfs_img):
 
     print("Desfragmentación completada.")
 
+def menu_principal():
+    while True:
+        print("\nMenú Principal - Sistema de Archivos FiUnamFS")
+        print("1. Leer el superbloque")
+        print("2. Listar directorio")
+        print("3. Copiar archivo de FiUnamFS a sistema")
+        print("4. Copiar archivo de sistema a FiUnamFS")
+        print("5. Eliminar archivo de FiUnamFS")
+        print("6. Salir")
+        opcion = input("Selecciona una opción: ")
+
+        if opcion == '1':
+            leer_superbloque(fiunamfs_img)
+        elif opcion == '2':
+            listar_directorio(fiunamfs_img)
+        
+        elif opcion == '3':
+            nombre_archivo = input("Ingresa el nombre del archivo en FiUnamFS: ")
+            destino = input("Ingresa la ruta de destino en el sistema (deja en blanco para la carpeta actual): ")
+            if not destino:
+                destino = os.path.join(os.getcwd(), nombre_archivo)  
+            try:
+                copiar_a_sistema(fiunamfs_img, nombre_archivo, destino)
+                print("Archivo copiado con éxito a", destino)
+            except Exception as e:
+                print("Error al copiar el archivo:", e)
+
+        elif opcion == '4':
+            origen = input("Ingresa la ruta del archivo en el sistema: ")
+            nombre_destino = input("Ingresa el nombre del archivo en FiUnamFS: ")
+            copiar_a_fiunamfs(fiunamfs_img, origen, nombre_destino)
+        elif opcion == '5':
+            nombre_archivo = input("Ingresa el nombre del archivo a eliminar de FiUnamFS: ")
+            eliminar_archivo(fiunamfs_img, nombre_archivo)
+        elif opcion == '6':
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida. Por favor, intenta de nuevo.")
+
+# Configuración inicial
+fiunamfs_img = "fiunamfs.img"  # Asegúrate de cambiar esto por la ruta de tu archivo .img
+
+# Ejecutar el menú principal
+menu_principal()
+
 
