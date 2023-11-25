@@ -88,4 +88,18 @@ def copiar_a_fiunamfs(fiunamfs_img, archivo_origen, nombre_destino):
         f.write(struct.pack('<I', tam_origen))
         f.write(struct.pack('<I', cluster_libre))
 
+def eliminar_archivo(fiunamfs_img, nombre_archivo):
+    with open(fiunamfs_img, 'r+b') as f:
+        f.seek(DIRECTORIO_INICIO)
+        for _ in range(DIRECTORIO_TAMANO // TAMANO_ENTRADA):
+            posicion = f.tell()
+            entrada = f.read(TAMANO_ENTRADA)
+            nombre = entrada[1:16].decode('ascii').rstrip()
+            if nombre.rstrip('\x00').strip() == nombre_archivo.rstrip('\x00').strip():
+                f.seek(posicion)
+                f.write(b'/' + b' ' * 15)
+                print("Archivo eliminado")
+                return
+    raise FileNotFoundError("Archivo no encontrado en FiUnamFS")
+
 
