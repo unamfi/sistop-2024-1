@@ -21,7 +21,7 @@ def validar_superbloque(nombre_archivo):
             print("¡Error! Versión no compatible.")
             return False
         else:
-            print("La versión es compatible.")
+            print("La versión es compatible.\n\n")
 
         return True
       
@@ -30,11 +30,10 @@ def leer_superbloque(nombre_archivo):
     if validar_superbloque(nombre_archivo):
         with open(nombre_archivo, "rb") as f:
             data = f.read(54)
-            #magic, version, label, cluster_size, dir_clusters, total_clusters = struct.unpack("<8s5s20sIQQ", data)
-            dump, label, dumpy = struct.unpack("<20s19s15s", data) #label bien 9b de 20 a 29
+            #se obtienen los bytes de información del superbloque y se almacenan en sus respectivas variables
+            dump, label, dumpy = struct.unpack("<20s19s15s", data)
             print(label.decode("ascii"))
             dump, cluster_size, dumpy = struct.unpack("<40sI10s", data)
-            # print(cluster_size.decode("ascii"))
             print("Tamanio de clusters: %d bytes." % cluster_size)
             dump, dir_clusters, dumpy = struct.unpack("<45sI5s", data)
             print("Clusters del directorio: %d." % cluster_size)
@@ -58,7 +57,6 @@ def listar_contenidos(nombre_archivo):
             f.seek(superbloque["cluster_size"])
             for _ in range(superbloque["dir_clusters"]):
                 entrada = f.read(64)
-                #tipo, nombre, tamaño, cluster_inicial, _, _ = struct.unpack("<c15sI3s", entrada)
                 tipo, nombre, tamaño, cluster_inicial, creacion, modificacion, dump = struct.unpack("<c15sI3s14s14s13s", entrada)
 
                 if nombre.decode("ascii").rstrip('\x00') != "---------------":
@@ -73,11 +71,15 @@ def copiar_desde_fiunamfs(nombre_archivo, nombre_archivo_img):
             f.seek(superbloque["cluster_size"])
             for _ in range(superbloque["dir_clusters"]):
                 entrada = f.read(64)
-                tipo, nombre, tamaño, cluster_inicial, _, _ = struct.unpack("<s15sIQ14s14s14s", entrada)
-
-                if nombre.decode("ascii").rstrip('\x00') == nombre_archivo and tipo == b'-':
+                tipo, nombre, tamaño, cluster_inicial, creacion, modificacion, dump = struct.unpack("<c15sI3s14s14s13s", entrada)
+                longitud = len(nombre_archivo)
+                nombred = nombre.decode("ascii")
+                nombre = nombred[0:longitud]
+                if nombre == nombre_archivo and tipo == b'-':
+                    
                     with open(nombre_archivo, "wb") as destino:
-                        f.seek(cluster_inicial * superbloque["cluster_size"])
+                        cluster_inicial_int = int.from_bytes(cluster_inicial, "little")
+                        f.seek(cluster_inicial_int * superbloque["cluster_size"])
                         contenido = f.read(tamaño)
                         destino.write(contenido)
                         print(f"Archivo {nombre_archivo} copiado exitosamente.")
