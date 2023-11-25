@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-
+#include <time.h>
 // Definir la estructura del superbloque
 struct Superblock {
     char filesystem_name[8];  // 8 caracteres 
@@ -18,13 +18,71 @@ struct Superblock2 {
 };
 
 struct DirectoryEntry {
-  
+	char novacio[1];
+    char file_type[1];
+    char file_name[15];
+    time_t creation_time;  // Cambiado a time_t para almacenar la fecha y hora
+    time_t modification_time;
+    char unused_space[12];
+    uint32_t file_size;
+    uint32_t initial_cluster;
 };
 
-void listarContenidos(FILE *file) {
-	system("cls");
+
+void listarDirectorio(FILE *file, uint32_t cluster_size,uint32_t dir_clusters) {
+	int entradas = 64;
+	int cluster=0;
+	system("cls");	
+    struct DirectoryEntry entry;
+    printf("Tamaño del cluster en bytes: %u\n",cluster_size);
+    fread(&entry, sizeof(struct DirectoryEntry), 1, file);
     printf("Listando los contenidos del directorio...\n");
-    sleep(5);
+    	
+	while(1) {
+		fseek(file, cluster_size + cluster, SEEK_SET);
+	    if(entry.novacio[0] == '-') {
+			fseek(file, cluster_size + cluster, SEEK_SET);
+        	fread(&entry.file_type, sizeof(char), 1, file);
+        	printf("Tipo: %s\n", entry.file_type);
+        	
+        	fseek(file, cluster_size + cluster + 1, SEEK_SET);
+			fread(&entry.file_name, sizeof(char), 14, file);
+			printf("Nombre: %s\n", entry.file_name);
+			
+			fseek(file, cluster_size + cluster + 16, SEEK_SET);
+			fread(&entry.file_size, sizeof(uint32_t), 3, file);
+			printf("Tamaño: %u\n", entry.file_size);
+			
+			
+			fseek(file, cluster_size + cluster + 20, SEEK_SET);
+			fread(&entry.file_name, sizeof(uint32_t), 3, file);
+			printf("Cluster inicial: %u\n", entry.initial_cluster);
+			
+			char creation_time_str[15], modification_time_str[15];
+			strftime(creation_time_str, sizeof(creation_time_str), "%Y%m%d%H%M%S", localtime(&entry.creation_time));
+    		strftime(modification_time_str, sizeof(modification_time_str), "%Y%m%d%H%M%S", localtime(&entry.modification_time));
+			printf("Fecha y hora de creación: %s\n", creation_time_str);
+    		printf("Fecha y hora de modificación: %s\n", modification_time_str);
+			
+			//fseek(file, cluster_size + cluster + 24, SEEK_SET);
+			//fread(&entry.creation_time, sizeof(char), 14, file);
+			//printf("Fecha creacion: %s\n", entry.creation_time);
+			
+			//fseek(file, cluster_size + cluster + 38, SEEK_SET);
+			//fread(&entry.modification_time, sizeof(char), 14, file);
+			//printf("Fecha modificacion: %s\n", entry.modification_time);
+			
+        	cluster += entradas;
+	        continue; 
+	    }
+	    if(entry.novacio[0] == '/') {
+	        cluster += 64; 
+	        continue;
+	    }
+			
+	}
+	sleep(5);
+    printf("Contenidos listados correctamente.\n");
 }
 
 void copiarDesdeFiUnamFS() {
@@ -58,9 +116,44 @@ void desfragmentarFiUnamFS() {
     
     sleep(5);
 }
-void informacion(){
-	FILE *file = fopen("fiunamfs.img", "rb");
-	struct Superblock2 superblock2;
+
+int main() {
+    FILE *file = fopen("fiunamfs.img", "rb");
+    if (file == NULL) {
+        perror("Error al abrir el archivo");
+        return 0;
+    } else {
+        printf("archivo abierto correctamente\n");
+        sleep(2);
+    }
+    
+    // Leer el superbloque
+    struct Superblock2 superblock2;
+    struct Superblock superblock;
+    fread(&superblock, sizeof(struct Superblock), 1, file);
+
+    /////////////////////////////////////////////////////////////////////
+	// Validar el nombre del sistema de archivos
+    if (strcmp(superblock.filesystem_name, "FiUnamFS") != 0) {
+        printf("El nombre del sistema de archivos no es válido.\n");
+        fclose(file);
+        return 0;
+    } 
+    printf("Nombre del sistema de archivos: %s\n", superblock.filesystem_name);
+   
+    // Validar la versión del sistema de archivos
+    fseek(file, 10, SEEK_SET);
+    fread(superblock.version, sizeof(char), 4, file);
+    printf("Versión del sistema de archivos: %s\n", superblock.version);
+    //sleep(2);
+    if (strcmp(superblock.version, "24.1") != 0) {
+        printf("La versión del sistema de archivos no es compatible.\n");
+        fclose(file);
+        return 0;
+    }
+    
+    ////////////////////////////////////////////////////////////////////
+    
     fread(&superblock2, sizeof(struct Superblock2), 1, file);
     
     //volumen
@@ -82,43 +175,9 @@ void informacion(){
 	fseek(file, 50, SEEK_SET);
 	fread(&superblock2.total_clusters, sizeof(uint32_t), 4, file);
 	printf("Número de clusters que mide la unidad completa: %u\n", superblock2.total_clusters);	
-    sleep(7);
-}
-
-int main() {
-    FILE *file = fopen("fiunamfs.img", "rb");
-    if (file == NULL) {
-        perror("Error al abrir el archivo");
-        return 0;
-    } else {
-        printf("archivo abierto correctamente\n");
-        sleep(2);
-    }
-    
-    // Leer el superbloque
-    struct Superblock superblock;
-    fread(&superblock, sizeof(struct Superblock), 1, file);
-
-    // Validar el nombre del sistema de archivos
-    if (strcmp(superblock.filesystem_name, "FiUnamFS") != 0) {
-        printf("El nombre del sistema de archivos no es válido.\n");
-        fclose(file);
-        return 0;
-    } 
-    printf("Nombre del sistema de archivos: %s\n", superblock.filesystem_name);
-   
-    // Validar la versión del sistema de archivos
-    fseek(file, 10, SEEK_SET);
-    fread(superblock.version, sizeof(char), 4, file);
-    printf("Versión del sistema de archivos: %s\n", superblock.version);
-    sleep(2);
-    if (strcmp(superblock.version, "24.1") != 0) {
-        printf("La versión del sistema de archivos no es compatible.\n");
-        fclose(file);
-        return 0;
-    }
-    
-    informacion();
+    //sleep(7);
+    ////////////////////////////////////////////////////////////////////////
+	
     int opcion;
     do {
         // Mostrar el menú
@@ -134,11 +193,11 @@ int main() {
         // Solicitar la opción al usuario
         printf("Ingresa el número de la opción deseada: ");
         scanf("%d", &opcion);
-
+	
         // Realizar acciones según la opción seleccionada
         switch (opcion) {
             case 1:
-                listarContenidos(file);
+                listarDirectorio(file, superblock2.cluster_size, superblock2.dir_clusters);
                 break;
             case 2:
                 copiarDesdeFiUnamFS();
