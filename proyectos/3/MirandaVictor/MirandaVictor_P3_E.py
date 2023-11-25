@@ -22,3 +22,13 @@ def leer_superbloque(fiunamfs_img):
             #raise ValueError("No es un sistema FiUnamFS válido o versión no soportada.")
         else:
             print("Superbloque válido") 
+
+def listar_directorio(fiunamfs_img):
+    with open(fiunamfs_img, 'rb') as f:
+        f.seek(DIRECTORIO_INICIO)
+        for _ in range(DIRECTORIO_TAMANO // TAMANO_ENTRADA):
+            entrada = f.read(TAMANO_ENTRADA)
+            nombre = entrada[1:16].decode('ascii').rstrip()
+            if nombre != '-' * 15:
+                print(f"Archivo: {nombre}")
+
