@@ -1,0 +1,125 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FileSystemFI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:FileSystemFI.Models"
+        xmlns:objectModel="clr-namespace:System.Collections.ObjectModel;assembly=System.ObjectModel"
+        mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="550"
+        Width="950"
+        Height="550"
+        WindowStartupLocation="CenterScreen"
+        x:Class="FileSystemFI.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="FileSystemFI">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*"
+          RowDefinitions="Auto,*,Auto">
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <Menu>
+                <MenuItem Header="File">
+                    <MenuItem Header="Abrir"
+                              Command="{ Binding OpenFileSystemCommand }">
+                    </MenuItem>
+                    <MenuItem Header="Cerrar"
+                              Command="{Binding CloseFileSystemCommand}">
+                    </MenuItem>
+                    <MenuItem Header="Salir"
+                              Click="OnCloseClick">
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Desfragmentar"></MenuItem>
+                    <MenuItem Header="Renombrar"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Help">
+                    <MenuItem Header="About"
+                              Click="OnAboutClick">
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="0"
+              ColumnDefinitions="*, 5*, 2*"
+              RowDefinitions="*, Auto,Auto">
+            <TreeView Grid.Row="0" Grid.Column="0"
+                      ItemsSource="{Binding Files}"
+                      SelectedItem="{Binding SelectedFile}">
+                <TreeView.ItemTemplate>
+                    <TreeDataTemplate>
+                        <TextBlock Text="{Binding FileName}"></TextBlock>
+                    </TreeDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            <ScrollViewer Grid.Row="0" Grid.Column="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          Margin="5"
+                          IsVisible="{Binding TextMode }">
+                <TextBlock Text="{Binding FileContent}">
+                </TextBlock>
+            </ScrollViewer>
+            <Image Grid.Row="0"
+                   Grid.Column="1"
+                   IsVisible="{Binding ImageMode}"
+                   Source="{Binding ImageSource}">
+            </Image>
+            <StackPanel Grid.Row="0" Grid.Column="2"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        IsVisible="{Binding InfoPanelEnabled}">
+                <StackPanel.Styles>
+                    <Styles>
+                        <Style Selector="Label">
+                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        </Style>
+                    </Styles>
+                </StackPanel.Styles>
+                <Label Content="{Binding SelectedFile.FileName, StringFormat='Archivo: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.MbSize, StringFormat='Tamaño: {0:0.00} MB'}"></Label>
+                <Label Content="{Binding SelectedFile.CreatedDate, StringFormat='Creado: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.LastModifiedDate, StringFormat='Modificado: {0}'}"></Label>
+                <Label Content="{Binding SelectedFile.FirstCluster, StringFormat='Cluster Inicial: {0}'}"></Label>
+            </StackPanel>
+
+            <!-- Parte inferior -->
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Margin="5"
+                        Orientation="Horizontal">
+                <Button Margin="0,0,5,0"
+                        Command="{Binding ImportFileCommand}"
+                        IsEnabled="{Binding EnabledManagementButtons}">
+                    Importar Archivo
+                </Button>
+                <Button Margin="0,0,5,0"
+                        Command="{Binding SaveFileCommand}"
+                        IsEnabled="{Binding EnabledManagementButtons}">
+                    Exportar Selección
+                </Button>
+                <Button
+                    Background="Crimson"
+                    Foreground="White"
+                    Margin="0,0,5,0"
+                    Command="{Binding DeleteFileCommand}"
+                    IsEnabled="True">
+                    Eliminar Archivo
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"
+                        Margin="5"
+                        Orientation="Horizontal">
+                <Label Margin="0,0,5,0" Content="{Binding InfoString}"></Label>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

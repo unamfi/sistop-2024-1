@@ -80,7 +80,7 @@ def llegaMetro(numMetro):
 
 def salida(numMetro, carril, listaCarril):
     time.sleep(random.uniform(0.01, 0.05))  # Tiempo en que las puertas estan abiertas
-    if(carril==0): #EL METRO PIDE PERMISO PARA SALIR, ES DECIR, ESPERA QUE LOS HILOS DE GENTE LE SEÑALIZEN --SEÑALZIACION
+    if(carril==0): #EL METRO PIDE PERMISO PARA SALIR, ES DECIR, ESPERA QUE LOS HILOS DE GENTE LE SEÑALIZEN --SEÑALIZACION
         semAndenA.acquire()
     elif(carril==1):
         semAndenB.acquire()
