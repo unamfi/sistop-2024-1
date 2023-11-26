@@ -1,0 +1,1043 @@
+** Becerril Erick
+- Título :: Reserva de asientos en el teatro
+- Documentación :: [[./BecerrilErick/Documentacion.md][Documentacion.md]], [[./BecerrilErick/Proyecto2.md][Proyecto2.md]]
+- Archivos :: [[./BecerrilErick/Proyecto2.py][Proyecto2.py]]
+- Interfaz :: GUI (Tk)
+- Sincronización utilizada :: 1 cola (=Queue=) para formar a los solicitantes, 1
+  mutex (=Lock=) para proteger de acceso simultáneo.
+  - Comentarios ::
+    - Un poquito básico, pero cumple a la letra con lo solicitado
+
+    |------------------------+-------|
+    | *Requisitos*           |  7.50 |
+    | Cumplimiento           |   7.5 |
+    |------------------------+-------|
+    | *Proyecto*             |  7.50 |
+    | Creatividad            |    10 |
+    | Complejidad            |     5 |
+    | Interfaz usuario       |   7.5 |
+    |------------------------+-------|
+    | *Documentación*        |  9.20 |
+    | Expresa                |   7.6 |
+    | Entorno y dependencias |    10 |
+    | Comentarios            |    10 |
+    |------------------------+-------|
+    | *Entrega*              | 10.00 |
+    | Historia en Git        |    10 |
+    | Directorio de proyecto |    10 |
+    | Código válido          |    10 |
+    |------------------------+-------|
+    | *Legibilidad*          | 10.00 |
+    | Estructura             |    10 |
+    | Nomenclatura           |    10 |
+    |------------------------+-------|
+    | *Totales*              |  8.84 |
+    |------------------------+-------|
+    #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Ceniceros Mariaca, Ramirez Martinez
+- Título :: Sistema de reservas en el hotel
+- Documentación :: [[./CenicerosMariaca-RamirezMartinez/PROYECTO2.pdf][PROYECTO2.pdf]]
+- Archivos :: [[./CenicerosMariaca-RamirezMartinez/proyecto2.py][proyecto2.py]]
+- Interfaz :: GUI (Tk)
+- Sincronización utilizada :: mutex (=Lock=)
+- Comentarios ::
+  - Un poquito básico, pero cumple con lo solicitado.
+  
+  - ¡Recuerden que las /regiones críticas/ protegidas por un mutex deben
+    mantenerse /tan cortas como sea posible/. Incluir toda la interacción con el
+    usuario humano mientras retienes el mutex puede fácilmente causarle negación
+    de servicio a tu sistema.
+
+  |------------------------+-------|
+  | *Requisitos*           |  1.40 |
+  | Cumplimiento           |   7/5 |
+  |------------------------+-------|
+  | *Proyecto*             |  8.33 |
+  | Creatividad            |   7.5 |
+  | Complejidad            |   7.5 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  6.67 |
+  | Historia en Git        |     0 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  7.28 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Chagoya Gonzalez, Cervantes Garcia
+- Título :: La salida del tren del metro
+- Documentación :: [[./ChagoyaGonzalez-CervantesGarcia/Proyecto2_SO.pdf][Proyecto2_SO.pdf]]
+- Archivos :: [[./ChagoyaGonzalez-CervantesGarcia/metro.py][metro.py]]
+- Interfaz :: Bitácora a terminal, reportando por color por tipo de operación
+- Sincronización utilizada :: Multiplex de trenes por estación; mutex de
+  asignación a 1 tren por carril; apagador de puertas por tren para usuarios
+  pendientes, señalización cruzada
+- Comentarios ::
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |   7.5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.83 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Cruz Emilio, Garcialiano Giovanni
+- Título :: Las llamadas telefónicas
+- Documentación :: [[./CruzEmilio y GarcialianoGiovanni/Documentación.adoc][Documentación.adoc]], [[./CruzEmilio y GarcialianoGiovanni/Ejemplificación.png][Ejemplificación.png]]
+- Archivos :: [[./CruzEmilio y GarcialianoGiovanni/Llamadas.py][Llamadas.py]]
+- Interfaz :: Bitácora de eventos a terminal
+- Sincronización utilizada :: Multiplex sobre el númerototal de líneas
+  definidas.
+- Comentarios ::
+  - El nivel de concurrencia está acotado a dos emisores y tres receptores,
+    aunque se manejan únicamente dos hios (=manejador()=).
+
+  - Si no hay llamadas que rutear, =manejador()= hace espera activa (¡y mi
+    ventilador puede dar fé de ello!) Tendrían que manejar una señalización,
+    para que la espera fuera un simple =manejador.acquire()= (¡Y no, para fines
+    prácticos, un =if condicion_falsa: pass=)
+
+  - Me parece que es imposible llegar al caso de línea ocupada ☹ ¡Revisen su
+    flujo de información!
+
+  |------------------------+-------|
+  | *Requisitos*           |  5.00 |
+  | Cumplimiento           |     5 |
+  |------------------------+-------|
+  | *Proyecto*             |  6.67 |
+  | Creatividad            |    10 |
+  | Complejidad            |     5 |
+  | Interfaz usuario       |     5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  6.67 |
+  | Historia en Git        |     0 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  7.67 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Galvan Ricardo
+- Título :: Etiqueta de urinal: El temible baño público
+- Documentación :: [[./GalvanRicardo/documentacion.pdf][documentacion.pdf]]
+- Archivos :: [[./GalvanRicardo/necesidades.py][necesidades.py]]
+- Interfaz :: Bitácora a terminal, reportando por color por actor
+- Sincronización utilizada :: mutex para proteger de impresión
+  simultánea. Contador global de usuarios que han pasado por el baño (aunque sin
+  más acción que llevar la cuenta). Mutex sobre las unidades adyacentes.
+- Comentarios ::
+  - Habría sido bueno poder responder al nivel de saturación de recursos (si hay
+    de /n/ usuarios en elsistema, relajar las solictudes para que puedan /irlo
+    soltando/ más agilmente. ¡Es una tristeza tener un baño grande,pero
+    únicamene poder uilizarlo al 50% de su capacidad!
+
+  |------------------------+-------|
+  | *Requisitos*           |  7.50 |
+  | Cumplimiento           |   7.5 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |   7.5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.33 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Gomez Juan Pablo
+- Título :: Reservaciones de hotel
+- Documentación :: [[./GomezJuanPablo/Proyecto2_GomezJuanPablo.pdf][Proyecto2_GomezJuanPablo.pdf]]
+- Archivos :: [[./GomezJuanPablo/Proyecto2Sistop.py][Proyecto2Sistop.py]]
+- Interfaz :: 
+- Sincronización utilizada :: Doble mutex (?) para proteger acceso concurrente a
+  estructuras comunes (listado de habitaciones)
+- Comentarios ::
+  - Un poquito básico, pero cumple con lo solicitado.
+
+  - Si bien defines dos mecanismos (un =Lock= y un =Semaphore=), ambos los usas
+    igual (como un mutex)... ¡y prácticamente en el mismo lugar! No me queda
+    claro a qué apunta el usar a =mutex_reserva= si para cuando lo tomas ya
+    tienes a =sem_disponibilidad= cumpliendo la misma tarea.
+
+  |------------------------+-------|
+  | *Requisitos*           |  5.00 |
+  | Cumplimiento           |     5 |
+  |------------------------+-------|
+  | *Proyecto*             |  5.00 |
+  | Creatividad            |     5 |
+  | Complejidad            |     5 |
+  | Interfaz usuario       |     5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  8.33 |
+  | Historia en Git        |     5 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  7.67 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Hernandez Alberto, Vazquez Ivan
+- Título :: El inventario del almacén
+- Documentación :: [[./HernandezAlberto-VazquezIvan/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./HernandezAlberto-VazquezIvan/Proyecto2.py][Proyecto2.py]]
+- Interfaz :: GUI (Tk)
+- Sincronización utilizada :: notificación global de cambios empleando variable
+  de condición
+- Comentarios ::
+  - ¡Bien por usar una VC! 😃
+
+  - La forma de desarrollo que tienen con Tk "amarra" mucho a la lógica de las
+    estructuras que presentan con su despliegue. Les sugiero intentar ir
+    intentando un modelo más por el tipo modelo-vista-controlador (MVC), que va
+    despegando los datos (modelo), la lógica (controlador) y el despliegue
+    (vista).
+
+  - (¿Python 7.19, dice la documentación? ¡La última versión es 3.12!)
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             | 10.00 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        |  9.17 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |   7.5 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.83 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Hernandez Jonathan, Perez Paola
+- Título :: Emocionante noche de cine
+- Documentación :: [[./HernandezJonathan-PerezPaola/README.md][README.md]], [[./HernandezJonathan-PerezPaola/proyecto2.pdf][proyecto2.pdf]]
+- Archivos :: [[./HernandezJonathan-PerezPaola/cine_final.py][cine_final.py]], [[./HernandezJonathan-PerezPaola/cine_prueba.py][cine_prueba.py]], [[./HernandezJonathan-PerezPaola/idea_cine.py][idea_cine.py]], [[./HernandezJonathan-PerezPaola/idea_pumabus.jpeg][idea_pumabus.jpeg]], [[./HernandezJonathan-PerezPaola/idea_pumabus.py][idea_pumabus.py]]
+- Interfaz :: Bitácora a terminal, reportando por color por actor
+- Sincronización utilizada :: Multiplex representando al cupo
+  máximo. =thread.join()= global para asegurar que todos los hilos terminaron.
+- Comentarios ::
+  - Un poquito básico, pero cumple con lo solicitado.
+
+  - Eviten el uso de llamadas a binarios externos para limpiar la pantalla. ¡Ya
+    importaron =colorama=! ¿Por qué no limpiar la pantalla con
+    =print(colorama.ansi.clear_screen()))=? ¡Mucho más limpio, eficiente, y
+    transportable a otras plataformas!
+
+  - Modelan una película donde la gente entra y sale durante el transcurso de la
+    misma, al estilo del viejo “Cine Permanencia Voluntaria” (¿les tocó? ¡no
+    creo!  Yo lo recuerdo muy apenitas...) Yo suponía que entrarían y saldrían
+    más con el comportamiento de una /barrera/ (¡es completamente válido! Es la
+    situación que /ustedes/ presentaron).
+
+  - ¡Están usando Git! ¿Por qué dejar versiones incompletas que sólo hacen ruido
+    y confunden a su público? (basta con dejar una sola de entre
+    =cine_final.py=, =cine_prueba.py=,  =idea_cine.py=, =idea_pumabus.py=; ¿cuál
+    es la buena entre =proyecto2.pdf= y =README.md=?)
+
+  |------------------------+-------|
+  | *Requisitos*           |  7.50 |
+  | Cumplimiento           |   7.5 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |    10 |
+  | Complejidad            |   7.5 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  8.33 |
+  | Historia en Git        |   7.5 |
+  | Directorio de proyecto |   7.5 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.00 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Hernandez Samuel
+- Título :: Simulación de un restaurante
+- Documentación :: [[./HernandezSamuel/Documento_Proyecto02_SO.pdf][Documento_Proyecto02_SO.pdf]], [[./HernandezSamuel/Screenshot_prueba_exitosa.png][Screenshot_prueba_exitosa.png]]
+- Archivos :: [[./HernandezSamuel/Proyecto2.py][Proyecto2.py]]
+- Interfaz :: Bitácora a un terminal GUI (Tk)
+- Sincronización utilizada :: =Queue= para representar la salida de
+  mensajes. Dos =multiplexes= (base =Semaphore(5)=) para manejar el total de
+  mesas y de cocineros a presentar.
+- Comentarios ::
+  - Entiendo que querías usar Tk para darle mejor interfaz... ¡pero la interfaz
+    que presentas por Tk es exactamente igual que la que mandarías a línea de
+    comando!
+  - El control del flujo entre comensal, cocinero y mesero no cambia en el ciclo
+    de vida de la función =comensal()=.
+
+  |------------------------+-------|
+  | *Requisitos*           |  5.00 |
+  | Cumplimiento           |     5 |
+  |------------------------+-------|
+  | *Proyecto*             |  6.67 |
+  | Creatividad            |   7.5 |
+  | Complejidad            |     5 |
+  | Interfaz usuario       |   7.5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  9.17 |
+  | Historia en Git        |   7.5 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  8.17 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Jimenez Patricia
+- Título :: Boutique de ropa
+- Documentación :: [[./JimenezPatricia/JimenezPerezPatriciaAlejandra_Proyecto.pdf][JimenezPerezPatriciaAlejandra_Proyecto.pdf]]
+- Archivos :: [[./JimenezPatricia/Proyecto.py][Proyecto.py]]
+- Interfaz :: Bitácra a pantalla. Se ve que la autora intentó implementar la
+  interfaz sobre Tk, pero no resultó funcional(?)
+- Sincronización utilizada :: Mutex controlando que sólo un hilo
+  consulte/modifique la lista de probadores dsponibles a la vez
+- Comentarios ::
+  - Me parece interesante la manera en que "dejas pasar" el mutex hasta que haya
+    un probador disponible; no recuerdo haber visto este patrón:
+    #+begin_src python
+      with self.mutex:
+	  while not self.probadores_disponibles:
+	      self.mutex.release()#libera el bloqueo 
+	      self.mutex.acquire()#lo bloquea 
+
+	  probador = self.probadores_disponibles.pop(0)
+    #+end_src
+    Te doy crédito ahí por un uso creativo, y me lo llevo de tarea para pensarlo
+    un poco. Sin embargo, sigue siendo un uso muy limitado de sincronización
+    para el ámbito esperado del proyecto ☹
+  |------------------------+-------|
+  | *Requisitos*           |  7.50 |
+  | Cumplimiento           |   7.5 |
+  |------------------------+-------|
+  | *Proyecto*             |  8.33 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |     5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  8.33 |
+  | Historia en Git        |     5 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          |  8.75 |
+  | Estructura             |   7.5 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  8.58 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Lara Aguilar, Zúñiga Reyes
+- Título :: El abordaje al vagón de metro
+- Documentación :: [[./LaraAguilar-ZúñigaReyes/Proyecto_No.2 Sistemas Operativos.pdf][Proyecto_No.2 Sistemas Operativos.pdf]]
+- Archivos :: [[./LaraAguilar-ZúñigaReyes/proyecto2_SO.py][proyecto2_SO.py]]
+- Interfaz :: Tk
+- Sincronización utilizada :: Variable de condición dependiente del estado de
+  las puertas y la acción requerida por cada hilo (entrar o salir)
+- Comentarios ::
+  - Se ve que le trabajaron a desplegar /algo/ con la interrfaz, pero no queda
+    muy claro /qué es lo que ocurre/ a cada momento
+  - Nada le indica al usuario que la acción concluyó una vez que todos los hilos
+    terminan su trabajo.
+  - Aprovechen a los comentarios para describir la funcionalidad de un bloque;
+    línea por línea no aporta tanto a la comprensión. Comentar línea por línea
+    resulta casi inútil ante un lector medianamente versado en el lenguaje, y el
+    ámbito de lectura no alcanza a transmitir su intención general.
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  8.33 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |     5 |
+  |------------------------+-------|
+  | *Documentación*        |  8.33 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |     5 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          |  8.75 |
+  | Estructura             |    10 |
+  | Nomenclatura           |   7.5 |
+  |------------------------+-------|
+  | *Totales*              |  9.08 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Lopez Ernesto
+- Título :: La Casa de Toño
+- Documentación :: [[./LopezErnesto/Documentacion.pdf][Documentacion.pdf]], [[./LopezErnesto/LopezErnesto_Proyecto2.md][LopezErnesto_Proyecto2.md]]
+- Archivos :: [[./LopezErnesto/Proyecto2.py][Proyecto2.py]]
+- Interfaz :: 
+- Sincronización utilizada :: Apagador para indicar si se está /surtiendo/ al
+  restaurante o pueden entrar nuevos clientes. Mutex protegiendo varios accesos
+  a variables compartidas como el arreglo =mesa_familia=. Multiplex para
+  controlar el tamaño de grupos (mesas) en el restaurante.
+- Comentarios ::
+  - Envías tu documentación como PDF y como Markdown. ¿Cuál es la correcta? ¡Ojo
+    con incluir archivos de más que no hacen falta, y distraen! (supongo que es
+    el PDF, por extensión... ¿?)
+  - Estoy de acuerdo, ese =while= de la línea 145 no parece en lo más mínimo
+    necesario... no debería "girar" ni una segunda vez. No me hace sentido el
+    problema que reportas, pero... ???
+  - ¡Que los nombres de variables sean descriptivos! Cuando tienes un
+    /Multiplex/ y le pones de nombre =mutex=... estás llamando a que alguien no
+    lo comprenda 😉
+  - ¡Muy bien! Le metiste bastante complejidad al planteamiento. Un poquito
+    /barroco/ a ratos incluso 😉
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             | 10.00 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          |  8.75 |
+  | Estructura             |    10 |
+  | Nomenclatura           |   7.5 |
+  |------------------------+-------|
+  | *Totales*              |  9.75 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Martínez Villegas Pedro
+- Título :: Sistema de pedids en un restaurante con servicio a domicilio
+- Documentación :: [[./MartínezVillegas/PMV_PROYECTO2.pdf][PMV_PROYECTO2.pdf]]
+- Archivos :: [[./MartínezVillegas/Restaurante_Domi.py][Restaurante_Domi.py]]
+- Interfaz :: Tk para datos de pedido, bitácora a consola
+- Sincronización utilizada :: Colas (=Queue=) para ir recibiendo/atendiendo
+  pedidos conforme sea necesario. La documentación menciona mutexes (=Lock=),
+  pero no aparecen en el código 😼
+- Comentarios ::
+  - Tendrías que haber puesto por lo menos una /señalización/ para notificarle a
+    =repartidor()= que tiene trabajo por hacer. Así como lo tienes,
+    =asignar_pedidos_a_repartidores()= cae en espera activa (=while True: if not
+    self.pedidos_listos.empty(): (...)=), ¡lo cual es de muy mala educación!
+  - no resulta válido decir que «el uso de /print/ es seguro para operaciones de
+    escritura en la consola»: Nada garantiza que no tengas concurrencia (fuera
+    de que /no puede ocurrir/ en la situación que tienes planteada)
+  - Incluyes bastante /código muerto/, que no es llamado nunca (toda la
+    interacción vía línea de comando como sub-funciones de
+    =iniciar_simulacion()=)
+    - La documentación que incluyes /no corresponde/ con la implementación en
+      puntos subsantivos de la implementación.
+
+  |------------------------+------|
+  | *Requisitos*           | 5.00 |
+  | Cumplimiento           |    5 |
+  |------------------------+------|
+  | *Proyecto*             | 6.67 |
+  | Creatividad            |    5 |
+  | Complejidad            |  7.5 |
+  | Interfaz usuario       |  7.5 |
+  |------------------------+------|
+  | *Documentación*        | 8.33 |
+  | Expresa                |    5 |
+  | Entorno y dependencias |   10 |
+  | Comentarios            |   10 |
+  |------------------------+------|
+  | *Entrega*              | 6.67 |
+  | Historia en Git        |    5 |
+  | Directorio de proyecto |   10 |
+  | Código válido          |    5 |
+  |------------------------+------|
+  | *Legibilidad*          | 7.50 |
+  | Estructura             |    5 |
+  | Nomenclatura           |   10 |
+  |------------------------+------|
+  | *Totales*              | 6.83 |
+  |------------------------+------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Miranda Victor
+- Título :: Las pistas de aterrizaje del aeropuerto
+- Documentación :: [[./MirandaVictor/MirandaVictorP_2.pdf][MirandaVictorP_2.pdf]]
+- Archivos :: [[./MirandaVictor/MirandaVictorP_2.py][MirandaVictorP_2.py]]
+- Interfaz :: Bitácora a terminal
+- Sincronización utilizada :: Un mutex por pista, y una variable de condición
+  para las tres juntas. Colas con prioridad (=PriorityQueue=) para la torre de
+  control.
+- Comentarios ::
+  - ¡Pero qué claro se nota cuando uno de ustedes maneja mejor Pyhon que yo! 😉
+    Clases con herencia propiamente, asignación a variables anónimas,
+    construcciones de /azucar sintáctico/... ¡Bien!
+  - ¡jé! el tiempo de despegue/aterrizaje se simula con un =sleep()=, pero el
+    tiempo de viaje pasa sin pena de inmediato... ¡Ojalá así fuera el verdadero
+    transporte aéreo de larga distancia! 😉
+  - No puede realmente apreciarse el efecto de las prioridades. ¿Cómo podrías
+    /demostrar/ que se respeta una asignación basada en prioridades?
+    - En tu implementación, haces =self.aeropuerto.torre_control.put=
+      inmediatamente antes de =self.aeropuerto.torre_control.get=, las colas se
+      mantienen siempre vacías
+    - Si obligo a la demora agregando un =time.sleep(0.1)= entre ellas, surge un
+      error: dentro de cada nivel de prioridad, ¡un =Avion()= no es comparable
+      con otro!
+      #+begin_src text
+	Exception in thread Thread-10:
+	  File "/usr/lib/python3.11/queue.py", line 150, in put
+	TypeError: '<' not supported between instances of 'Avion' and 'Avion'
+	  File "/usr/lib/python3.11/threading.py", line 1045, in _bootstrap_inner
+	Traceback (most recent call last):
+	    self._put(item)
+      #+end_src
+    - Para eso, basta agregar la función que permita comparar dos objetos:
+      #+begin_src python
+	def __lt__(self, other):
+	    return self.avion_id < other.avion_id
+      #+end_src
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |   7.5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  8.33 |
+  | Historia en Git        |     5 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.50 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Moreno Edgar, Osorio Rodrigo
+- Título :: Aterrizajes en el aeropuerto
+- Documentación :: [[./MorenoEdgar-OsorioRodrigo/README.md][README.md]], [[./MorenoEdgar-OsorioRodrigo/img/Fin.png][Fin.png]], [[./MorenoEdgar-OsorioRodrigo/img/Inicio.png][Inicio.png]]
+- Archivos :: [[./MorenoEdgar-OsorioRodrigo/Proyecto2/Proyecto2.sln][Proyecto2.sln]], [[./MorenoEdgar-OsorioRodrigo/Proyecto2/SistopP2.Cli/Program.cs][Program.Wcs]], [[./MorenoEdgar-OsorioRodrigo/Proyecto2/SistopP2.Cli/SistopP2.Cli.csproj][SistopP2.Cli.csproj]]
+- Interfaz :: Bitácora a terminal, reportando por color por actor
+- Sincronización utilizada :: Mutexes (semáforos) representando las estructuras
+  rivales (andenes, pistas). Los diferentes procesos se esperan asíncronamente
+  mediante =async (...) await= para terminar de forma
+  coordinada. =TorreControl()= maneja comunicación sincronizada estructurada con
+  los actores =Avion()=.
+- Comentarios ::
+  - ¡Muy bien por usar formas de sincronización propias al entorno que
+    eligieron, distintas de las que yo enseño! 😃
+  - ... ¡Me cuesta trabajo leer C#! (pero bien que vale la pena leer algo nuevo
+    😉)
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |   7.5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.83 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Mota Carolina
+- Título :: Triage médico
+- Documentación :: [[./MotaCarolina/Triage.pdf][Triage.pdf]]
+- Archivos :: [[./MotaCarolina/triage.py][triage.py]]
+- Interfaz :: Bitácora a terminal, reportando por color/indentación por actor
+- Sincronización utilizada :: Mutex para proteger de acceso simultáneo al
+  =contador= de pacientes atendidos.
+- Comentarios ::
+  - Nos planteas una situación muy interesante, muy distinta de lo que estoy
+    habituado a ver en este punto. ¡Gracias! 😃
+  - ¡Recuerda que la palabra correcta para referirte a conjuntos de código que
+    tienes disponible es /bibliotecas/ (y no /librerías/)!
+  - De tu documentación: Cuando haces =dudas[(quien + 1) %
+    num_pacientes].acquire()= no dices /adquiere el =acquire=,/ pues resulta
+    absolutamente ambiguo. En todo caso, estás /adquiriendo el semáforo de
+    atención única del doctor/, o algo por el estilo
+    - Esto incluso te podría permitir ampliarlo a un /multiplex/ en caso de que
+      se contrataran doctores adicionales en el futuro 😉
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |    10 |
+  | Complejidad            |   7.5 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.83 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Nuñez Abraham
+- Título :: El restaurante de múltiples chefs
+- Documentación :: [[./NuñezAbraham/Documentación.pdf][Documentación.pdf]]
+- Archivos :: [[./NuñezAbraham/proyecto2_con_interfaz.py][proyecto2_con_interfaz.py]], [[./NuñezAbraham/proyecto2_sin_interfaz.py][proyecto2_sin_interfaz.py]]
+- Interfaz :: Bitácora a terminal. Implementación (incompleta / con error) de
+  bitácora a interfaz GUI basada en Tk.
+- Sincronización utilizada :: Cola para comunicar a los cocineros el total de
+  pedidos. Mutex para usar de forma exclusiva el /equipamiento/. Multiplex
+  limitando el número de meseros (¿es realmente necesario?). Variabe de
+  condición indicando cuando un plato está listo para ser entregado.
+- Comentarios ::
+  - ¡Bien por usar mecanismos que yo no cubrí a profundidad! (variables de
+    condición y colas!) 😃
+  - Entiendo la relevancia de la variable de clase,
+    =todos_pedidos_servidos=. Su uso esá (¡correctamente!) protegido por el
+    mutex =self.cond_plato_listo=. Sin embargo, una bandera /no es/ un mecanismo
+    de sincronización.
+  - La diferencia entre las dos versiones de tu programa es demasiado grande
+    como para que me meta de uno a encontrar la diferencia que hace la versión
+    cong GUI no funcione como debe. ¡Tiene que haber una divergencia en el
+    código a la hora de tomar o entregar algo!
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  9.17 |
+  | Creatividad            |   7.5 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  6.67 |
+  | Historia en Git        |     0 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.17 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Perez Jose
+- Título :: La tienda de videojuegos
+- Documentación :: [[./PerezJose/EJECUCIONES.pdf][EJECUCIONES.pdf]], [[./PerezJose/DESCRIPCIONDELPROBLEMA.org][DESCRIPCIONDELPROBLEMA.org]], [[./PerezJose/DOCUMENTACION.org][DOCUMENTACION.org]]
+- Archivos :: [[./PerezJose/CODIGO.py][CODIGO.py]],
+- Interfaz :: Bitácora a línea de comando, paginada en cortes cada 10 minutos
+  (virtuales) de operación de la tienda. Mutex para el uso de la terminal sin
+  sobreescribir entre “páginas”. Mutexes para el contador de lectura/escritura
+- Sincronización utilizada :: Cola (=Queue=) por taquilla para los clientes.
+- Comentarios ::
+  - ¡Muy buena narrativa! Me gustó mucho cómo escribiste tu
+    [[./PerezJose/DESCRIPCIONDELPROBLEMA.org][DESCRIPCIONDELPROBLEMA.org]]. Y si ves mis otros comentarios, una correcta
+    expresión escrita es un punto muy importante que le he marcado a varios de
+    los compañeros. ¡Felicidades! 😃
+  - La sincronización que manejas es sencilla, pero la /profundidad/ a que la
+    usas y la manera en que la integras con las abstracciones de tu programa es
+    muy buena. ¡Muy buen trabajo!
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             | 10.00 |
+  | Creatividad            |    10 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              | 10.00 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Puente Abdiel
+- Título :: Fábrica de automóviles
+- Documentación :: [[./PuenteAbdiel/Documento.pdf][Documento.pdf]], [[./PuenteAbdiel/ReadMe.txt][ReadMe.txt]]
+- Archivos :: [[./PuenteAbdiel/programa.py][programa.py]]
+- Interfaz :: GUI en Tk, lanzando las diferentes etapas de la construcción
+  por botones
+- Sincronización utilizada :: Mutexes (=Lock=) para evitar que una misma línea
+  de producción esté activa más de una vez al mismo tiempo. Señalización
+  (=Event=) de que cada línea terminó con su taera.
+- Comentarios ::
+  - La lógica de tu programa es correcta, pero /el manejo de Tk/ oculta los
+    efectos (positivos) de tu manejo de hilos 🙁
+    - Dado que tienes una dependencia directa de datos entre los elementos de tu
+      programa, si le solicito =Ensamblar Automóvil= sin haberle dado primero a
+      los otros tres, quedo en situación de bloqueo (la interfaz usuario queda
+      congelada, no puedo lanzar ningún ensamblaje previo)
+    - Si solicito =Mostrar Hilos Activos=, sólo me muestra a =MainThread=
+      (porque todos los demás, cuando corren, se /esconden/ por efectos del
+      mutex y del no-paralelismo de tu llamada al código de Tk)
+  - Manejas los conceptos básicos de la concurrencia, pero tu programa no logra
+    aprovecharlos (casi podríamos decir que sólo sufre de sus puntos negativos
+    🙁)
+    - ¡Pero me da gusto que lo hicieras con =Lock= y =Event=! Demuestra que
+      buscaste implementar con las primitivas específicas.
+
+  |------------------------+-------|
+  | *Requisitos*           |  5.00 |
+  | Cumplimiento           |     5 |
+  |------------------------+-------|
+  | *Proyecto*             |  8.33 |
+  | Creatividad            |     5 |
+  | Complejidad            |    10 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  8.33 |
+  | Historia en Git        |     5 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  8.33 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Rodríguez Santiago, Villaseñor Carlos
+- Título :: El sistema aeroportuario
+- Documentación :: [[./RodríguezSantiago-VillaseñorCarlos/Documentación.pdf][Documentación.pdf]]
+- Archivos :: [[./RodríguezSantiago-VillaseñorCarlos/controlAereo.py][controlAereo.py]]
+- Interfaz :: Tkinter
+- Sincronización utilizada :: Mutexes por pista de aterrizaje y lógica de
+  edificio terminal, y para proteger de accesos simultáneos a los contadores de
+  avion por tipo (nacional, internacional).
+- Comentarios ::
+  - Recuerden el comentario global que hice en la tarea anterior al código
+    repetido manualmente muchas veces: *DRY*. *Don't Repeat Yourself*.
+    - Resulta /mucho/ más fácil leer y comprender (¡y mantener, a futuro!) su
+      código si en vez de lo siguiente:
+      #+begin_src python
+	myLabelSalida1 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida1.grid(row=3,column=1)
+	myLabelSalida2 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida2.grid(row=4,column=1)
+	myLabelSalida3 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida3.grid(row=5,column=1)
+	myLabelSalida4 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida4.grid(row=6,column=1)
+	myLabelSalida5 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida5.grid(row=7,column=1)
+	myLabelSalida6 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida6.grid(row=3,column=5)
+	myLabelSalida7 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida7.grid(row=4,column=5)
+	myLabelSalida8 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida8.grid(row=5,column=5)
+	myLabelSalida9 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida9.grid(row=6,column=5)
+	myLabelSalida10 = Label(root, text=texto,bg = "black",fg = "white")
+	myLabelSalida10.grid(row=7,column=5)
+      #+end_src
+      tuviéramos lo siguiente:
+      #+begin_src python
+	# Ir acomodando en [renglon,columna] por renglones de 3 a 7, primero en columna
+	# 1, luego en columna 5
+	with mutex_matriz_datos:
+	    renglon = 3
+	    columna = 1
+	    for label_id in range(10):
+		myLabelsSalida[label_id] = Label(root, text=text, bg="black", fg="white")
+		myLabelsSalida[label_id].grid(row=renglon, column=columna)
+		renglon += 1
+		if renglon > 7:
+		    columna = 5
+		    renglon = 3
+      #+end_src
+      Sólo le agregué el =with mutex_matriz_datos=, que tendrían que definir
+      globalmente. Queda más claro y fácil de mantener, ¿no creen? 😉
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  7.50 |
+  | Creatividad            |   7.5 |
+  | Complejidad            |     5 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          |  8.75 |
+  | Estructura             |   7.5 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.25 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Vargas Adan
+- Título :: Las gorditas de harina y maiz de Torreón
+- Documentación :: [[./VargasAdan/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./VargasAdan/gorditas.py][gorditas.py]]
+- Interfaz :: GUI en Tk
+- Sincronización utilizada :: Mutex para la estructura con la lista de pedidos 
+- Comentarios ::
+  - Hay varios errores con tu código; intenté corregirlo, pero siempre que
+    aplastaba un /bug/ aparecía otro para morderme ☹
+    - No declaras como =global pedidosCocedor, pedidosCarbon, pedidosComal= en
+      =tomaOrdenes()=. Como el primer uso que haces es de asignación (aunque sea
+      con =+==), la lógica de Python indica que son variables no inicializadas
+      de ámbito local...
+    - Agregué la declaración =global=... Pero me topé con que, en la misma
+      función no puedes sumar (concatenar) una cadena con un valor
+      entero. Modifiqué tus ="Se pidieron " + pedido + " de cocedor"= por ="Se
+      pidieron %d de cocedor" % pedido=...
+    - En =cocinarCocedor()=, =cocinarCarbon()= y =cocinarComal()=, otros tres
+      casos de ámbito global no especificado. Los corregí...
+    - ...pero el código no funciona: Cae en bloqueo mutuo 🙁
+    - Estas últimas dos funciones me parece que terminan llamándose a sí mismas
+      /sin ser necesario/
+
+  |------------------------+-------|
+  | *Requisitos*           |  5.00 |
+  | Cumplimiento           |     5 |
+  |------------------------+-------|
+  | *Proyecto*             |  8.33 |
+  | Creatividad            |    10 |
+  | Complejidad            |     5 |
+  | Interfaz usuario       |    10 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              |  8.33 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |     5 |
+  |------------------------+-------|
+  | *Legibilidad*          |  7.50 |
+  | Estructura             |     5 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  7.83 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
+** Vazquez Sebastian
+- Título :: La sobreventa de Ticketmaster
+- Documentación :: [[./VazquezSebastian/Documentacion.pdf][Documentacion.pdf]], [[./VazquezSebastian/Ejecucion/CapturaEjecucionNo1.png][CapturaEjecucionNo1.png]], [[./VazquezSebastian/Ejecucion/CapturaEjecucionNo2.png][CapturaEjecucionNo2.png]], [[./VazquezSebastian/Ejecucion/CapturaEjecucionNo3.png][CapturaEjecucionNo3.png]], [[./VazquezSebastian/Ejecucion/CapturaEjecucionNo4.png][CapturaEjecucionNo4.png]]
+- Archivos :: [[./VazquezSebastian/proyecto02.py][proyecto02.py]]
+- Interfaz :: Bitácora de eventos a terminal
+- Sincronización utilizada :: Multiplex (=Semaphore(12)=) para acceso al sistema
+  multiusuario. Mutex (=Lock()=) para manejo de pago y de impresión.
+- Comentarios ::
+  - Caray, ¡qué situación tan triste y traumática elegiste para representar!
+    Pero sí, muy buena elección: Me cuesta entender por qué la sobreventa es un
+    problema real hoy en día, en que cualquier programador debería saber manejar
+    perfectamente estos asuntos 😠
+
+  |------------------------+-------|
+  | *Requisitos*           | 10.00 |
+  | Cumplimiento           |    10 |
+  |------------------------+-------|
+  | *Proyecto*             |  6.67 |
+  | Creatividad            |    10 |
+  | Complejidad            |     5 |
+  | Interfaz usuario       |     5 |
+  |------------------------+-------|
+  | *Documentación*        | 10.00 |
+  | Expresa                |    10 |
+  | Entorno y dependencias |    10 |
+  | Comentarios            |    10 |
+  |------------------------+-------|
+  | *Entrega*              | 10.00 |
+  | Historia en Git        |    10 |
+  | Directorio de proyecto |    10 |
+  | Código válido          |    10 |
+  |------------------------+-------|
+  | *Legibilidad*          | 10.00 |
+  | Estructura             |    10 |
+  | Nomenclatura           |    10 |
+  |------------------------+-------|
+  | *Totales*              |  9.33 |
+  |------------------------+-------|
+  #+TBLFM: @1$2=@2$2 ;%.2f::@3$2=(@4$2 + @5$2 + @6$2) / 3 ;%.2f::@7$2=(@8$2 + @9$2 + @10$2) / 3 ;%.2f::@11$2=(@12$2 + @13$2 + @14$2) / 3 ;%.2f::@15$2=(@16$2 + @17$2 ) / 2 ;%.2f::@18$2=(@1$2 + @3$2 + @7$2 + @11$2 + @15$2) / 5 ;%.2f
+
