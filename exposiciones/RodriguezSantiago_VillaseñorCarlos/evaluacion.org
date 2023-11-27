@@ -36,14 +36,6 @@ para el segundo.
 |              |   |   |   |   |    |  9.80 |
 #+TBLFM: @7$7=vmean(@2$7..@6$7); f-2
 
-
-|--------------+-------+------------+----------+-----------+--------|
-| Originalidad | Nivel | Relevancia | Claridad | Presencia |  Total |
-|--------------+-------+------------+----------+-----------+--------|
-|        9.867 |   9.6 |      9.867 |    9.733 |       9.6 | 9.7334 |
-|--------------+-------+------------+----------+-----------+--------|
-#+TBLFM: @2$6=vmean($1..$5)
-
 ** Comentarios de los compañeros
 
 Tu exposición recibió los siguientes comentarios anonimizados por
