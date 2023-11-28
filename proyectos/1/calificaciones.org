@@ -200,6 +200,17 @@ ingenieros hacia su vida profesional.
     siquiera cuando escribimos en ensamblador!
 - Calificación :: 9
 
+** Hernández Jonathan, Pérez Paola
+- Archivos :: [[./HernandezJonathan-PerezPaola/proyecto_fasciculo.pdf][proyecto_fasiculo.pdf]]
+- Comentarios ::
+  - No incluyeron en su entrega las indicaciones de cuál fascículo trabajaron 🙁
+    Me resulta útil para poder cotejar, comparar un poco el texto con lo
+    desarrollado, particularmente cuando no estoy seguro de lo que quieren decir
+    con algo.
+  - Tiene una escritura muy pulida. Y se nota que usaron referencias más allá de
+    lo que les solicité. ¡Muy bien!
+- Calificación :: 9
+
 ** Lara Aguilar, Martinez Villegas
 - Archivos :: [[./LaraAguilar-MartinezVillegas/LaraAguilar-MartinezVillegaz-Proyecto1.pdf][LaraAguilar-MartinezVillegaz-Proyecto1.pdf]]
 - Comentarios ::
