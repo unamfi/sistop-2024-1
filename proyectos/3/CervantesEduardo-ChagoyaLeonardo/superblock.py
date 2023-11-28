@@ -26,7 +26,7 @@ class superblock():
     def __readlittlendianNumbers(dirfile, start, end):
         dirfile.seek(start) 
         tmp  = struct.unpack('<I', dirfile.read((end - start)))
-        return tmp
+        return tmp[0]
 
 #getters           
     def get_name(self):
@@ -53,7 +53,7 @@ class superblock():
     def get_volactualSize(self):
         return self.__volactualSize
 #setters
-#Insertar setters que modifiquen el directorio y el espacio en el volumen cada que se mueven o eliminan archivos
+#Insertar setters que modifiquen el directorio y el espacio en el area de datos cada que se mueven o eliminan archivos
 
 #Metodos para operaciones y archivos
     def newFile(self, fileSize):
