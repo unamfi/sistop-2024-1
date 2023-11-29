@@ -1,11 +1,11 @@
-#+title: Proyecto 2: (Micro) sistema de archivos
+#+title: Proyecto 3: (Micro) sistema de archivos
 
 #+BEGIN_SRC yaml
 Planteamiento: 2023.11.14
-Entrega: 2023.11.23
+Entrega: 2023.11.24
 #+END_SRC
 
-# ¡Las [[./calificaciones.org][calificaciones y comentarios]] ya están disponibles!
+¡Las [[./calificaciones.org][calificaciones y comentarios]] ya están disponibles!
 
 ** Descripción del proyecto
 

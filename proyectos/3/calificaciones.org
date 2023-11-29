@@ -1,0 +1,690 @@
+* Proyecto 3 • Calificaciones y comentarios
+
+** Becerril Erick, Galvan Ricardo
+- Documentación :: [[./BecerrilErick-GalvanRicardo/Documentación.pdf][Documentación.pdf]]
+- Archivos :: [[./BecerrilErick-GalvanRicardo/fileSystemBEGR.py][fileSystemBEGR.py]]
+- Comentarios ::
+  - ¡Muy bueno obtener también cadenas de datos con =struct.unpack("<s")=
+    ¿Creerían que no se me había ocurrido? 😃
+  - Definen /en duro/ el nombre del archivo donde tienen a la imagen en su
+    computadora — ="/Users/PC/Desktop/SO/Proyecto3/fiunamfs.img"=
+    - No se permite al usuario especificar otro lugar, sólo editando el código
+      fuente
+    - Es una /ruta absoluta/, ni siquiera relativa al directorio actual
+    - Punto fuerte en contra de la intefaz usuario 🙁
+  - Hay algunos puntos de la implementación que resultan en imágenes
+    incorrectas/corruptas (p.ej. la creación de un archivo nuevo en
+    =FiUnamFS=) o la desfragmentación rompiéndose con un error
+    - Marco las funciones como entregadas, pero el código no es /del todo/
+      válido.
+- Calificación ::
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  8.33 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  9.17 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |   7.5 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.25 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Ceniceros Mariaca, Ramirez Martinez
+- Documentación :: [[./CenicerosMariaca-RamirezMartinez/DocumentacionProyecto3.pdf][DocumentacionProyecto3.pdf]]
+- Archivos :: [[./CenicerosMariaca-RamirezMartinez/proyecto.py][proyecto.py]]
+- Comentarios ::
+  - ¡Ojo! En español se dice /biblioteca/, no /librería/.
+  - ¡Al desfragmentar el sistema de archivos hay pérdida de información!
+    #+begin_src text
+      ----MENÚ FIUNAMFS----
+      ,*** 1. LISTAR ARCHIVOS ***
+      ,*** 2. COPIAR ARCHIVO DE FiUnamFs AL SISTEMA ***
+      ,*** 3. COPIAR ARCHIVO DEL SISTEMA A FiUnamFS ***
+      ,*** 4. ELIMINAR ARCHIVO ***
+      ,*** 5. DESFRAGMENTAR ***
+      ,*** 6. MOSTRAR INFORMACION DEL SUPERBLOQUE ***
+      ,*** 7. SALIR ***
+      SELECCIONE UNA OPCION: 1
+      ARCHIVO: README.org, TAMAÑO: 31209, CLUSTER INICIAL: 6, FECHA CREACION: 20231116130339, FECHA MODIFICACION: 20231116130339
+      ARCHIVO: extra.txt, TAMAÑO: 100663296, CLUSTER INICIAL: 838860800, FECHA CREACION: 02311291557432, FECHA MODIFICACION: 0231129155743
+      ARCHIVO: logo.png, TAMAÑO: 170192, CLUSTER INICIAL: 21, FECHA CREACION: 20231116130339, FECHA MODIFICACION: 20231116130339
+      ARCHIVO: mensaje.jpg, TAMAÑO: 102657, CLUSTER INICIAL: 154, FECHA CREACION: 20231116130339, FECHA MODIFICACION: 20231116130339
+      ----MENÚ FIUNAMFS----
+      ,*** 1. LISTAR ARCHIVOS ***
+      ,*** 2. COPIAR ARCHIVO DE FiUnamFs AL SISTEMA ***
+      ,*** 3. COPIAR ARCHIVO DEL SISTEMA A FiUnamFS ***
+      ,*** 4. ELIMINAR ARCHIVO ***
+      ,*** 5. DESFRAGMENTAR ***
+      ,*** 6. MOSTRAR INFORMACION DEL SUPERBLOQUE ***
+      ,*** 7. SALIR ***
+      SELECCIONE UNA OPCION: 5
+      Iniciando desfragmentación...
+      Desfragmentación completada con éxito.
+      ----MENÚ FIUNAMFS----
+      ,*** 1. LISTAR ARCHIVOS ***
+      ,*** 2. COPIAR ARCHIVO DE FiUnamFs AL SISTEMA ***
+      ,*** 3. COPIAR ARCHIVO DEL SISTEMA A FiUnamFS ***
+      ,*** 4. ELIMINAR ARCHIVO ***
+      ,*** 5. DESFRAGMENTAR ***
+      ,*** 6. MOSTRAR INFORMACION DEL SUPERBLOQUE ***
+      ,*** 7. SALIR ***
+      SELECCIONE UNA OPCION: 1
+      ARCHIVO: README.org, TAMAÑO: 31209, CLUSTER INICIAL: 6, FECHA CREACION: 20231116130339, FECHA MODIFICACION: 20231116130339
+      ARCHIVO: logo.png, TAMAÑO: 170192, CLUSTER INICIAL: 21, FECHA CREACION: 20231116130339, FECHA MODIFICACION: 20231116130339
+      ----MENÚ FIUNAMFS----
+      ,*** 1. LISTAR ARCHIVOS ***
+      ,*** 2. COPIAR ARCHIVO DE FiUnamFs AL SISTEMA ***
+      ,*** 3. COPIAR ARCHIVO DEL SISTEMA A FiUnamFS ***
+      ,*** 4. ELIMINAR ARCHIVO ***
+      ,*** 5. DESFRAGMENTAR ***
+      ,*** 6. MOSTRAR INFORMACION DEL SUPERBLOQUE ***
+      ,*** 7. SALIR ***
+      SELECCIONE UNA OPCION: 7
+    #+end_src
+    - Es un error menor en la función más compleja. No los penalizo, pero tengo
+      que hacérselos ver.
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 | 10.00 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 | 10.00 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 |  8.33 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.67 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Hernandez Jonathan, Perez Paola
+- Documentación :: [[./HernandezJonathan-PerezPaola/README.md][README.md]], [[./HernandezJonathan-PerezPaola/proyecto3_demo.pdf][proyecto3_demo.pdf]], [[./HernandezJonathan-PerezPaola/proyecto3_errores.pdf][proyecto3_errores.pdf]], [[./HernandezJonathan-PerezPaola/proyecto3_final.pdf][proyecto3_final.pdf]]
+- Archivos :: [[./HernandezJonathan-PerezPaola/microsistema_final.py][microsistema_final.py]], [[./HernandezJonathan-PerezPaola/microsistema_v1.py][microsistema_v1.py]], [[./HernandezJonathan-PerezPaola/microsistema_v2.py][microsistema_v2.py]], [[./HernandezJonathan-PerezPaola/microsistema_v3.py][microsistema_v3.py]], [[./HernandezJonathan-PerezPaola/microsistema_v4.py][microsistema_v4.py]]
+- Comentarios ::
+  - ¡Están usando Git! Quítense ya de esa obsoleta idea de guardar por separado
+    archivitos preliminares =_v1=, =_v2=, =_v3=, =final=... ¡El gestión de
+    versiones se los /regala/ el repositorio 😉
+  - ¡Guau! Iba a decir lo mismo que en el inciso anterior respecto a la
+    documentación. ¡Pero son archivos independientes, con buen desarrollo
+    específico a diferentes puntos de evaluación! 😮
+  - Ummm, la función =desfragmentar_archivo()= no hace desfragmentación
+    - Sólo copia el contenido de un archivo /fuera del FiUnamFS/ a otro
+    - Y no es llamado desde ningún punto del código. Me permito hacer de cuenta
+      que no está ahí 😉
+  - Al crear un nuevo archivo en el FS, mantiene al caracter de tipo de archivo
+    como =/= (vacío), y tanto tamaño como cluster inicial quedan en 0:
+    #+begin_src text
+      ---1. Listar de contenido de FIUNAMFS---
+      ---2. Copiar archivo de FIUNAMFS a PC---
+      ---3. Copiar archivo de PC a FIUNAMFS---
+      ---4. Eliminar archivo de FiUnamFS------
+      ---5. Salir del Programa----------------
+      ---|Ingresa una opción: 3
+      ---|Ingrese nombre del archivo: extra.txt
+      Tamaño:  7  caracteres.
+      Archivo copiado.
+      Opciones: 
+      ---1. Listar de contenido de FIUNAMFS---
+      ---2. Copiar archivo de FIUNAMFS a PC---
+      ---3. Copiar archivo de PC a FIUNAMFS---
+      ---4. Eliminar archivo de FiUnamFS------
+      ---5. Salir del Programa----------------
+      ---|Ingresa una opción: 1
+      Archivo: README.org     Peso: 6 Cluster inicial: 858927154
+      Archivo: extra.txt Peso: 0 Cluster inicial: 858927154
+      Archivo: logo.png       Peso: 21 Cluster inicial: 858927154
+      (...)
+      ---|Ingresa una opción: 5
+      ---|¡Hasta luego! Este es el Proyecto 3 de Sistemas Operativos.
+      ---|Realizado por:
+      ---|Jonathan Emmanuel Hernández Ortiz.
+      ---|Paola Celina de Jesus Pérez Avin.
+      $ hd fiunamfs.img|grep extra.txt -A3
+      00000840  2f 2d 65 78 74 72 61 2e  74 78 74 20 20 20 20 20  |/-extra.txt     |
+      00000850  20 00 00 00 00 00 00 00  32 30 32 33 31 31 32 39  | .......20231129|
+      00000860  31 36 31 37 35 34 30 32  30 32 33 31 31 32 39 31  |1617540202311291|
+      00000870  36 31 37 35 34 00 00 00  00 00 00 00 00 00 00 00  |61754...........|
+    #+end_src
+  - Tampoco me funcionó copiar un archivo del FS hacia afuera — marca errores en
+    tiempo de ejecución.
+    - La lógica que implementan se ve mayormente bien; confío en que son errores
+      /menores/, pero... son varios 🙁
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  6.67 |
+  | Cumplimiento                              |      |     5 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  8.33 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |     5 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 |  8.75 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |   7.5 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  8.25 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Hernandez Samuel, Vazquez Sebastian
+- Documentación :: [[./HernandezSamuel-VazquezSebastian/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./HernandezSamuel-VazquezSebastian/proyecto3.py][proyecto3.py]]
+- Comentarios ::
+  - Los archivos binarios autogenerados (como =proyecto3.cpython-39.pyc=) deben
+    ser declarados en tu =.gitignore=, no deberían ser parte de la entrega
+  - ¡me robaron mi archivo! Verifiquen bien cuando copian/mueven archivos: Creo
+    que el =fiunamfs.img= tendrían que haberlo /copiado/ de mi versión, y
+    también agregado al =.gitignore= (lo /renombraron ante Git/, con lo que lo
+    movieron de donde los demás alumnos podrían esperar encontrarlo).
+  - Les recomiendo mantener un /estilo/ más consistente a lo largo de su
+    código. ¿A qué me refiero? A que al leerlo, mantengan las mismas
+    /convenciones y usos generales/.
+    - Por ejemplo: yo he hecho un par de comentarios a algunos compañeros en
+      otras entregas que yo prefiero cuando los comentarios /anteceden/ al
+      objeto al que describen, como cuando crean la función =listado()=:
+      #+begin_src python
+	#Funcion que lista el contenido del directorio, ignorando las entradas vacias
+	def listado():
+	  # (...)
+      #+end_src
+    - Sin embargo, también usan el /otro estilo/, en que los comentarios /siguen
+      en la misma línea/ a la definición:
+      #+begin_src python
+	def buscar(var):#Esta funcion se encarga de buscar un archivo en especifico del directorio y devolver sus datos mas importantes para trabajarlos
+	  # (...)
+      #+end_src
+    - Para una persona que se quiere /sumar a un proyecto existente/, o para
+      realizar un desarrollo entre varios, resulta importante mantener una serie
+      de convenciones estable.
+  - Como es de esperarse, hay correcciones menores que hacer; algunos mensajes
+    que el usuario debería ver, y se reportan únicamente a consola. ¡Pero
+    lograron una muy buena interfaz! 👍👍👍
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 | 10.00 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 | 10.00 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 |  8.75 |
+  | Estructura                                |      |   7.5 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.75 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Jimenez Patricia
+- Documentación :: [[./JimenezPatricia/Documento_P3.pdf][Documento_P3.pdf]]
+- Archivos :: [[./JimenezPatricia/proyecto_3.py][proyecto_3.py]]
+- Comentarios ::
+  - Muy bueno que abstraigas/separes las funciones de acceso a datos
+    (codificación y decodificación), separándola de la lógica de almacenamiento
+    😃
+  - ¿Por qué tienes dos funciones =borraEnDirectorio()= y =borraEnDirectorio2()=
+    tan parecidas, desde el nombre hasta la implementación?
+  - Me parece ingeniosa tu función =agregaEspacios(nombre)=, pero:
+    - ¿Qué pasa si recibe un =nombre > 14=?
+    - Creo que, literalmente, le "das demasiadas vueltas"... ¡Recuerda tus
+      cadenas de formato! La instrucción =nombre = "%14s" % nombre= tiene el
+      mismo efecto que la función que escribiste, y probablemente sea más
+      eficiente.
+  - Prácticamente todas las funciones están /casi bien/ implementadas, pero
+    tienen errores que hacen que fallen y el programa /se muera/ 🙁
+    - No son difíciles de corregir... ¡pero no me toca a mí corregirlas!
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  7.50 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |   7.5 |
+  | Interfaz usuario                          |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  8.33 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |     5 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 |  8.75 |
+  | Estructura                                |      |   7.5 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  8.50 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Lara Aguilar, Zuñiga Reyes
+- Documentación :: [[./LaraAguilar-ZuñigaReyes/Proyecto3_SO.pdf][Proyecto3_SO.pdf]]
+- Archivos :: [[./LaraAguilar-ZuñigaReyes/Proyecto3.py][Proyecto3.py]]
+- Comentarios ::
+  - Muy bueno que abstraigan/separen las funciones de acceso a datos
+    (codificación y decodificación), separándola de la lógica de almacenamiento
+    😃
+  - Hay errores menores (p.ej. =desfragmentarSistema()= frecuentemente se
+    muere), pero me parece que la lógica implementada es /mayormente/
+    correcta. ¡Lo doy por bueno!
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 | 10.00 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 | 10.00 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 |  8.33 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.67 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Lopez Ernesto
+- Documentación :: [[./LopezErnesto/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./LopezErnesto/proyecto3.py][proyecto3.py]]
+- Comentarios ::
+  - ¡Excelente documentación!
+  - Muy bueno que abstraigan/separen las funciones de acceso a datos
+    (codificación y decodificación), separándola de la lógica de almacenamiento
+    😃
+  - Me cuesta un poco de trabajo ubicar, sin embargo, dónde debería encontrar
+    cada pedazo de funcionalidad. Imagina que en algunos meses tienes que dar
+    mantenimiento a tu código, y ves que definiste funciones llamadas
+    =rescribirDirectorio()=, =escribirDirectorio()=, =escribirInfo()=,
+    =eliminarDirectorio()=, =eliminarInfo()=, =mostrarInformacionSistema()=,
+    =guardarInformacionArchivos()=...
+    - Ninguna de estas tiene comentarios... Tienes que entrar a leer el código
+      para encontrar qué es lo que hace cada una, y por qué tienen nombres tan
+      similares
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  9.17 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |   7.5 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  8.33 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 |  8.75 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |   7.5 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.00 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Miranda Victor
+- Documentación :: [[./MirandaVictor/MirandaVictorP3.pdf][MirandaVictorP3.pdf]]
+- Archivos :: [[./MirandaVictor/MirandaVictor_P3_E.py][MirandaVictor_P3_E.py]]
+- Comentarios ::
+  - Me gusta, tu código es probablemente el código más sencillo que he visto
+    hasta el momento (¡y eso es muy bueno!)
+    - Se mantiene /decentemente parametrizable/ teniendo los valores que les di
+      especificados como parte del texto
+    - Aunque no los lee del superbloque... ¡pero está bien! La especificación
+      no exige esa flexibilidad 😉
+  - Queda, sin embargo, como comentario orientado a la /mantenibilidad/ de tu
+    código: Dado que hay fragmentos que repites textualmente en casi cada
+    función con muy pocos cambios (por ejemplo, desde el =with open(...)= hasta
+    la detección de tipo de archivo). Recuerda: /Don't Repeat Yourself/ (/DRY/).
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  9.17 |
+  | Cumplimiento                              |      |   7.5 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  9.17 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |   7.5 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.50 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Moreno Edgar, Robles Alan
+- Documentación :: [[./MorenoEdgar-RoblesAlan/README.md][README.md]]
+- Archivos :: [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI.Tests/CopyFileSystemTests.cs][CopyFileSystemTests.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI.Tests/FileSystemFI.Tests.csproj][FileSystemFI.Tests.csproj]],
+  [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI.Tests/ReadFileSystemTests.cs][ReadFileSystemTests.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI.Tests/Usings.cs][Usings.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI.Tests/WriteFileSystemTests.cs][WriteFileSystemTests.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI.sln][FileSystemFI.sln]],
+  [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/App.axaml][App.axaml]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/App.axaml.cs][App.axaml.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Extensions/BinaryReaderExtensions.cs][BinaryReaderExtensions.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Extensions/BinaryWriterExtensions.cs][BinaryWriterExtensions.cs]],
+  [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/FileSystemFI.csproj][FileSystemFI.csproj]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Models/FiFile.cs][FiFile.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Models/FiFileSystemMgr.cs][FiFileSystemMgr.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Program.cs][Program.cs]],
+  [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Services/FileService.cs][FileService.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Services/IFileService.cs][IFileService.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/ViewLocator.cs][ViewLocator.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/ViewModels/MainWindowViewModel.cs][MainWindowViewModel.cs]],
+  [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/ViewModels/ViewModelBase.cs][ViewModelBase.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Views/AboutWindow.axaml][AboutWindow.axaml]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Views/AboutWindow.axaml.cs][AboutWindow.axaml.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Views/MainWindow.axaml][MainWindow.axaml]],
+  [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/Views/MainWindow.axaml.cs][MainWindow.axaml.cs]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/FileSystemFI/app.manifest][app.manifest]], [[./MorenoEdgar-RoblesAlan/FileSystemFI/global.json][global.json]]
+- Comentarios ::
+  - Muy buena la documentación. Lo que me gusta de sus proyectos es que con C#
+    siempre me llevan a aprender distintas maneras de hacer las cosas 😉
+    - Lo malo es que me obligan a pensar... ¡pero no puede verse como algo malo!
+      😉
+  - Sí tengo que hacerles notar que el código que me envían incluye varios
+    archivos autogenerados que no forman parte de la entrega, que no son
+    escritos por ustedes, y que /creo/ que no deberían formar parte de la
+    entrega:
+    - Varias declaraciones en los =*.axaml= que son mayormente autogeneradas
+    - Declaración del entorno de desarrollo en =global.json=
+    - La manifestación de versiones de Windows donde probaron el programa en =app.manifest=
+    - El logotipo de Avalonia
+    - Declaración del proyecto en =*.csproj=
+    - Incluso los archivos de pruebas. ¡Genial que tengan la sana costumbre de
+      usarlos! Sin embargo, no corresponden al ámbito de lo que tengo que
+      calificar... ¿Me equivoco? :-)
+  - La lógica y legibilidad de su código (mayormente me enfoqué en la presente
+    en el archivo =FiFilesSystemMgr.cs= está clara y fácil de leer. ¡Muy bien!
+    - Aunque... Un poquito de comentarios describiendo dónde estamos parados y
+      por qué nunca le dolió a nadie 😉
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  8.33 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |     5 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  2.50 |
+  | Directorio de proyecto                    |      |       |
+  | Código válido                             |      |       |
+  | Comentarios                               |      |   7.5 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 |  8.75 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |   7.5 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  7.00 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Mota Carolina
+- Documentación :: [[./MotaCarolina/DocProyecto.pdf][DocProyecto.pdf]]
+- Archivos :: [[./MotaCarolina/proyecto.py][proyecto.py]]
+  - Puedes copiar mi objeto de pruebas =fiunamfs.img= a tu directorio si te
+    facilita el desarrollo. Pero correspondería agregarlo a tu =.gitignore= para
+    evitar duplicaciones, y para poder modificarlo tranquilamente.
+- Comentarios ::
+  - La documentación repite el planteamiento del problema que yo les hice. Eso
+    no es problema (muchos lo entregan así, por alguna razón que me /escapa/),
+    pero el límite entre mi texto y el tuyo no es claro. Tendrías que separar en
+    secciones  o algo por el estilo.
+  - Implementación incompleta 🙁 Cuenta con la función =showDir()=, pero las
+    demás operaciones solicitadas no forman parte del programa.
+    - En la documentacion no mencionas que no tengas la funcionalidad completa
+      implementada.
+    - ...Tampoco en el menú que le presentas al usuario hay indicación alguna de
+      que estoy pidiendo algo que sencillamente /no está ahí/
+  - Los comentarios deberían ayudarte a comprender la función de lo que
+    describen, no dar información obvia como repetir el nombre del objeto que
+    están definiendo. Por ejemplo:
+    #+begin_src python
+      #Inicializa el mapeo
+      def initMap():
+	  # (...)
+      #Actualiza la informacion en el mapa a partir de la lista de archivos 
+      def updateMap():
+	  # (...)
+      #Definimos getData y lo ponemos para imprimirlo
+      def getData(posicion):
+	  # (...)
+    #+end_src
+    Estos comentarios no contribuyen a la legibilidad de tu programa. ¿Me
+    explico?
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  5.00 |
+  | Cumplimiento                              |      |     0 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  8.33 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 |  8.33 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  7.67 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Perez Jose
+- Documentación :: [[./PerezJose/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./PerezJose/sistema_de_archivos.cpp][sistema_de_archivos.cpp]]
+- Comentarios ::
+  - =copiarHaciaFiUnamFS()= y =eliminarDesdeFiUnamFS()= no estan implementados.
+    - La documentación no menciona que no estén implementados, simplemente las
+      opciones no tienen nada detrás
+  - Casi todas las funciones provistas me llevan a un =Segmentation fault= y se
+    mueren 🙁
+    - El código se ve, leyéndolo, a ojo /mayormente correcto/... Pero no me fue
+      posible ejecutarlo y probarlo lo suficiente🙁
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  6.67 |
+  | Cumplimiento                              |      |     5 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  8.33 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |     5 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 |  9.17 |
+  | Documentación externa                     |      |   7.5 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  8.33 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Puente Abdiel
+- Documentación :: [[./PuenteAbdiel/Documento.pdf][Documento.pdf]], [[./PuenteAbdiel/ReadMe.txt][ReadMe.txt]]
+- Archivos :: [[./PuenteAbdiel/programa.py][programa.py]]
+- Comentarios ::
+  - Documentación: Cuando te piden el desarrollo de un proyecto que incluye
+    documentación, así como algunos puntos específicos a incluir en esta, y lo
+    único que entregas es un texto que copia y pega algunas de las definiciones
+    de función... No puedes decir que constituya propiamente documentaicón de tu
+    programa.
+    - No da una imagen profesional tuya.
+  - Falta implementar varias de las funciones requeridas
+    - Copiar archivos hacia FiUnamFS, eliminar archivos, defragmentar
+    - ...y las funciones implementadas es necesrio corregirlas, porque no están
+      funcionando bien 🙁
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  8.33 |
+  | Cumplimiento                              |      |     5 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 |  8.33 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |     5 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 |  6.67 |
+  | Documentación externa                     |      |     5 |
+  | Entorno y dependencias                    |      |     5 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  8.33 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
+** Rodríguez Santiago, Villaseñor Carlos
+- Documentación :: [[./RodríguezSantiago-VillaseñorCarlos/Proyecto03_SO.pdf][Proyecto03_SO.pdf]]
+- Archivos :: [[./RodríguezSantiago-VillaseñorCarlos/sistema_de_archivos.py][sistema_de_archivos.py]]
+- Comentarios ::
+  - Buena estructura en tu documentación, bien orientada a un desarrollo
+    técnico.
+    - Pero la intefaz de usuario es muy /dura/, /obscurece/ la información en
+      vez de /ilustrarla/.
+- Calificación :: 
+  | Rubro                                     | Peso | Valor |
+  |-------------------------------------------+------+-------|
+  | *Proyecto*                                |  0.3 |  8.33 |
+  | Cumplimiento                              |      |    10 |
+  | Claridad                                  |      |    10 |
+  | Interfaz usuario                          |      |     5 |
+  |-------------------------------------------+------+-------|
+  | *Desarrollo*                              |  0.3 | 10.00 |
+  | Directorio de proyecto                    |      |    10 |
+  | Código válido                             |      |    10 |
+  | Comentarios                               |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Legibilidad*                             |  0.2 | 10.00 |
+  | Estructura                                |      |    10 |
+  | Nomenclatura                              |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Entrega*                                 |  0.2 | 10.00 |
+  | Documentación externa                     |      |    10 |
+  | Entorno y dependencias                    |      |    10 |
+  | Historia en Git                           |      |    10 |
+  |-------------------------------------------+------+-------|
+  | *Extra1* Directorios jerárquicos          |    1 |     0 |
+  | *Extra2* Sistema de archivos con bitácora |    1 |     0 |
+  |-------------------------------------------+------+-------|
+  | *Total*                                   |      |  9.50 |
+  |-------------------------------------------+------+-------|
+  #+TBLFM: @2$3=vmean(@3$3, @4$3, @5$3); %.2f::@6$3=vmean(@7$3, @8$3, @9$3); %.2f::@10$3=vmean(@11$3, @12$3); %.2f::@13$3=vmean(@14$3, @15$3, @16$3); %.2f::@19$3=( @2$3 * @2$2 ) + ( @6$3 * @6$2 ) + ( @10$3 * @10$2 ) + ( @13$3 * @13$2 ) + ( @17$3 * @17$2 ) + ( @18$3 * @18$2 ) ;%.2f
+
