@@ -481,16 +481,30 @@
 - Comentarios ::
   - Entregado a tiempo; lo recibo extemporáneo por confusión con el directorio
     de entrega
-- Calificación :: 
+  - Agradezco la franqueza con que me indicas que resolviste el problema con la
+    ayuda de ChatGPT
+    - Sin embargo... No me queda claro que /tú hayas logrado una solución/, ni
+      que hayas comprendido el código más allá de copiarlo
+    - ...ni de que la solución sea verdaeramente correcta. Revisa la
+      ejecución. ¡Los gatos se comen a decenas de ratones, no intentan
+      evitarlos! ¡Y el que se coman a un ratón no /lo saca del juego/!
+    - Te doy nota de /entregado en tiempo, pero no puedo darte más que eso 🙁
+- Calificación :: 5
 
 ** Miranda Víctor
 - Documentación :: [[./MirandaVictor/MirandaVictor_Tarea1.pdf][MirandaVictor_Tarea1.pdf]]
-- Archivos :: [[./MirandaVictorT1.cpp][MirandaVictorT1.cpp]]
+- Archivos :: [[./MirandaVictor/MirandaVictorT1.cpp][MirandaVictorT1.cpp]]
 - Problema resuelto :: Gatos y ratones
 - Comentarios ::
   - Entregado a tiempo; lo recibo extemporáneo por confusión con el directorio
     de entrega
-- Calificación :: 
+  - ¡Muy bien por el uso de variables de condición!
+    - Sin embargo, =catSeenMouse= se mantiene siempre falso (nunca lo haces
+      =true=). ¿Es posible acaso que un gato atrape a un ratón? Me parece que no
+    - Probé subirlo durante el tiempo de vida de =cat()=, y el pobre ratoncito
+      era capturado el 100% de las ocasiones 🙁
+    - Revisen las soluciones propuestas por sus compañeros...
+- Calificación :: 7
 
 ** Moreno Edgar, Osorio Rodrigo
 - Documentación :: [[./MorenoEdgar-OsorioRodrigo/README.md][README.md]], [[./MorenoEdgar-OsorioRodrigo/img/fin_programa.png][fin_programa.png]], [[./MorenoEdgar-OsorioRodrigo/img/inicio_programa.png][inicio_programa.png]]
