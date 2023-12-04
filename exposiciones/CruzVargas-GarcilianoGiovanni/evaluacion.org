@@ -1,0 +1,62 @@
+#+title: Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* GNU HURD
+
+- Tema presentado por :: Emilio Cruz y Giovanni Garciliano
+- Calificación global :: Por favor revisen más adelante para ver de
+  dónde vienen todos estos números 😉
+
+|------------------------+-------+--------------------+------+---------|
+| Evaluación  compañeros | Valor | Evaluación docente | Peso | *Total* |
+|------------------------+-------+--------------------+------+---------|
+|                   9.66 |   0.3 |               8.13 |  0.7 |    8.59 |
+|------------------------+-------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 0 | 0 | 6 |    10 |
+| Nivel        | 0 | 0 | 0 | 1 | 5 |  9.66 |
+| Relevancia   | 0 | 0 | 0 | 1 | 5 |  9.66 |
+| Claridad     | 0 | 0 | 0 | 1 | 5 |  9.66 |
+| Presencia    | 0 | 0 | 0 | 2 | 4 |  9.33 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  9.66 |
+#+TBLFM: @7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Tu exposición recibió los siguientes comentarios anonimizados por
+parte de tus compañeros:
+
+- Interesante mostrar un SO que en lo personal no conocía
+- Excelente exposición de mis compañeros
+- Muy buena exposicion
+
+* Evaluación por parte del docente
+
+| *Aspecto*              | *Peso* | *Evaluación* | *Puntos* |
+|------------------------+--------+--------------+----------|
+| Originalidad del tema  |    0.1 |           10 |       1. |
+| Material desarrollado  |    0.2 |          7.5 |      1.5 |
+| Contenido              |    0.2 |          7.5 |      1.5 |
+| Fuentes bibliográficas |    0.1 |            5 |      0.5 |
+| Uso del tiempo         |    0.1 |           10 |       1. |
+| Dominio del tema       |   0.15 |           10 |      1.5 |
+| Presencia              |   0.15 |          7.5 |    1.125 |
+|------------------------+--------+--------------+----------|
+| *Global*               |        |              |     8.13 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
