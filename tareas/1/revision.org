@@ -558,6 +558,24 @@
       la invención de los semáforos, por Dekker.
 - Calificación :: 10
 
+
+** Puente Abdiel
+- Archivos :: [[./AbdielPuente/gyr.py][gyr.py]]
+- Problema resuelto :: Gatos y ratones
+- Comentarios ::
+  - Tarea resuelta en tiempo, pero el /pull request/ no fue enviado a tiempo. La
+    doy por buena.
+  - ¡Bien por usar variables de condición! (aunque me parece que el uso correcto
+    tendría que seguir una lógica un poco distinto)
+    - Para usarla, los =gato()= deberían llevar el conteo de cuántos =gato()=
+      quedan en ejecución, y sólo al salir el último, mandar al =notify()=
+    - O el =raton()= podría verificar si ya salió el último
+    - implementando una lógica similar aunque más simple a la del /patrón
+      apagador/
+  - No acompañas tu código de documentación ni comentarios 🙁
+  - Me parece, como sea, que cumples correctamente con la consigna 😃
+- Calificación :: 7
+
 ** Robles Alan
 - Documentación :: [[./RoblesAlan/README.md][README.md]], [[./RoblesAlan/img/1.-ImportacionDeBibliotecas.png][1.-ImportacionDeBibliotecas.png]], [[./RoblesAlan/img/2.-DefinicionDeVariables.png][2.-DefinicionDeVariables.png]], [[./RoblesAlan/img/3.-InicializacionDeSemaforos.png][3.-InicializacionDeSemaforos.png]], [[./RoblesAlan/img/4.-DefinicionFuncionGatos.png][4.-DefinicionFuncionGatos.png]], [[./RoblesAlan/img/5.-DefinicionFuncionRatones.png][5.-DefinicionFuncionRatones.png]], [[./RoblesAlan/img/6.-CreacionDeHilos.png][6.-CreacionDeHilos.png]], [[./RoblesAlan/img/7.-InicioDeHilos.png][7.-InicioDeHilos.png]], [[./RoblesAlan/img/8.-EsperaHilosTerminen.png][8.-EsperaHilosTerminen.png]], [[./RoblesAlan/img/9.-MensajeDeFinalizacion.png][9.-MensajeDeFinalizacion.png]], [[./RoblesAlan/img/Python-logo.png][Python-logo.png]]
 - Archivos :: [[./RoblesAlan/tarea.py][tarea.py]]
