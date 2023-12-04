@@ -1,16 +1,16 @@
 #+title: Evaluación de la exposición
 #+author: Gunnar Wolf
 
-* GNU HURD
+* Desduplicación en sistemas operativos de última generación
 
-- Tema presentado por :: Emilio Cruz y Giovanni Garciliano
+- Tema presentado por :: Patricia Jiménez y José Pérez
 - Calificación global :: Por favor revisen más adelante para ver de
   dónde vienen todos estos números 😉
 
 |------------------------+-------+--------------------+------+---------|
 | Evaluación  compañeros | Valor | Evaluación docente | Peso | *Total* |
 |------------------------+-------+--------------------+------+---------|
-|                    9.5 |   0.3 |               8.75 |  0.7 |    2.85 |
+|                    9.5 |   0.3 |               8.75 |  0.7 |    8.98 |
 |------------------------+-------+--------------------+------+---------|
 #+TBLFM: @2$5=$1*$2+$3*$4;f-2
 
